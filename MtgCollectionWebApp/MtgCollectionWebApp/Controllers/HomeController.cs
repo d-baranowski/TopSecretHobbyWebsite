@@ -10,6 +10,7 @@ namespace MtgCollectionWebApp.Controllers
     {
         public ActionResult Index()
         {
+            
             return View();
         }
 

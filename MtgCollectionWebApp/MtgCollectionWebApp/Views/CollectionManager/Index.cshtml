@@ -1,0 +1,39 @@
+﻿@model IEnumerable<MtgCollectionWebApp.Models.Collection>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CollectionOwner)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CollectionName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CollectionOwner)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CollectionName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CollectionId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CollectionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CollectionId })
+        </td>
+    </tr>
+}
+
+</table>

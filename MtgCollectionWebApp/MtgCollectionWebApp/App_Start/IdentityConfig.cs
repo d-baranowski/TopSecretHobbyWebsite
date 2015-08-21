@@ -32,9 +32,15 @@ namespace MtgCollectionWebApp
         }
     }
 
+    public class NewUserEvent
+    {
+        public string UserId { get; set; }
+    }
+
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
+       
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
         {
@@ -91,6 +97,8 @@ namespace MtgCollectionWebApp
     // Configure the application sign-in manager which is used in this application.
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
+        public EventHandler<NewUserEvent> NewUserCreated;
+
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
         {
@@ -98,7 +106,19 @@ namespace MtgCollectionWebApp
 
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
         {
-            return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
+            return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager).ContinueWith(tsk =>
+            {
+                var claim = tsk.Result;
+                var eventArgs = new NewUserEvent
+                {
+                    UserId = claim.GetUserId()
+                };
+                if (NewUserCreated != null)
+                {
+                    NewUserCreated(this, eventArgs);
+                }
+                return claim;
+            });
         }
 
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
