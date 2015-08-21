@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MtgCollectionWebApp", "MtgCollectionWebApp\MtgCollectionWebApp.csproj", "{CE43C067-FB98-42EF-BE7D-6CA8DD49DF65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MtgCollectionWebApp.Tests", "MtgCollectionWebApp.Tests\MtgCollectionWebApp.Tests.csproj", "{963A695B-CB06-4E4C-8F2C-DEE3A72B6680}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE43C067-FB98-42EF-BE7D-6CA8DD49DF65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE43C067-FB98-42EF-BE7D-6CA8DD49DF65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE43C067-FB98-42EF-BE7D-6CA8DD49DF65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE43C067-FB98-42EF-BE7D-6CA8DD49DF65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{963A695B-CB06-4E4C-8F2C-DEE3A72B6680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{963A695B-CB06-4E4C-8F2C-DEE3A72B6680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{963A695B-CB06-4E4C-8F2C-DEE3A72B6680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{963A695B-CB06-4E4C-8F2C-DEE3A72B6680}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
