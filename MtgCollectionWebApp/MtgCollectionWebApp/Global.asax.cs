@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MtgCollectionWebApp.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,6 +14,11 @@ namespace MtgCollectionWebApp
     {
         protected void Application_Start()
         {
+            //Initialze the database
+            Database.SetInitializer ( new MtgDbInitializer());
+            MtgCollectionDB c = new MtgCollectionDB();
+            c.Database.Initialize(true);
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
