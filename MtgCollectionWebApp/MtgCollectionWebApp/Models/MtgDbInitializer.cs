@@ -12,7 +12,7 @@ using System.Web;
 
 namespace MtgCollectionWebApp.Models
 {
-    public class MtgDbInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<MtgCollectionDB>
+    public class MtgDbInitializer : System.Data.Entity.DropCreateDatabaseAlways<MtgCollectionDB>
     {
         protected override void Seed(MtgCollectionDB context)
         {
@@ -35,7 +35,7 @@ namespace MtgCollectionWebApp.Models
             cardsPerPage = (int)o["perPage"];
 
 
-            for (int j = 0; j < 100; j++)
+            for (int j = 0; j < 50; j++)
            // while (!currentPage.Equals(lastPage))
             {
             request = (HttpWebRequest)WebRequest.Create(currentPage);
@@ -56,7 +56,8 @@ namespace MtgCollectionWebApp.Models
                 string flavour = (string)o["cards"][i]["flavor"];
                 string foreignNames = o["cards"][i]["foreignNames"].ToString();
                 string hand = o["cards"][i]["hand"].ToString();
-                string imageUrl = o["cards"][i]["images"].ToString();
+                string imageUrl = "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" + o["cards"][i]["multiverseid"] + "&type=card";
+                //string imageUrl = o["cards"][i]["images"]["mtgimage"].ToString();
                 string layout = (string)o["cards"][i]["layout"];
                 string legalities = o["cards"][i]["legalities"].ToString();
                 string life = o["cards"][i]["life"].ToString();
@@ -86,7 +87,7 @@ namespace MtgCollectionWebApp.Models
                         CardFlavour = flavour,
                         CardForeignNames = foreignNames,
                         CardHand = hand,
-                        CardImageUrl = url,
+                        CardImageUrl = imageUrl,
                         CardLayout = layout,
                         CardLegalities = legalities,
                         CardLife = life,

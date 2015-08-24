@@ -1,0 +1,242 @@
+﻿@model MtgCollectionWebApp.Models.Card
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Card</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CardArtist)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardArtist)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardCmc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardCmc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardColors)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardColors)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardFlavour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardFlavour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardForeignNames)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardForeignNames)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardHand)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardHand)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardImageUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardImageUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardLayout)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardLayout)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardLegalities)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardLegalities)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardLife)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardLife)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardLoyalty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardLoyalty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardManaCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardManaCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardMultiverseId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardMultiverseId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardNames)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardNames)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardPower)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardPower)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardPrintings)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardPrintings)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardRarity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardRarity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardSet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardSet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardSubTypes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardSubTypes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardSuperTypes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardSuperTypes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardToughness)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardToughness)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardTypes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardTypes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardVariations)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardVariations)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardWatermark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardWatermark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardUrl)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CardId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
