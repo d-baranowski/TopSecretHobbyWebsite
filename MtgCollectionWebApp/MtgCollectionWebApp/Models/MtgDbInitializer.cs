@@ -35,7 +35,7 @@ namespace MtgCollectionWebApp.Models
             cardsPerPage = (int)o["perPage"];
 
 
-            for (int j = 0; j < 50; j++)
+            for (int j = 0; j < 10; j++)
            // while (!currentPage.Equals(lastPage))
             {
             request = (HttpWebRequest)WebRequest.Create(currentPage);

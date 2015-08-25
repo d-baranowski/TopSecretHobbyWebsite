@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MtgCollectionWebApp.Models;
+using System.Threading.Tasks;
 
 namespace MtgCollectionWebApp.Controllers
 {
@@ -15,9 +16,11 @@ namespace MtgCollectionWebApp.Controllers
         private MtgCollectionDB db = new MtgCollectionDB();
 
         // GET: Cards
-        public ActionResult Index()
+        [HttpGet]
+        public async Task<ActionResult> Index()
         {
-            return View(db.Cards.ToList());
+            var model = await GetCardsByName("");
+            return View(model);
         }
 
         public ActionResult SearchByName(string q)
@@ -26,6 +29,24 @@ namespace MtgCollectionWebApp.Controllers
             .Where(a => a.CardName.Contains(q));
 
             return View(cards);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetCardsByName(string q)
+        {
+            string b = q;
+            var model = await GetFullAndPartialViewModel(b);
+          
+            return PartialView("_DisplayCards",model);
+        }
+
+        private async Task<CardsViewModel> GetFullAndPartialViewModel(string q)
+        {
+            var c = db.Cards
+            .Where(a => a.CardName.Contains(q));
+            var cardsViewModel = new CardsViewModel();
+            cardsViewModel.Cards = c;
+            return cardsViewModel;
         }
 
         // GET: Cards/Details/5
