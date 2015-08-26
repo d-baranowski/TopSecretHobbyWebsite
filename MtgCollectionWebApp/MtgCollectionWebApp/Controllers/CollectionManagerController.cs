@@ -7,17 +7,56 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MtgCollectionWebApp.Models;
+using System.Threading.Tasks;
 
 namespace MtgCollectionWebApp.Controllers
 {
     public class CollectionManagerController : Controller
     {
         private MtgCollectionDB db = new MtgCollectionDB();
+        
 
         // GET: CollectionManager
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(db.Collections.ToList());
+            var model = await GetEntryViewModel();
+            return View(model);
+        }
+
+        private async Task<IEnumerable<EntryViewModel>> GetEntryViewModel()
+        {
+            Collection collection;
+            IEnumerable<CollectionEntry> entries;
+            List<EntryViewModel> entryViewModelList;
+            var test = db.Collections.Where(a => a.CollectionOwner.Equals(User.Identity.Name));
+            if (test.Count() > 0)
+            {
+                collection = test.First();
+                entries = collection.CollectionEntries;
+                entryViewModelList = new List<EntryViewModel>();
+                foreach (CollectionEntry e in entries)
+                {
+                    var entryViewModel = new EntryViewModel();
+                    entryViewModel.Card = await db.Cards.FindAsync(e.CollectionEntryCardId);
+                    entryViewModel.Quantity = e.Quantity;
+                    entryViewModelList.Add(entryViewModel);
+                    entryViewModel.collectionID = collection.CollectionId;
+                }
+
+            } else
+            {
+                collection = db.Collections.Add(new Collection { CollectionOwner = User.Identity.Name, CollectionName = "Hello" });
+                entryViewModelList = new List<EntryViewModel>();
+                var entryViewModel = new EntryViewModel();
+                entryViewModel.collectionID = collection.CollectionId;
+                entryViewModelList.Add(entryViewModel);
+                db.SaveChanges();
+            }
+
+           
+            
+            
+            return entryViewModelList;
         }
 
         // GET: CollectionManager/Details/5

@@ -14,6 +14,8 @@ namespace MtgCollectionWebApp.Controllers
     {
         public ActionResult Index()
         {
+            ViewData.Add("loggedIn", User.Identity.IsAuthenticated);
+
             return View();
         }
 

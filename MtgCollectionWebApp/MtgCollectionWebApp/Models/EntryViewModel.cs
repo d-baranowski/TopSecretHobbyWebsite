@@ -5,9 +5,10 @@ using System.Web;
 
 namespace MtgCollectionWebApp.Models
 {
-    public class CardsViewModel
+    public class EntryViewModel
     {
+        public int collectionID { get; set; }
         public Card Card { get; set; }
         public virtual int Quantity { get; set; }
-    }   
+    }
 }

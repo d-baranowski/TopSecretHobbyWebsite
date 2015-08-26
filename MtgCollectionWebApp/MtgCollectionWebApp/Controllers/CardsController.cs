@@ -28,18 +28,6 @@ namespace MtgCollectionWebApp.Controllers
             return (List<Card>)db.Cards.Where(a => a.CardName.Contains(q));
         }
 
-
-        public ActionResult SearchByName(string q)
-        {
-            if (q.Length == 0)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var cards = db.Cards.Where(a => a.CardName.Contains(q));
-
-            return PartialView("_DisplayCards", cards);
-        }
-
         [HttpGet]
         public async Task<ActionResult> GetCardsByName(string q)
         {
@@ -49,13 +37,57 @@ namespace MtgCollectionWebApp.Controllers
             return PartialView("_DisplayCards",model);
         }
 
-        private async Task<CardsViewModel> GetFullAndPartialViewModel(string q)
+        private async Task<IEnumerable<CardsViewModel>> GetFullAndPartialViewModel(string q)
         {
-            var c = db.Cards
-            .Where(a => a.CardName.Contains(q));
-            var cardsViewModel = new CardsViewModel();
-            cardsViewModel.Cards = c;
+            var cardsAll = db.Cards.Where(a => a.CardName.Contains(q));
+            var cardsViewModel = new List<CardsViewModel>();
+            
+            foreach (Card i in cardsAll)
+            {
+                var b = new CardsViewModel();
+                b.Card = i;
+                b.Quantity = getQuantityOrZero(i.CardId);
+                cardsViewModel.Add(b);
+                   
+            }
+
             return cardsViewModel;
+        }
+
+        private Collection getOrCreateUserCollection()
+        {
+            Collection collection;
+
+            var test = db.Collections.Where(a => a.CollectionOwner.Equals(User.Identity.Name));
+            if (test.Count() > 0)
+            {
+                collection = test.First();
+            }
+            else
+            {
+                collection = db.Collections.Add(new Collection { CollectionOwner = User.Identity.Name, CollectionName = "Hello" });
+                db.SaveChanges();
+         
+            }
+
+           
+
+            return collection;
+        }
+
+        private int getQuantityOrZero(int cardId)
+        {
+            int q = 0;
+            var collection = getOrCreateUserCollection();
+            if (collection.CollectionEntries.Count > 0)
+            {
+                var entries = collection.CollectionEntries.Where(d => d.CollectionEntryCardId.Equals(cardId));
+                if (entries.Count() > 0) {
+                   q = entries.First().Quantity;
+                }  
+            }
+            
+            return q;
         }
 
         // GET: Cards/Details/5
