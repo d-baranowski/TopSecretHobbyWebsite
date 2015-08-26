@@ -7,18 +7,18 @@
 <h2>Index</h2>
 
 <input id="txtTest" type="text" name="q" style="width: 400px;" />
-<button id="buttonTest"></button>
 <div id="dvCards">
-   
+
 </div>
 
 @section scripts{
     <script type="text/javascript">
 
-    $(document).ready(function () {
+        $(document).ready(function () {
+            $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=');
         $("#txtTest").keyup(function () {
-            var categoryId = $("#txtTest").val();
-            $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=' + categoryId);
+            var cardName = $("#txtTest").val();
+            $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=' + cardName);
         });
     });
 </script>  
