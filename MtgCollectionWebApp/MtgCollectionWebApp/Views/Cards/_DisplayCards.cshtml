@@ -1,44 +1,41 @@
-﻿@model IEnumerable<MtgCollectionWebApp.Models.Card>
+﻿@model MtgCollectionWebApp.Models.CardsViewModel
 
-@{
-    ViewBag.Title = "DisplayCardsPartialView";
-}
 
 <table id="table" class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CardName)
+            @Html.Display("Card Name")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CardType)
+            @Html.Display("Card Type")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CardManaCost)
+            @Html.Display("CardManaCost")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CardArtist)
+            @Html.Display("CardArtist")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CardText)
+            @Html.Display("CardText")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CardFlavour)
+            @Html.Display("CardFlavour")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CardPower)
+            @Html.Display("CardPower")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CardToughness)
+            @Html.Display("CardToughness")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CardImageUrl)
+            @Html.Display("CardImageUrl")
         </th>
 
 
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Cards)
     {
         <tr>
             <td>
@@ -74,4 +71,3 @@
         </tr>
     }
 </table>
-

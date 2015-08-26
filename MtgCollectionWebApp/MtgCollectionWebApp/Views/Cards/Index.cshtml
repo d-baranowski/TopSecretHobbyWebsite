@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MtgCollectionWebApp.Models.Card>
+﻿@model System.Web.Mvc.PartialViewResult
 
 @{
     ViewBag.Title = "Index";
@@ -6,28 +6,20 @@
 
 <h2>Index</h2>
 
-    @using (Html.BeginForm("Index", "Cards", FormMethod.Get))
-    {
-        <p>Search: @Html.TextBox("SearchString")</p>
-        <button id="search"></button>
-    }
+<input id="txtTest" type="text" name="q" style="width: 400px;" />
+<div id="dvCards">
 
-<div>
-    <label>Cards</label>
-    <div id="detailsDiv"></div>
 </div>
 
+@section scripts{
+    <script type="text/javascript">
 
-@section scripts {
-   <script>
-       $('#search').click(function (evt) {
-
-           var $detailDiv = $('#detailsDiv'),
-               url = $(this).data('url');
-
-           $.get(url, function (data){
-                $detailDiv.replaceWith(data);
-           });
-       });
-   </script>
+        $(document).ready(function () {
+            $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=');
+        $("#txtTest").keyup(function () {
+            var cardName = $("#txtTest").val();
+            $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=' + cardName);
+        });
+    });
+</script>  
 }
