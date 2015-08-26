@@ -20,12 +20,21 @@ namespace MtgCollectionWebApp.Controllers
             return View(db.Cards.ToList());
         }
 
+        public List<Card> GetCardList(string q)
+        {
+            return (List<Card>)db.Cards.Where(a => a.CardName.Contains(q));
+        }
+
+
         public ActionResult SearchByName(string q)
         {
-            var cards = db.Cards
-            .Where(a => a.CardName.Contains(q));
+            if (q.Length == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var cards = db.Cards.Where(a => a.CardName.Contains(q));
 
-            return View(cards);
+            return PartialView("_DisplayCards", cards);
         }
 
         // GET: Cards/Details/5
@@ -53,3 +62,5 @@ namespace MtgCollectionWebApp.Controllers
         }
     }
 }
+
+

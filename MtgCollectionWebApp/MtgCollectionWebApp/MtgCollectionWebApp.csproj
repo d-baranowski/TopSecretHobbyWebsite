@@ -257,6 +257,7 @@
     <Content Include="Views\Cards\Details.cshtml" />
     <Content Include="Views\Cards\Index.cshtml" />
     <Content Include="Views\Cards\SearchByName.cshtml" />
+    <Content Include="Views\Cards\_DisplayCards.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
