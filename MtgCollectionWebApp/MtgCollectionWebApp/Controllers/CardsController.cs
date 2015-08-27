@@ -56,10 +56,7 @@ namespace MtgCollectionWebApp.Controllers
 
         private Collection getUserCollection()
         {
-            Collection collection;
-
-            var test = db.Collections.Where(a => a.CollectionOwner.Equals(User.Identity.Name));
-            collection = test.First();
+            var collection = db.Collections.Find(User.Identity.Name);
 
             return collection;
         }
@@ -67,8 +64,9 @@ namespace MtgCollectionWebApp.Controllers
         private int getQuantityOrZero(int cardId)
         {
             int q = 0;
-            var collection = getUserCollection();
-            if (collection.CollectionEntries.Count > 0)
+            var test = db.Collections.Where(a => a.CollectionOwner.Equals(User.Identity.Name));
+            var collection = test.First();
+            if (collection.CollectionEntries != null)
             {
                 var entries = collection.CollectionEntries.Where(d => d.CollectionEntryCardId.Equals(cardId));
                 if (entries.Count() > 0) {

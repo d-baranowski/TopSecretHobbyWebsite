@@ -67,7 +67,9 @@
                 <img src="@item.Card.CardImageUrl" />
             </td>
             <td>
+                <button id="@item.Card.CardId" onclick='alert("@item.Card.CardId");' class="addOne">+</button>
                 @Html.DisplayFor(modelItem => item.Quantity)
+                <button class="subOne">-</button>
             </td>
         </tr>
     }
