@@ -10,9 +10,7 @@ namespace MtgCollectionWebApp.Models
     {
         [Key]
         public virtual int CollectionId { get; set; }
-        public virtual string CollectionOwner { get; set; }
-        public virtual string CollectionName { get; set; }
-        
+        public virtual string CollectionOwner { get; set; }        
         public virtual ICollection<CollectionEntry> CollectionEntries { get; set; }
         
     }

@@ -29,8 +29,7 @@ namespace MtgCollectionWebApp.Controllers
             IEnumerable<CollectionEntry> entries;
             List<EntryViewModel> entryViewModelList;
             var test = db.Collections.Where(a => a.CollectionOwner.Equals(User.Identity.Name));
-            if (test.Count() > 0)
-            {
+            
                 collection = test.First();
                 entries = collection.CollectionEntries;
                 entryViewModelList = new List<EntryViewModel>();
@@ -43,19 +42,6 @@ namespace MtgCollectionWebApp.Controllers
                     entryViewModel.collectionID = collection.CollectionId;
                 }
 
-            } else
-            {
-                collection = db.Collections.Add(new Collection { CollectionOwner = User.Identity.Name, CollectionName = "Hello" });
-                entryViewModelList = new List<EntryViewModel>();
-                var entryViewModel = new EntryViewModel();
-                entryViewModel.collectionID = collection.CollectionId;
-                entryViewModelList.Add(entryViewModel);
-                db.SaveChanges();
-            }
-
-           
-            
-            
             return entryViewModelList;
         }
 
