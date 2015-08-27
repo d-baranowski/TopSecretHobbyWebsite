@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 
 namespace MtgCollectionWebApp.Models
@@ -45,7 +46,15 @@ namespace MtgCollectionWebApp.Models
                 var entryId = Int32.Parse((string)entries[i]["collectionEntry"]);
                 if (entryId == id) //Entry for given card already exists 
                 {
+                    var updateEntryUrl = "api/Entries/"+entryId;
+                    var client = new WebClient();
+                    client.BaseAddress = updateEntryUrl;
                     
+                    var data = new CollectionEntry();
+                    data.CollectionEntryId = id;
+                    data.CollectionEntryCardId = id;
+                    data.CollectionId = Int32.Parse((string)entries[i]["CollectionId"]);
+                    data.Quantity = Int32.Parse((string)entries[i]["Quantity"]) + 1;
                 } 
             }
 
