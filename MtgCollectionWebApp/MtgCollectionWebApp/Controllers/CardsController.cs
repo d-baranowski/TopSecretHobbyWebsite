@@ -54,12 +54,31 @@ namespace MtgCollectionWebApp.Controllers
             return cardsViewModel;
         }
 
-      
+        private Collection getOrCreateUserCollection()
+        {
+            Collection collection;
+
+            var test = db.Collections.Where(a => a.CollectionOwner.Equals(User.Identity.Name));
+            if (test.Count() > 0)
+            {
+                collection = test.First();
+            }
+            else
+            {
+                collection = db.Collections.Add(new Collection { CollectionOwner = User.Identity.Name, CollectionName = "Hello" });
+                db.SaveChanges();
+         
+            }
+
+           
+
+            return collection;
+        }
 
         private int getQuantityOrZero(int cardId)
         {
             int q = 0;
-            var collection = db.Collections.Where(d => d.CollectionOwner.Equals(User.Identity.Name)).First();
+            var collection = getOrCreateUserCollection();
             if (collection.CollectionEntries.Count > 0)
             {
                 var entries = collection.CollectionEntries.Where(d => d.CollectionEntryCardId.Equals(cardId));
