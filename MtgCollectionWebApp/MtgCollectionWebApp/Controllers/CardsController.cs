@@ -28,18 +28,6 @@ namespace MtgCollectionWebApp.Controllers
             return (List<Card>)db.Cards.Where(a => a.CardName.Contains(q));
         }
 
-
-        public ActionResult SearchByName(string q)
-        {
-            if (q.Length == 0)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var cards = db.Cards.Where(a => a.CardName.Contains(q));
-
-            return PartialView("_DisplayCards", cards);
-        }
-
         [HttpGet]
         public async Task<ActionResult> GetCardsByName(string q)
         {
