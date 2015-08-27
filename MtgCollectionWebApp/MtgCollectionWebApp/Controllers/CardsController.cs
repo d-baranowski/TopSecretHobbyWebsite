@@ -37,13 +37,44 @@ namespace MtgCollectionWebApp.Controllers
             return PartialView("_DisplayCards",model);
         }
 
-        private async Task<CardsViewModel> GetFullAndPartialViewModel(string q)
+        private async Task<IEnumerable<CardsViewModel>> GetFullAndPartialViewModel(string q)
         {
-            var c = db.Cards
-            .Where(a => a.CardName.Contains(q));
-            var cardsViewModel = new CardsViewModel();
-            cardsViewModel.Cards = c;
+            var cardsAll = db.Cards.Where(a => a.CardName.Contains(q));
+            var cardsViewModel = new List<CardsViewModel>();
+            
+            foreach (Card i in cardsAll)
+            {
+                var b = new CardsViewModel();
+                b.Card = i;
+                b.Quantity = getQuantityOrZero(i.CardId);
+                cardsViewModel.Add(b);
+                   
+            }
+
             return cardsViewModel;
+        }
+
+        private Collection getUserCollection()
+        {
+            var collection = db.Collections.Find(User.Identity.Name);
+
+            return collection;
+        }
+
+        private int getQuantityOrZero(int cardId)
+        {
+            int q = 0;
+            var test = db.Collections.Where(a => a.CollectionOwner.Equals(User.Identity.Name));
+            var collection = test.First();
+            if (collection.CollectionEntries != null)
+            {
+                var entries = collection.CollectionEntries.Where(d => d.CollectionEntryCardId.Equals(cardId));
+                if (entries.Count() > 0) {
+                   q = entries.First().Quantity;
+                }  
+            }
+            
+            return q;
         }
 
         // GET: Cards/Details/5

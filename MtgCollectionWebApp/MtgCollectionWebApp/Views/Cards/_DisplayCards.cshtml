@@ -1,73 +1,100 @@
-﻿@model MtgCollectionWebApp.Models.CardsViewModel
+﻿@model  IEnumerable<MtgCollectionWebApp.Models.CardsViewModel>
 
 
 <table id="table" class="table">
     <tr>
         <th>
-            @Html.Display("Card Name")
+            Name
         </th>
         <th>
-            @Html.Display("Card Type")
+            Type
         </th>
         <th>
-            @Html.Display("CardManaCost")
+            Mana Cost
         </th>
         <th>
-            @Html.Display("CardArtist")
+           Artist
         </th>
         <th>
-            @Html.Display("CardText")
+            Text
         </th>
         <th>
-            @Html.Display("CardFlavour")
+            Flavour
         </th>
         <th>
-            @Html.Display("CardPower")
+            Power
         </th>
         <th>
-            @Html.Display("CardToughness")
+            Toughness
         </th>
         <th>
-            @Html.Display("CardImageUrl")
+            Image
         </th>
 
-
-        <th></th>
+        <th>
+            Details
+        </th>
     </tr>
-
-    @foreach (var item in Model.Cards)
+    
+    @foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CardName)
+                @Html.DisplayFor(modelItem => item.Card.CardName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CardType)
+                @Html.DisplayFor(modelItem => item.Card.CardType)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CardManaCost)
+                @Html.DisplayFor(modelItem => item.Card.CardManaCost)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CardArtist)
+                @Html.DisplayFor(modelItem => item.Card.CardArtist)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CardText)
+                @Html.DisplayFor(modelItem => item.Card.CardText)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CardFlavour)
+                @Html.DisplayFor(modelItem => item.Card.CardFlavour)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CardPower)
+                @Html.DisplayFor(modelItem => item.Card.CardPower)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CardToughness)
+                @Html.DisplayFor(modelItem => item.Card.CardToughness)
             </td>
             <td>
-                <img src="@item.CardImageUrl" />
+                <img src="@item.Card.CardImageUrl" />
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.CardId })
+                <button class="addOne" onclick="startAjax(@item.Card.CardId);">+</button>
+                @Html.DisplayFor(modelItem => item.Quantity)
+                <button class="subOne">-</button>
             </td>
         </tr>
     }
 </table>
+
+<script type='text/javascript'>
+
+    //AJAX function
+    function startAjax(i) {
+         $.ajax({
+             url: '/api/CollectionEntries',
+             type: "GET",
+        }).done(function (data) {
+            //window.location.reload();
+                              
+            //Trying to refresh picture
+            /*var call = '/user/PartialProfilePicTest';
+            $("#partialTest").load(call); */
+            //$.ajaxSetup({ cache: false });  //Turn off caching */
+
+        }).fail(function (err) {
+            alert('fail')
+        }).success(function (result) {
+            alert(result.arguments)
+        });
+
+    }
+</script>

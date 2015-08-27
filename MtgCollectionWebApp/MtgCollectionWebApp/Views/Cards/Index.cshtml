@@ -7,6 +7,7 @@
 <h2>Index</h2>
 
 <input id="txtTest" type="text" name="q" style="width: 400px;" />
+
 <div id="dvCards">
 
 </div>
@@ -15,11 +16,13 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=');
-        $("#txtTest").keyup(function () {
-            var cardName = $("#txtTest").val();
-            $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=' + cardName);
+            $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=')
+            $("#txtTest").keyup(function () {
+                var cardName = $("#txtTest").val();
+                $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=' + cardName);
+            });
         });
-    });
-</script>  
+</script>
+    
+      
 }

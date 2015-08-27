@@ -12,9 +12,6 @@ namespace MtgCollectionWebApp.Models
         [Key]
         public virtual int CollectionEntryId { get; set; }
         public virtual int Quantity { get; set; }
-        
-        [ForeignKey("CollectionEntryCardId")]
-        public virtual Card CollectionEntryCard { get; set; }
         public int CollectionEntryCardId { get; set; }
 
         public int CollectionId { get; set; }

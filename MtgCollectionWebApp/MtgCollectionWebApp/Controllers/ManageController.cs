@@ -66,8 +66,7 @@ namespace MtgCollectionWebApp.Controllers
             var userId = User.Identity.GetUserId();
 
             var p = new Collection();
-            p.CollectionOwner = userId;
-
+            
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),

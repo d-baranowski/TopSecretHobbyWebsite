@@ -17,7 +17,7 @@ namespace MtgCollectionWebApp.Controllers
         // GET: CollectionEntriesManager
         public ActionResult Index()
         {
-            var collectionsEntries = db.CollectionsEntries.Include(c => c.CollectionEntryCard);
+            var collectionsEntries = db.CollectionsEntries;
             return View(collectionsEntries.ToList());
         }
 

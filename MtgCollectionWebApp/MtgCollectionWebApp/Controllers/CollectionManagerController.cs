@@ -7,17 +7,42 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MtgCollectionWebApp.Models;
+using System.Threading.Tasks;
 
 namespace MtgCollectionWebApp.Controllers
 {
     public class CollectionManagerController : Controller
     {
         private MtgCollectionDB db = new MtgCollectionDB();
+        
 
         // GET: CollectionManager
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(db.Collections.ToList());
+            var model = await GetEntryViewModel();
+            return View(model);
+        }
+
+        private async Task<IEnumerable<EntryViewModel>> GetEntryViewModel()
+        {
+            Collection collection;
+            IEnumerable<CollectionEntry> entries;
+            List<EntryViewModel> entryViewModelList;
+            var test = db.Collections.Where(a => a.CollectionOwner.Equals(User.Identity.Name));
+            
+                collection = test.First();
+                entries = collection.CollectionEntries;
+                entryViewModelList = new List<EntryViewModel>();
+                foreach (CollectionEntry e in entries)
+                {
+                    var entryViewModel = new EntryViewModel();
+                    entryViewModel.Card = await db.Cards.FindAsync(e.CollectionEntryCardId);
+                    entryViewModel.Quantity = e.Quantity;
+                    entryViewModelList.Add(entryViewModel);
+                    entryViewModel.collectionID = collection.CollectionId;
+                }
+
+            return entryViewModelList;
         }
 
         // GET: CollectionManager/Details/5
