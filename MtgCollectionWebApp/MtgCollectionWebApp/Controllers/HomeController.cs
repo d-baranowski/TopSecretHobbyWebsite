@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using MtgCollectionWebApp.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,9 +13,14 @@ namespace MtgCollectionWebApp.Controllers
 {
     public class HomeController : Controller
     {
+        private MtgCollectionDB db;
+
         public ActionResult Index()
         {
-            ViewData.Add("loggedIn", User.Identity.IsAuthenticated);
+            if (User.Identity.IsAuthenticated){
+               // getOrCreateUserCollection();
+            }
+            
 
             return View();
         }
@@ -31,6 +37,25 @@ namespace MtgCollectionWebApp.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        private Collection getOrCreateUserCollection()
+        {
+            Collection collection;
+
+            var test = db.Collections.Where(a => a.CollectionOwner.Equals(User.Identity.Name));
+            if (test.Count() > 0)
+            {
+                collection = test.First();
+            }
+            else
+            {
+                collection = db.Collections.Add(new Collection { CollectionOwner = User.Identity.Name, CollectionName = "Hello" });
+                db.SaveChanges();
+
+            }
+
+            return collection;
         }
     }
 }
