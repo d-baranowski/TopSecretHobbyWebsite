@@ -29,19 +29,20 @@ namespace MtgCollectionWebApp.Controllers
             IEnumerable<CollectionEntry> entries;
             List<EntryViewModel> entryViewModelList;
             var test = db.Collections.Where(a => a.CollectionOwner.Equals(User.Identity.Name));
-            
-                collection = test.First();
-                entries = collection.CollectionEntries;
-                entryViewModelList = new List<EntryViewModel>();
-                foreach (CollectionEntry e in entries)
-                {
-                    var entryViewModel = new EntryViewModel();
-                    entryViewModel.Card = await db.Cards.FindAsync(e.CollectionEntryCardId);
-                    entryViewModel.Quantity = e.Quantity;
-                    entryViewModelList.Add(entryViewModel);
-                    entryViewModel.collectionID = collection.CollectionId;
-                }
+            var entryViewModel = new EntryViewModel();
 
+            collection = test.First();
+            entries = collection.CollectionEntries;
+            entryViewModelList = new List<EntryViewModel>();
+            foreach (CollectionEntry e in entries)
+            {
+
+                entryViewModel.Card = await db.Cards.FindAsync(e.CollectionEntryCardId);
+                entryViewModel.Quantity = e.Quantity;
+                entryViewModelList.Add(entryViewModel);
+                entryViewModel.collectionID = collection.CollectionId;
+            }
+            entryViewModelList.Add(entryViewModel);
             return entryViewModelList;
         }
 

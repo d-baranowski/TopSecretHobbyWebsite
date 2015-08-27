@@ -80,15 +80,11 @@
     //AJAX function
     function startAjax(i) {
          $.ajax({
-             url: '/api/CollectionEntries',
+             url: '/CollectionEntries',
              type: "GET",
         }).done(function (data) {
             //window.location.reload();
-                              
-            //Trying to refresh picture
-            /*var call = '/user/PartialProfilePicTest';
-            $("#partialTest").load(call); */
-            //$.ajaxSetup({ cache: false });  //Turn off caching */
+            
 
         }).fail(function (err) {
             alert('fail')

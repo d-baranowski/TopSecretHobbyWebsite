@@ -6,28 +6,27 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MtgCollectionWebApp.Models;
 
 namespace MtgCollectionWebApp.Controllers
 {
-    public class CollectionEntriesController : ApiController
+    public class EntriesController : ApiController
     {
         private MtgCollectionDB db = new MtgCollectionDB();
 
-        // GET: api/CollectionEntries
+        // GET: api/Entries
         public IQueryable<CollectionEntry> GetCollectionsEntries()
         {
             return db.CollectionsEntries;
         }
 
-        // GET: api/CollectionEntries/5
+        // GET: api/Entries/5
         [ResponseType(typeof(CollectionEntry))]
-        public async Task<IHttpActionResult> GetCollectionEntry(int id)
+        public IHttpActionResult GetCollectionEntry(int id)
         {
-            CollectionEntry collectionEntry = await db.CollectionsEntries.FindAsync(id);
+            CollectionEntry collectionEntry = db.CollectionsEntries.Find(id);
             if (collectionEntry == null)
             {
                 return NotFound();
@@ -36,9 +35,9 @@ namespace MtgCollectionWebApp.Controllers
             return Ok(collectionEntry);
         }
 
-        // PUT: api/CollectionEntries/5
+        // PUT: api/Entries/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCollectionEntry(int id, CollectionEntry collectionEntry)
+        public IHttpActionResult PutCollectionEntry(int id, CollectionEntry collectionEntry)
         {
             if (!ModelState.IsValid)
             {
@@ -54,7 +53,7 @@ namespace MtgCollectionWebApp.Controllers
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -71,9 +70,9 @@ namespace MtgCollectionWebApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/CollectionEntries
+        // POST: api/Entries
         [ResponseType(typeof(CollectionEntry))]
-        public async Task<IHttpActionResult> PostCollectionEntry(CollectionEntry collectionEntry)
+        public IHttpActionResult PostCollectionEntry(CollectionEntry collectionEntry)
         {
             if (!ModelState.IsValid)
             {
@@ -81,23 +80,23 @@ namespace MtgCollectionWebApp.Controllers
             }
 
             db.CollectionsEntries.Add(collectionEntry);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = collectionEntry.CollectionEntryId }, collectionEntry);
         }
 
-        // DELETE: api/CollectionEntries/5
+        // DELETE: api/Entries/5
         [ResponseType(typeof(CollectionEntry))]
-        public async Task<IHttpActionResult> DeleteCollectionEntry(int id)
+        public IHttpActionResult DeleteCollectionEntry(int id)
         {
-            CollectionEntry collectionEntry = await db.CollectionsEntries.FindAsync(id);
+            CollectionEntry collectionEntry = db.CollectionsEntries.Find(id);
             if (collectionEntry == null)
             {
                 return NotFound();
             }
 
             db.CollectionsEntries.Remove(collectionEntry);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
             return Ok(collectionEntry);
         }
