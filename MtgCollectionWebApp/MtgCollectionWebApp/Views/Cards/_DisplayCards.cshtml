@@ -79,14 +79,9 @@
 
     //AJAX function
     function startAjax(i) {
-        alert(i);
-
-        $.ajax({
-            type: "POST",
-            url: '/api/user/uploadPicture',
-            contentType: false,
-            processData: false,
-            data: formData
+         $.ajax({
+             url: '/api/CollectionEntries',
+             type: "GET",
         }).done(function (data) {
             //window.location.reload();
                               
@@ -96,9 +91,9 @@
             //$.ajaxSetup({ cache: false });  //Turn off caching */
 
         }).fail(function (err) {
-            easyjet.common.displayErrorDialog("There was a problem saving the user data.");
+            alert('fail')
         }).success(function (result) {
-            $('#inPageFileInputDialog').fadeOut();
+            alert(result.arguments)
         });
 
     }
