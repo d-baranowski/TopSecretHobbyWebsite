@@ -13,16 +13,19 @@ namespace MtgCollectionWebApp.Controllers
 {
     public class HomeController : Controller
     {
+        
         private MtgCollectionDB db = new MtgCollectionDB();
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
             {
-                if (db.Collections.Where(a=> a.CollectionOwner.Equals(User.Identity.Name)).Count() == 0){
-                    db.Collections.Add(new Collection { CollectionOwner = User.Identity.Name });
+                if (db.Collections.Find(User.Identity.Name.GetHashCode()) == null) { 
+                    var a = db.Collections.Add(new Collection {CollectionId = User.Identity.Name.GetHashCode()});
+                    GlobalVariable.UserCollectionId = User.Identity.Name.GetHashCode();
                     db.SaveChanges();
                 }
             }
+            ViewBag.Message = User.Identity.Name.GetHashCode();
 
             return View();
         }

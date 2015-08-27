@@ -25,13 +25,11 @@ namespace MtgCollectionWebApp.Controllers
 
         private async Task<IEnumerable<EntryViewModel>> GetEntryViewModel()
         {
-            Collection collection;
             IEnumerable<CollectionEntry> entries;
             List<EntryViewModel> entryViewModelList;
-            var test = db.Collections.Where(a => a.CollectionOwner.Equals(User.Identity.Name));
+            var collection = db.Collections.Find(User.Identity.Name.GetHashCode());
             var entryViewModel = new EntryViewModel();
 
-            collection = test.First();
             entries = collection.CollectionEntries;
             entryViewModelList = new List<EntryViewModel>();
             foreach (CollectionEntry e in entries)

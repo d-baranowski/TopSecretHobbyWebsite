@@ -80,16 +80,14 @@
     //AJAX function
     function startAjax(i) {
          $.ajax({
-             url: '/CollectionEntries',
+             url: '/api/Entries',
              type: "GET",
         }).done(function (data) {
-            //window.location.reload();
             
-
         }).fail(function (err) {
             alert('fail')
         }).success(function (result) {
-            alert(result.arguments)
+            alert()
         });
 
     }

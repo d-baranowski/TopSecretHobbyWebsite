@@ -64,8 +64,8 @@ namespace MtgCollectionWebApp.Controllers
         private int getQuantityOrZero(int cardId)
         {
             int q = 0;
-            var test = db.Collections.Where(a => a.CollectionOwner.Equals(User.Identity.Name));
-            var collection = test.First();
+            var collection = db.Collections.Find(User.Identity.Name.GetHashCode());
+           
             if (collection.CollectionEntries != null)
             {
                 var entries = collection.CollectionEntries.Where(d => d.CollectionEntryCardId.Equals(cardId));

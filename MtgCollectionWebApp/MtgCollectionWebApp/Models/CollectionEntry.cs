@@ -10,6 +10,7 @@ namespace MtgCollectionWebApp.Models
     public class CollectionEntry
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public virtual int CollectionEntryId { get; set; }
         public virtual int Quantity { get; set; }
         public int CollectionEntryCardId { get; set; }

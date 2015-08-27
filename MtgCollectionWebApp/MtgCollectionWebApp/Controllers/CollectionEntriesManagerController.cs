@@ -52,6 +52,7 @@ namespace MtgCollectionWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                collectionEntry.CollectionEntryId = collectionEntry.CollectionEntryCardId;
                 db.CollectionsEntries.Add(collectionEntry);
                 db.SaveChanges();
                 return RedirectToAction("Index");
