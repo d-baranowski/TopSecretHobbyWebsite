@@ -35,7 +35,7 @@
             Details
         </th>
     </tr>
-
+    
     @foreach (var item in Model)
     {
         <tr>
@@ -67,10 +67,39 @@
                 <img src="@item.Card.CardImageUrl" />
             </td>
             <td>
-                <button id="@item.Card.CardId" onclick='alert("@item.Card.CardId");' class="addOne">+</button>
+                <button class="addOne" onclick="startAjax(@item.Card.CardId);">+</button>
                 @Html.DisplayFor(modelItem => item.Quantity)
                 <button class="subOne">-</button>
             </td>
         </tr>
     }
 </table>
+
+<script type='text/javascript'>
+
+    //AJAX function
+    function startAjax(i) {
+        alert(i);
+
+        $.ajax({
+            type: "POST",
+            url: '/api/user/uploadPicture',
+            contentType: false,
+            processData: false,
+            data: formData
+        }).done(function (data) {
+            //window.location.reload();
+                              
+            //Trying to refresh picture
+            /*var call = '/user/PartialProfilePicTest';
+            $("#partialTest").load(call); */
+            //$.ajaxSetup({ cache: false });  //Turn off caching */
+
+        }).fail(function (err) {
+            easyjet.common.displayErrorDialog("There was a problem saving the user data.");
+        }).success(function (result) {
+            $('#inPageFileInputDialog').fadeOut();
+        });
+
+    }
+</script>
