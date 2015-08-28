@@ -68,7 +68,7 @@
             </td>
             <td>
                 <button class="addOne" onclick="startAjax(@item.Card.CardId);">+</button>
-                @Html.DisplayFor(modelItem => item.Quantity)
+                <div id="@item.Card.CardId">@{modelItem => item.Quantity}</div>
                 <button class="subOne">-</button>
             </td>
         </tr>
@@ -79,16 +79,14 @@
 
     //AJAX function
     function startAjax(i) {
-         $.ajax({
-             url: '/api/Entries',
-             type: "GET",
+        $.ajax({
+            url: 'http://localhost:59756/api/Quantity/' + i,
+             type: "PUT",
         }).done(function (data) {
-            
-        }).fail(function (err) {
-            alert('fail')
-        }).success(function (result) {
-            alert()
-        });
+             }).fail(function (err) {
+                 alert('fail')
+             }).success(function (result) {
+             });
 
-    }
+         }
 </script>
