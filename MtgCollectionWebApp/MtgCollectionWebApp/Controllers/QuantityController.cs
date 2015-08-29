@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -12,73 +14,62 @@ namespace MtgCollectionWebApp.Models
 {
     public class QuantityController : ApiController
     {
+        private MtgCollectionDB db = new MtgCollectionDB();
 
         // GET: api/Quantity/5
-        public string Get(int id)
+        public int Get(int id)
         {
-            return "value";
+            CollectionEntry collectionEntry = db.CollectionsEntries.Find(id);
+            if (collectionEntry != null)
+            {
+                return collectionEntry.Quantity;
+            } 
+            return 0;
         }
 
         // PUT: api/Quantity/5
-        public void Put(int id, string value)
+        public void Put(int id, int value)
         {
-            var cli = new WebClient();
-            int val = Int32.Parse(value);
-
-            var getEntriesUrl = "http://localhost:59756/api/Entries";
-
-            cli.Headers[HttpRequestHeader.ContentType] = "application/json";
-            string resp = cli.DownloadString(getEntriesUrl);
-            JArray entries = JArray.Parse(resp);
-
-            for (int i = 0; i < entries.Count; i++)
+            CollectionEntry collectionEntry = db.CollectionsEntries.Find(id);
+            if (collectionEntry != null) //If there already is an entry for this card
             {
-                var entryId = Int32.Parse((string)entries[i]["CollectionEntryId"]);
-                var entryQ = Int32.Parse((string)entries[i]["Quantity"]);
+                var entryQ = collectionEntry.Quantity;
+                var q = entryQ + value; //Calculate new quantity 
 
-                
-                if (entryId == id) //Entry for given card already exists 
+                if (q <= 0) //Can't have entries with quantity 0 or less
                 {
-                    var updateEntryUrl = "http://localhost:59756/api/Entries/" + id;
-                    
-                    var cid = (string)entries[i]["CollectionId"];
-                    var q = Int32.Parse((string)entries[i]["Quantity"]) + val;
-
-                    if (q <= 0) //Cant have -1 cards in collection allowing 0 for 
-                    {
-                        var request = WebRequest.Create(updateEntryUrl);
-                        request.Method = "DELETE";
-                        var d = (HttpWebResponse)request.GetResponse();
-                        return;
-                    }
-
-                    string putDataString = "{ \"CollectionEntryId\":"+ id + 
-                                           ",\"Quantity\":"+ q + 
-                                           ",\"CollectionEntryCardId\":"+ id + 
-                                           ",\"CollectionId\":"+ cid + "}";
-
-                    cli.Headers[HttpRequestHeader.ContentType] = "application/json";
-                    string response = cli.UploadString(updateEntryUrl,"PUT", putDataString);
-                    return;
-                } 
+                    db.CollectionsEntries.Remove(collectionEntry);
+                }
+                else //Modify
+                {
+                    collectionEntry.Quantity = q;
+                    db.Entry(collectionEntry).State = EntityState.Modified;
+                }
             }
-            
-            if (val > 0)
+            else //If entry doesn't exist, create one if val is positive
             {
-                var postEntryUrl = "http://localhost:59756/api/Entries/";
-                string postDataString = "{ \"CollectionEntryId\":" + id +
-                                    ",\"Quantity\":" + 1 +
-                                    ",\"CollectionEntryCardId\":" + id +
-                                    ",\"CollectionId\":" + User.Identity.Name.GetHashCode() + "}";
-                cli.Headers[HttpRequestHeader.ContentType] = "application/json";
-                string response = cli.UploadString(postEntryUrl, "POST", postDataString);
+                if (value > 0)
+                {
+                    collectionEntry = new CollectionEntry
+                    {
+                        CollectionEntryId = id,
+                        CollectionEntryCardId = id,
+                        CollectionId = User.Identity.Name.GetHashCode(),
+                        Quantity = value
+                    };
+
+                    db.CollectionsEntries.Add(collectionEntry);
+                }
             }
-            
 
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
 
-
-
-
+            }
         }
-}
+    }
 }
