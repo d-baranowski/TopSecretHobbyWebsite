@@ -211,8 +211,6 @@
     <Compile Include="Models\CardsViewModel.cs" />
     <Compile Include="Models\Collection.cs" />
     <Compile Include="Models\CollectionEntry.cs" />
-    <Compile Include="Models\EntryViewModel.cs" />
-    <Compile Include="Models\GlobalVariable.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MtgCollectionDB.cs" />

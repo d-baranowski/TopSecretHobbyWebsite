@@ -21,7 +21,6 @@ namespace MtgCollectionWebApp.Controllers
             {
                 if (db.Collections.Find(User.Identity.Name.GetHashCode()) == null) { 
                     var a = db.Collections.Add(new Collection {CollectionId = User.Identity.Name.GetHashCode()});
-                    GlobalVariable.UserCollectionId = User.Identity.Name.GetHashCode();
                     db.SaveChanges();
                 }
             }

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MtgCollectionWebApp.Models
 {
     public class Card
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public virtual int CardId { get; set; }
         public virtual string CardArtist { get; set; } //The artist of the card. Ex: "Alan Pollack"
         public virtual int CardCmc { get; set; } //Converted Mana Cost
