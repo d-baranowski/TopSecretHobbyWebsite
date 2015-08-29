@@ -12,11 +12,6 @@ namespace MtgCollectionWebApp.Models
 {
     public class QuantityController : ApiController
     {
-        // GET: api/Quantity
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET: api/Quantity/5
         public string Get(int id)
@@ -24,56 +19,66 @@ namespace MtgCollectionWebApp.Models
             return "value";
         }
 
-        // POST: api/Quantity
-        public void Post([FromBody]string value)
-        {
-        }
-
         // PUT: api/Quantity/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, string value)
         {
+            var cli = new WebClient();
+            int val = Int32.Parse(value);
+
             var getEntriesUrl = "http://localhost:59756/api/Entries";
-            HttpWebRequest getRequest = (HttpWebRequest)WebRequest.Create(getEntriesUrl);
-            getRequest.Method = WebRequestMethods.Http.Get;
-            getRequest.Accept = "application/json";
-            var getResponse = getRequest.GetResponse();
-            var sr = new StreamReader(getResponse.GetResponseStream());
-            var text = sr.ReadToEnd();
-            JArray entries = JArray.Parse(text);
+
+            cli.Headers[HttpRequestHeader.ContentType] = "application/json";
+            string resp = cli.DownloadString(getEntriesUrl);
+            JArray entries = JArray.Parse(resp);
 
             for (int i = 0; i < entries.Count; i++)
             {
                 var entryId = Int32.Parse((string)entries[i]["CollectionEntryId"]);
+                var entryQ = Int32.Parse((string)entries[i]["Quantity"]);
+
+                
                 if (entryId == id) //Entry for given card already exists 
                 {
-                    var updateEntryUrl = "http://localhost:59756/api/Entries/" + entryId;
-
-                    var eId = id;
-                    var cecId = id;
+                    var updateEntryUrl = "http://localhost:59756/api/Entries/" + id;
+                    
                     var cid = (string)entries[i]["CollectionId"];
-                    var q = Int32.Parse((string)entries[i]["Quantity"]) + 1;
-                    string dataString = "{ \"CollectionEntryId\":"+ eId + ",\"Quantity\":"+ q + ",\"CollectionEntryCardId\":"+ cecId + ",\"CollectionId\":"+ cid + "}";
+                    var q = Int32.Parse((string)entries[i]["Quantity"]) + val;
 
-                    HttpWebRequest putRequest = (HttpWebRequest)WebRequest.Create(updateEntryUrl);
-                    putRequest.Method = WebRequestMethods.Http.Put;
-                    putRequest.ContentType = "application/json";
-                    putRequest.Accept = "application/json";
+                    if (q <= 0) //Cant have -1 cards in collection allowing 0 for 
+                    {
+                        var request = WebRequest.Create(updateEntryUrl);
+                        request.Method = "DELETE";
+                        var d = (HttpWebResponse)request.GetResponse();
+                        return;
+                    }
 
-                    var cli = new WebClient();
+                    string putDataString = "{ \"CollectionEntryId\":"+ id + 
+                                           ",\"Quantity\":"+ q + 
+                                           ",\"CollectionEntryCardId\":"+ id + 
+                                           ",\"CollectionId\":"+ cid + "}";
+
                     cli.Headers[HttpRequestHeader.ContentType] = "application/json";
-                    string response = cli.UploadString(updateEntryUrl,"PUT",dataString);
-                    //var sw = new StreamWriter(putRequest.GetRequestStream());
-                    //sw.Write(dataString);
-                    //putRequest.GetResponse();
+                    string response = cli.UploadString(updateEntryUrl,"PUT", putDataString);
+                    return;
                 } 
             }
+            
+            if (val > 0)
+            {
+                var postEntryUrl = "http://localhost:59756/api/Entries/";
+                string postDataString = "{ \"CollectionEntryId\":" + id +
+                                    ",\"Quantity\":" + 1 +
+                                    ",\"CollectionEntryCardId\":" + id +
+                                    ",\"CollectionId\":" + User.Identity.Name.GetHashCode() + "}";
+                cli.Headers[HttpRequestHeader.ContentType] = "application/json";
+                string response = cli.UploadString(postEntryUrl, "POST", postDataString);
+            }
+            
+
+
+
 
 
         }
-
-        // DELETE: api/Quantity/5
-        public void Delete(int id)
-        {
-        }
-    }
+}
 }

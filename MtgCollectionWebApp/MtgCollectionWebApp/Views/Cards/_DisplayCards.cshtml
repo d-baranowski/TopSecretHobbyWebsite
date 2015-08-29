@@ -67,9 +67,9 @@
                 <img src="@item.Card.CardImageUrl" />
             </td>
             <td>
-                <button class="addOne" onclick="startAjax(@item.Card.CardId);">+</button>
-                <div id="@item.Card.CardId">@{modelItem => item.Quantity}</div>
-                <button class="subOne">-</button>
+                <button class="addOne" onclick="startAjax(@item.Card.CardId,1);">+</button>
+                @Html.DisplayFor(modelItem => item.Quantity)
+                <button class="subOne" onclick="startAjax(@item.Card.CardId,-1);">-</button>
             </td>
         </tr>
     }
@@ -78,9 +78,9 @@
 <script type='text/javascript'>
 
     //AJAX function
-    function startAjax(i) {
+    function startAjax(i,val) {
         $.ajax({
-            url: 'http://localhost:59756/api/Quantity/' + i,
+            url: 'http://localhost:59756/api/Quantity/' + i + "?value=" + val,
              type: "PUT",
         }).done(function (data) {
              }).fail(function (err) {
