@@ -1,13 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Web.Http;
 
 namespace MtgCollectionWebApp.Models
@@ -31,45 +23,34 @@ namespace MtgCollectionWebApp.Models
         public void Put(int id, int value)
         {
             CollectionEntry collectionEntry = db.CollectionsEntries.Find(id);
-            if (collectionEntry != null) //If there already is an entry for this card
+            if (collectionEntry != null) //If there already is an entry for this card modify or remove it
             {
                 var entryQ = collectionEntry.Quantity;
-                var q = entryQ + value; //Calculate new quantity 
+                var q = entryQ + value;
 
                 if (q <= 0) //Can't have entries with quantity 0 or less
                 {
                     db.CollectionsEntries.Remove(collectionEntry);
-                }
-                else //Modify
+                } else
                 {
                     collectionEntry.Quantity = q;
                     db.Entry(collectionEntry).State = EntityState.Modified;
                 }
-            }
-            else //If entry doesn't exist, create one if val is positive
+            } else if (value > 0) //If entry doesn't exist, create one if val is positive
             {
-                if (value > 0)
+                collectionEntry = new CollectionEntry
                 {
-                    collectionEntry = new CollectionEntry
-                    {
-                        CollectionEntryId = id,
-                        CollectionEntryCardId = id,
-                        CollectionId = User.Identity.Name.GetHashCode(),
-                        Quantity = value
-                    };
+                    CollectionEntryId = id,
+                    CollectionEntryCardId = id,
+                    CollectionId = User.Identity.Name.GetHashCode(),
+                    Quantity = value
+                };
 
-                    db.CollectionsEntries.Add(collectionEntry);
-                }
+                db.CollectionsEntries.Add(collectionEntry);
             }
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-
-            }
+            db.SaveChanges();
+          
         }
     }
 }

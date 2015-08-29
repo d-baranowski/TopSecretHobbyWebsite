@@ -17,27 +17,22 @@ namespace MtgCollectionWebApp.Controllers
 
         // GET: Cards
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var model = await GetCardsByName("");
+            var model =  GetCardsByName("");
             return View(model);
         }
 
-        public List<Card> GetCardList(string q)
-        {
-            return (List<Card>)db.Cards.Where(a => a.CardName.Contains(q));
-        }
-
         [HttpGet]
-        public async Task<ActionResult> GetCardsByName(string q)
+        public ActionResult GetCardsByName(string q)
         {
             string b = q;
-            var model = await GetFullAndPartialViewModel(b);
+            var model = GetFullAndPartialViewModel(b);
           
             return PartialView("_DisplayCards",model);
         }
 
-        private async Task<IEnumerable<CardsViewModel>> GetFullAndPartialViewModel(string q)
+        private IEnumerable<CardsViewModel> GetFullAndPartialViewModel(string q)
         {
             var cardsAll = db.Cards.Where(a => a.CardName.Contains(q));
             var cardsViewModel = new List<CardsViewModel>();
@@ -52,13 +47,6 @@ namespace MtgCollectionWebApp.Controllers
             }
 
             return cardsViewModel;
-        }
-
-        private Collection getUserCollection()
-        {
-            var collection = db.Collections.Find(User.Identity.Name);
-
-            return collection;
         }
 
         private int getQuantityOrZero(int cardId)
