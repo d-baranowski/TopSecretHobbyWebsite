@@ -37,7 +37,7 @@
     </tr>
     
     @foreach (var item in Model)
-    {
+    {  
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Card.CardName)
@@ -72,6 +72,7 @@
                 <button class="subOne" onclick="startAjax(@item.Card.CardId,-1);">-</button>
             </td>
         </tr>
+        
     }
 </table>
 

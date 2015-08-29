@@ -1,4 +1,4 @@
-﻿@model System.Web.Mvc.PartialViewResult
+﻿@model  System.Web.Mvc.PartialViewResult
 
 @{
     ViewBag.Title = "Index";
@@ -6,22 +6,46 @@
 
 <h2>Index</h2>
 
-<input id="txtTest" type="text" name="q" style="width: 400px;" />
+<div ng-app="myApp" ng-controller="myCtrl">
 
-<div id="dvCards">
 
+    First Name: <input type="text" ng-model="firstName"><br>
+    Last Name: <input type="text" ng-model="lastName"><br>
+    <br>
+    Full Name: {{firstName + " " + lastName}}
+    <ul>
+        <li ng-repeat="x in names">
+            {{ x.name + ', ' + x.country }}
+        </li>
+    </ul>
+    <div id="dvCards">
+        
+    </div>
 </div>
 
 @section scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            //Load all the cards on screen
-            $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=')
-            //When typing in textbox filter out the cards that don't fit the text
-            $("#txtTest").keyup(function () {
-                var cardName = $("#txtTest").val();
-                $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=' + cardName);
-            });
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function ($scope) {
+        $scope.names = [
+{ name: 'Jani', country: 'Norway' },
+{ name: 'Hege', country: 'Sweden' },
+{ name: 'Kai', country: 'Denmark' }];
+        $scope.firstName = "John";
+        $scope.lastName = "Doe";
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Load all the cards on screen
+        $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=')
+        //When typing in textbox filter out the cards that don't fit the text
+        $("#txtTest").keyup(function () {
+            var cardName = $("#txtTest").val();
+            $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=' + cardName);
         });
-    </script>
+    });
+</script>
+
 }
