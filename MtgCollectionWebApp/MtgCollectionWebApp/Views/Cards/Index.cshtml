@@ -14,15 +14,14 @@
 
 @section scripts{
     <script type="text/javascript">
-
         $(document).ready(function () {
+            //Load all the cards on screen
             $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=')
+            //When typing in textbox filter out the cards that don't fit the text
             $("#txtTest").keyup(function () {
                 var cardName = $("#txtTest").val();
                 $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=' + cardName);
             });
         });
-</script>
-    
-      
+    </script>
 }
