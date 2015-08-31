@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using MtgCollectionWebApp.Models;
 using System.Threading.Tasks;
+using System.Web.Routing;
 
 namespace MtgCollectionWebApp.Controllers
 {
@@ -19,7 +20,15 @@ namespace MtgCollectionWebApp.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            } else
+            {
+                return RedirectToAction("Login", "Account");
+                 
+            }
+            
         }
     }
 }

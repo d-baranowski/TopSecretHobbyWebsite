@@ -3,63 +3,83 @@
     ViewBag.Title = "Index";
 }
 
+
 <h2>Index</h2>
 
 <div ng-app="myApp" ng-controller="myCtrl">
+    <p>{{rarityIncludes}}</p>
+    <div>
+        <input ng-model="search.Card.CardType" type="text"><br><br>
+    </div>
 
+    <div>
+        <input data-on-text="Creature" data-off-text="Creature" type="checkbox" class="switch" />
+        <input data-on-text="Instant" data-off-text="Instant" type="checkbox" class="switch" />
+        <input data-on-text="Artifact" data-off-text="Artifact" type="checkbox" class="switch" />
+        <input data-on-text="Sorcery" data-off-text="Sorcery" type="checkbox" class="switch" />
+        <input data-on-text="Land" data-off-text="Land" type="checkbox" class="switch" />
+        <input data-on-text="Enchantment" data-off-text="Enchantment" type="checkbox" class="switch" />
+    </div>
+    <div>
+        <input data-on-text="White" data-off-text="White" type="checkbox" class="switch" />
+        <input data-on-text="Blue" data-off-text="Blue" type="checkbox" class="switch" />
+        <input data-on-text="Green" data-off-text="Green" type="checkbox" class="switch" />
+        <input data-on-text="Black" data-off-text="Black" type="checkbox" class="switch" />
+        <input data-on-text="Red" data-off-text="Red" type="checkbox" class="switch" />
+        <input data-on-text="Colorless" data-off-text="Colorless" type="checkbox" class="switch" />
+    </div>
 
-    First Name: <input type="text" ng-model="firstName"><br>
-    Last Name: <input type="text" ng-model="lastName"><br>
+    <div>
+        <input data-on-text="0-1" data-off-text="0-1" type="checkbox" class="switch" />
+        <input data-on-text="2-3" data-off-text="2-3" type="checkbox" class="switch" />
+        <input data-on-text="4-5" data-off-text="4-5" type="checkbox" class="switch" />
+        <input data-on-text="6+" data-off-text="6+" type="checkbox" class="switch" />
+    </div>
+        
+    <div>
+        <input value="Common" data-on-text="Common" data-off-text="Common" type="checkbox" class="switch rarity"/>
+        <input value="Uncommon" data-on-text="Uncommon" data-off-text="Uncommon" type="checkbox" class="switch rarity" />
+        <input value="Rare" data-on-text="Rare" data-off-text="Rare" type="checkbox" class="switch rarity" />
+        <input value="Mythic" data-on-text="Mythic" data-off-text="Mythic" type="checkbox" class="switch rarity" />
+    </div>
+
+    <div>
+        <input data-on-text="Owned" data-off-text="Owned" type="checkbox" class="switch" />
+    </div>
+ 
     <br>
-   
-    <!-- <tr><th>Name</th><th>Type</th><th>Mana Cost</th><th>Artist</th><th>Text</th><th>Flavour</th><th>Power</th><th>Toughness</th><th>Image</th><th>Details</th></tr>-->
+    <br>
 
-    <div id="dvCards" ng-repeat="x in data | filter:firstName">
-        <table id="table" class="table">
+    <div id="dvCards" ng-repeat="x in data | filter:rarityFilter">
+        <div class="col-md-3 panel" style="margin-bottom: 20px;">
+            <img class="img-rounded" ng-src={{x["Card"]["CardImageUrl"]}} width ="223" height="310"/>
             
-            <tr>
-                <td>
-                    {{ x["Card"]["CardName"] }}
-                </td>
-                <td>
-                    {{ x["Card"]["CardType"] }}
-                </td>
-                <td>
-                    {{ x["Card"]["CardManaCost"] }}
-                </td>
-                <td>
-                    {{ x["Card"]["CardArtist"] }}
-                </td>
-                <td>
-                    {{ x["Card"]["CardText"] }}
-                </td>
-                <td>
-                    {{ x["Card"]["CardFlavour"] }}
-                </td>
-                <td>
-                    {{ x["Card"]["CardPower"] }}
-                </td>
-                <td>
-                    {{ x["Card"]["CardToughness"] }}
-                </td>
-                <td>
-                    <img ng-src={{x["Card"]["CardImageUrl"]}} /> 
-                </td>
-                <td>
-                    <button ng-click="addOne(x);">+</button>
-                </td>
-                <td>
-                    {{x["Quantity"]}}
-                </td>
-                <td>
-                    <button ng-click="subOne(x);">-</button>
-                </td>        
-            </tr>
-        </table>
-</div>
+            <div class="EntryControlls" role="group">
+                <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
+                <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
+                <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 @section scripts{
+
+
+<link rel="stylesheet" type="text/css"
+      href="http://www.bootstrap-switch.org/dist/css/bootstrap3/bootstrap-switch.css">
+<script type='text/javascript'
+        src="http://www.bootstrap-switch.org/dist/js/bootstrap-switch.js"></script>
+
+
+<script type='text/javascript'>
+
+$(window).load(function(){
+    $("input.switch").bootstrapSwitch();
+});
+</script>
+
 <script>
     var app = angular.module('myApp', []);
     app.controller('myCtrl', function ($scope, $http) {
@@ -89,6 +109,28 @@
                 alert('fail')
             }).success(function (result) {
             });
+        }
+
+        //Filters
+        $scope.rarityIncludes = [];
+
+        $('.rarity').on('switchChange.bootstrapSwitch', function (event, state) {
+            if (state) {
+                $scope.rarityIncludes.push(this.value);
+            } else {
+                var i = $.inArray(this.value, $scope.rarityIncludes);
+                $scope.rarityIncludes.splice(i, 1);
+            }
+            $scope.$apply();
+        });
+
+        $scope.rarityFilter = function (entry) {
+            if ($scope.rarityIncludes.length > 0) {
+                if ($.inArray(entry["Card"]["CardRarity"], $scope.rarityIncludes) < 0) {
+                    return;
+                }    
+            }
+            return entry;
         }
     });
 </script>
