@@ -80,7 +80,6 @@ namespace MtgCollectionWebApp.Models
 
                     try
                     {
-
                         if (multiverseId != 0)
                         {
                             if (context.Cards.Find(multiverseId) == null)

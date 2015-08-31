@@ -1,5 +1,4 @@
-﻿@model  System.Web.Mvc.PartialViewResult
-
+﻿
 @{
     ViewBag.Title = "Index";
 }
@@ -68,7 +67,6 @@
         $http.get("http://localhost:59756/api/CardsApi/").success(function (response) {
            $scope.data = response;
         });
-
 
         $scope.addOne = function (entry) {
             changeQuantity(entry["Card"]["CardId"], +1);

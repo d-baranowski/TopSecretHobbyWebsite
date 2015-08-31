@@ -9,12 +9,6 @@ namespace MtgCollectionWebApp.Models
     {
         private MtgCollectionDB db = new MtgCollectionDB();
 
-        // GET: api/Quantity/
-        public CollectionEntry Get(int id)
-        {
-            return db.CollectionsEntries.Find(id);
-        }
-
         // PUT: api/Quantity/5
         public void Put(int id, int value)
         {
