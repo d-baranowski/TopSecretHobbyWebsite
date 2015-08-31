@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
 using System.Web.Http;
 
 namespace MtgCollectionWebApp.Models
@@ -8,15 +9,10 @@ namespace MtgCollectionWebApp.Models
     {
         private MtgCollectionDB db = new MtgCollectionDB();
 
-        // GET: api/Quantity/5
-        public int Get(int id)
+        // GET: api/Quantity/
+        public CollectionEntry Get(int id)
         {
-            CollectionEntry collectionEntry = db.CollectionsEntries.Find(id);
-            if (collectionEntry != null)
-            {
-                return collectionEntry.Quantity;
-            } 
-            return 0;
+            return db.CollectionsEntries.Find(id);
         }
 
         // PUT: api/Quantity/5

@@ -199,6 +199,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CardsApiController.cs" />
     <Compile Include="Controllers\CardsController.cs" />
     <Compile Include="Controllers\CollectionEntriesManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

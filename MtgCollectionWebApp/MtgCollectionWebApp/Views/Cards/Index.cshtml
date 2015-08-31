@@ -12,40 +12,86 @@
     First Name: <input type="text" ng-model="firstName"><br>
     Last Name: <input type="text" ng-model="lastName"><br>
     <br>
-    Full Name: {{firstName + " " + lastName}}
-    <ul>
-        <li ng-repeat="x in names">
-            {{ x.name + ', ' + x.country }}
-        </li>
-    </ul>
-    <div id="dvCards">
-        
-    </div>
+   
+    <!-- <tr><th>Name</th><th>Type</th><th>Mana Cost</th><th>Artist</th><th>Text</th><th>Flavour</th><th>Power</th><th>Toughness</th><th>Image</th><th>Details</th></tr>-->
+
+    <div id="dvCards" ng-repeat="x in data | filter:firstName">
+        <table id="table" class="table">
+            
+            <tr>
+                <td>
+                    {{ x["Card"]["CardName"] }}
+                </td>
+                <td>
+                    {{ x["Card"]["CardType"] }}
+                </td>
+                <td>
+                    {{ x["Card"]["CardManaCost"] }}
+                </td>
+                <td>
+                    {{ x["Card"]["CardArtist"] }}
+                </td>
+                <td>
+                    {{ x["Card"]["CardText"] }}
+                </td>
+                <td>
+                    {{ x["Card"]["CardFlavour"] }}
+                </td>
+                <td>
+                    {{ x["Card"]["CardPower"] }}
+                </td>
+                <td>
+                    {{ x["Card"]["CardToughness"] }}
+                </td>
+                <td>
+                    <img ng-src={{x["Card"]["CardImageUrl"]}} /> 
+                </td>
+                <td>
+                    <button ng-click="addOne(x);">+</button>
+                </td>
+                <td>
+                    {{x["Quantity"]}}
+                </td>
+                <td>
+                    <button ng-click="subOne(x);">-</button>
+                </td>        
+            </tr>
+        </table>
+</div>
 </div>
 
 @section scripts{
 <script>
     var app = angular.module('myApp', []);
-    app.controller('myCtrl', function ($scope) {
-        $scope.names = [
-{ name: 'Jani', country: 'Norway' },
-{ name: 'Hege', country: 'Sweden' },
-{ name: 'Kai', country: 'Denmark' }];
-        $scope.firstName = "John";
-        $scope.lastName = "Doe";
-    });
-</script>
+    app.controller('myCtrl', function ($scope, $http) {
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        //Load all the cards on screen
-        $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=')
-        //When typing in textbox filter out the cards that don't fit the text
-        $("#txtTest").keyup(function () {
-            var cardName = $("#txtTest").val();
-            $("#dvCards").load('@(Url.Action("GetCardsByName", "Cards",null, Request.Url.Scheme))?q=' + cardName);
+        $http.get("http://localhost:59756/api/CardsApi/").success(function (response) {
+           $scope.data = response;
         });
+
+
+        $scope.addOne = function (entry) {
+            changeQuantity(entry["Card"]["CardId"], +1);
+            entry["Quantity"] = entry["Quantity"] + 1;
+        }
+
+        $scope.subOne = function (entry) {
+            changeQuantity(entry["Card"]["CardId"], -1);
+            if (entry["Quantity"] != 0) {
+                entry["Quantity"] = entry["Quantity"] - 1;
+            }
+        }
+
+        function changeQuantity(cardId, value) {
+            $.ajax({
+                url: 'http://localhost:59756/api/Quantity/' + cardId + "?value=" + value,
+                type: "PUT",
+            }).done(function (data) {
+            }).fail(function (err) {
+                alert('fail')
+            }).success(function (result) {
+            });
+        }
     });
 </script>
-
 }
