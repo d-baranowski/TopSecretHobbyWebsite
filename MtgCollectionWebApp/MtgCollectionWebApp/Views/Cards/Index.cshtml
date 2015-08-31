@@ -7,9 +7,9 @@
 <h2>Index</h2>
 
 <div ng-app="myApp" ng-controller="myCtrl">
-    <p>{{rarityIncludes}}</p>
+    <p>{{colorIncludes}}</p>
     <div>
-        <input ng-model="search.Card.CardType" type="text"><br><br>
+        <input ng-model="searchBox" type="text"><br><br>
     </div>
 
     <div>
@@ -21,12 +21,12 @@
         <input data-on-text="Enchantment" data-off-text="Enchantment" type="checkbox" class="switch" />
     </div>
     <div>
-        <input data-on-text="White" data-off-text="White" type="checkbox" class="switch" />
-        <input data-on-text="Blue" data-off-text="Blue" type="checkbox" class="switch" />
-        <input data-on-text="Green" data-off-text="Green" type="checkbox" class="switch" />
-        <input data-on-text="Black" data-off-text="Black" type="checkbox" class="switch" />
-        <input data-on-text="Red" data-off-text="Red" type="checkbox" class="switch" />
-        <input data-on-text="Colorless" data-off-text="Colorless" type="checkbox" class="switch" />
+        <input value="White" data-on-text="White" data-off-text="White" type="checkbox" class="switch color" />
+        <input value="Blue" data-on-text="Blue" data-off-text="Blue" type="checkbox" class="switch color" />
+        <input value="Green" data-on-text="Green" data-off-text="Green" type="checkbox" class="switch color" />
+        <input value="Black" data-off-text="Black" data-on-text="Black" type="checkbox" class="switch color" />
+        <input value="Red" data-off-text="Red" data-on-text="Red" type="checkbox" class="switch color" />
+        <input data-off-text="Colorless" data-on-text="Colorless"  type="checkbox" class="switch color" />
     </div>
 
     <div>
@@ -44,13 +44,13 @@
     </div>
 
     <div>
-        <input data-on-text="Owned" data-off-text="Owned" type="checkbox" class="switch" />
+        <input id="owned" data-on-text="Owned" data-off-text="Owned" type="checkbox" class="switch" />
     </div>
  
     <br>
     <br>
 
-    <div id="dvCards" ng-repeat="x in data | filter:rarityFilter">
+    <div id="dvCards" ng-repeat="x in data | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:searchBox">
         <div class="col-md-3 panel" style="margin-bottom: 20px;">
             <img class="img-rounded" ng-src={{x["Card"]["CardImageUrl"]}} width ="223" height="310"/>
             
@@ -112,8 +112,8 @@ $(window).load(function(){
         }
 
         //Filters
+        //Rarity
         $scope.rarityIncludes = [];
-
         $('.rarity').on('switchChange.bootstrapSwitch', function (event, state) {
             if (state) {
                 $scope.rarityIncludes.push(this.value);
@@ -132,6 +132,46 @@ $(window).load(function(){
             }
             return entry;
         }
+        //Color
+        $scope.colorIncludes = [];
+        $('.color').on('switchChange.bootstrapSwitch', function (event, state) {
+            if (state) {
+                $scope.colorIncludes.push(this.value);
+            } else {
+                var i = $.inArray(this.value, $scope.colorIncludes);
+                $scope.colorIncludes.splice(i, 1);
+            }
+            $scope.$apply();
+        });
+        $scope.colorFilter = function (entry) {
+            if ($scope.colorIncludes.length > 0) {
+                var fits = 1;
+                for (item in $scope.colorIncludes) {
+                    if (entry["Card"]["CardColors"].toString().indexOf($scope.colorIncludes[item]) === -1) {
+                        fits = 0;
+                    }
+                }
+                return fits === 1;
+            }
+            return true;
+        }
+        //Owned
+        $scope.owned = 0;
+        $('#owned').on('switchChange.bootstrapSwitch', function (event, state) {
+            if (state) {
+                $scope.owned = 1;
+            } else {
+                $scope.owned = 0;
+            }
+            $scope.$apply();
+        });
+        $scope.ownedFilter = function (entry) {
+            if ($scope.owned > 0) {
+                return entry["Quantity"] > 0;
+            }
+            return true;           
+        }
+
     });
 </script>
 }
