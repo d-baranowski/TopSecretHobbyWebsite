@@ -18,7 +18,7 @@ namespace MtgCollectionWebApp.Controllers
         {
             var data = new List<CardsViewModel>();
 
-            foreach (CardGroup c in db.CardGroups)
+            foreach (Card c in db.Cards)
             {
                 var entry = db.CollectionsEntries.Find(c.CardId);
                 if (entry != null)

@@ -31,7 +31,7 @@ namespace MtgCollectionWebApp.Models
                 collectionEntry = new CollectionEntry
                 {
                     CollectionEntryId = id,
-                    CollectionEntryCardGroupId = id,
+                    CollectionEntryCardId = id,
                     CollectionId = User.Identity.Name.GetHashCode(),
                     Quantity = value
                 };

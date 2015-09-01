@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <div ng-app="myApp" ng-controller="myCtrl">
-
+    <p>{{legalityIncludes}}</p>
     <div>
         <input ng-model="searchBox" type="text"><br><br>
     </div>
@@ -49,13 +49,11 @@
         <input value="Legacy" data-on-text="Legacy" data-off-text="Legacy" type="checkbox" class="switch legality" /> 
         <input value="Vintage" data-on-text="Vintage" data-off-text="Vintage" type="checkbox" class="switch legality" /> 
         <input value="Standard" data-on-text="Standard" data-off-text="Standard" type="checkbox" class="switch legality" />  
-     </div>
     <br>
     <br>
 
     <div id="dvCards" ng-repeat="x in data | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter | filter:costFilter | filter:legalityFilter | filter:searchBox">
         <div class="col-md-3 panel" style="margin-bottom: 20px;">
-            <p>{{x["Card"]["CardGroupMembers"]}}</p>
             <img class="img-rounded" ng-src={{x["Card"]["CardImageUrl"]}} width ="223" height="310"/>
             <div class="EntryControlls" role="group">
                 <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
@@ -115,7 +113,6 @@ $(window).load(function(){
         }
 
         $scope.getLegality = function (item, format) {
-            console.log(item["Card"]["CardGroupMembers"]);
             if (item["Card"]["CardLegalities"] != "") {
                 var obj = angular.fromJson(item["Card"]["CardLegalities"]);
                 for (i = 0; i < obj.length; i++) {
