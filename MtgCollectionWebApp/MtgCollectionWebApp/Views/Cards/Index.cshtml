@@ -1,26 +1,12 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Index";
-}
-
-@section scripts{
-    <!--Angular Files-->
-    <script src="~/App/Cards/App.js"></script>
-    <script>angular.bootstrap(document.getElementById("cards"), ['myApp']);</script>
-    <!--Pretty Switches-->
-    <link rel="stylesheet" type="text/css" href="http://www.bootstrap-switch.org/dist/css/bootstrap3/bootstrap-switch.css">
-    <script type='text/javascript' src="http://www.bootstrap-switch.org/dist/js/bootstrap-switch.js"></script>
-    <!--Initialise Pretty Switches-->
-    <script type='text/javascript'>
-    $(window).load(function () {
-        $("input.switch").bootstrapSwitch();
-    });
-    </script>
 }
 
 
 <h2>Index</h2>
 
-<div id="cards" ng-app="myApp" ng-controller="myCtrl" >
+<div ng-app="myApp" ng-controller="myCtrl">
     <p>{{legalityIncludes}}</p>
     <div>
         <input ng-model="searchBox" type="text"><br><br>
@@ -32,7 +18,7 @@
         <input value="Artifact" data-on-text="Artifact" data-off-text="Artifact" type="checkbox" class="switch type" />
         <input value="Sorcery" data-on-text="Sorcery" data-off-text="Sorcery" type="checkbox" class="switch type" />
         <input value="Land" data-on-text="Land" data-off-text="Land" type="checkbox" class="switch type" />
-        <input value="Enchantment" data-on-text="Enchantment" data-off-text="Enchantment" type="checkbox" class="switch type" />
+        <input value="Enchantment"  data-on-text="Enchantment"   data-off-text="Enchantment" type="checkbox" class="switch type" />
     </div>
     <div>
         <input value="White" data-on-text="White" data-off-text="White" type="checkbox" class="switch color" />
@@ -40,7 +26,7 @@
         <input value="Green" data-on-text="Green" data-off-text="Green" type="checkbox" class="switch color" />
         <input value="Black" data-off-text="Black" data-on-text="Black" type="checkbox" class="switch color" />
         <input value="Red" data-off-text="Red" data-on-text="Red" type="checkbox" class="switch color" />
-        <input data-off-text="Colorless" data-on-text="Colorless" type="checkbox" class="switch color" />
+        <input data-off-text="Colorless" data-on-text="Colorless"  type="checkbox" class="switch color" />
     </div>
 
     <div>
@@ -49,30 +35,29 @@
         <input value="2" data-on-text="4-5" data-off-text="4-5" type="checkbox" class="switch cost" />
         <input value="3" data-on-text="6+" data-off-text="6+" type="checkbox" class="switch cost" />
     </div>
-
+        
     <div>
-        <input value="Common" data-on-text="Common" data-off-text="Common" type="checkbox" class="switch rarity" />
+        <input value="Common" data-on-text="Common" data-off-text="Common" type="checkbox" class="switch rarity"/>
         <input value="Uncommon" data-on-text="Uncommon" data-off-text="Uncommon" type="checkbox" class="switch rarity" />
         <input value="Rare" data-on-text="Rare" data-off-text="Rare" type="checkbox" class="switch rarity" />
         <input value="Mythic" data-on-text="Mythic" data-off-text="Mythic" type="checkbox" class="switch rarity" />
     </div>
 
     <div>
-        <input id="owned" data-on-text="Owned" data-off-text="Owned" type="checkbox" class="switch legality" />
-        <input value="Commander" data-on-text="Commander" data-off-text="Commander" type="checkbox" class="switch legality" />
-        <input value="Legacy" data-on-text="Legacy" data-off-text="Legacy" type="checkbox" class="switch legality" />
-        <input value="Vintage" data-on-text="Vintage" data-off-text="Vintage" type="checkbox" class="switch legality" />
-        <input value="Standard" data-on-text="Standard" data-off-text="Standard" type="checkbox" class="switch legality" />
-    </div>
+        <input id="owned" data-on-text="Owned" data-off-text="Owned" type="checkbox" class="switch legality" /> 
+        <input value="Commander"  data-on-text="Commander" data-off-text="Commander" type="checkbox" class="switch legality" />
+        <input value="Legacy" data-on-text="Legacy" data-off-text="Legacy" type="checkbox" class="switch legality" /> 
+        <input value="Vintage" data-on-text="Vintage" data-off-text="Vintage" type="checkbox" class="switch legality" /> 
+        <input value="Standard" data-on-text="Standard" data-off-text="Standard" type="checkbox" class="switch legality" />  
     <br>
     <br>
 
     <div id="dvCards" ng-repeat="x in data | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter | filter:costFilter | filter:legalityFilter | filter:searchBox">
         <div class="col-md-3 panel" style="margin-bottom: 20px;">
-            <img class="img-rounded" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
+            <img class="img-rounded" ng-src={{x["Card"]["CardImageUrl"]}} width ="223" height="310"/>
             <div class="EntryControlls" role="group">
                 <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
-                <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
+                 <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
                 <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
             </div>
         </div>
@@ -80,3 +65,207 @@
     </div>
 </div>
 
+@section scripts{
+
+
+<link rel="stylesheet" type="text/css"
+      href="http://www.bootstrap-switch.org/dist/css/bootstrap3/bootstrap-switch.css">
+<script type='text/javascript'
+        src="http://www.bootstrap-switch.org/dist/js/bootstrap-switch.js"></script>
+
+
+<script type='text/javascript'>
+
+$(window).load(function(){
+    $("input.switch").bootstrapSwitch();
+});
+</script>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function ($scope, $http) {
+
+        $http.get("http://localhost:59756/api/CardsApi/").success(function (response) {
+           $scope.data = response;
+        });
+
+        $scope.addOne = function (entry) {
+            changeQuantity(entry["Card"]["CardId"], +1);
+            entry["Quantity"] = entry["Quantity"] + 1;
+        }
+
+        $scope.subOne = function (entry) {
+            changeQuantity(entry["Card"]["CardId"], -1);
+            if (entry["Quantity"] != 0) {
+                entry["Quantity"] = entry["Quantity"] - 1;
+            }
+        }
+
+        function changeQuantity(cardId, value) {
+            $.ajax({
+                url: 'http://localhost:59756/api/Quantity/' + cardId + "?value=" + value,
+                type: "PUT",
+            }).done(function (data) {
+            }).fail(function (err) {
+                alert('fail')
+            }).success(function (result) {
+            });
+        }
+
+        $scope.getLegality = function (item, format) {
+            if (item["Card"]["CardLegalities"] != "") {
+                var obj = angular.fromJson(item["Card"]["CardLegalities"]);
+                for (i = 0; i < obj.length; i++) {
+                    if (obj[i]["format"] === format) {
+                        if (obj[i]["legality"] === "Legal") {
+                            return true;
+                        }
+                    } 
+                }
+            }
+            return false;
+        }
+
+        //Filters
+        //Legality
+        $scope.legalityIncludes = [];
+        $('.legality').on('switchChange.bootstrapSwitch', function (event, state) {
+            if (state) {
+                $scope.legalityIncludes.push(this.value);
+            } else {
+                var i = $.inArray(this.value, $scope.legalityIncludes);
+                $scope.legalityIncludes.splice(i, 1);
+            }
+            $scope.$apply();
+        });
+        $scope.legalityFilter = function (entry) {
+            if ($scope.legalityIncludes.length > 0) {
+                var inc = 0;
+                for (item in $scope.legalityIncludes) {
+                    if ($scope.getLegality(entry, $scope.legalityIncludes[item])) {
+                        inc = 1;
+                    }
+                }
+                return inc === 1;
+            }
+            return true;
+        }
+
+
+        //Rarity
+        $scope.rarityIncludes = [];
+        $('.rarity').on('switchChange.bootstrapSwitch', function (event, state) {
+            if (state) {
+                $scope.rarityIncludes.push(this.value);
+            } else {
+                var i = $.inArray(this.value, $scope.rarityIncludes);
+                $scope.rarityIncludes.splice(i, 1);
+            }
+            $scope.$apply();
+        });
+
+        $scope.rarityFilter = function (entry) {
+            if ($scope.rarityIncludes.length > 0) {
+                if ($.inArray(entry["Card"]["CardRarity"], $scope.rarityIncludes) < 0) {
+                    return;
+                }    
+            }
+            return entry;
+        }
+        //Color
+        $scope.colorIncludes = [];
+        $('.color').on('switchChange.bootstrapSwitch', function (event, state) {
+            if (state) {
+                $scope.colorIncludes.push(this.value);
+            } else {
+                var i = $.inArray(this.value, $scope.colorIncludes);
+                $scope.colorIncludes.splice(i, 1);
+            }
+            $scope.$apply();
+        });
+        $scope.colorFilter = function (entry) {
+            if ($scope.colorIncludes.length > 0) {
+                var fits = 1;
+                for (item in $scope.colorIncludes) {
+                    if (entry["Card"]["CardColors"].toString().indexOf($scope.colorIncludes[item]) === -1) {
+                        fits = 0;
+                    }
+                }
+                return fits === 1;
+            }
+            return true;
+        }
+        //Types
+        $scope.typeIncludes = [];
+        $('.type').on('switchChange.bootstrapSwitch', function (event, state) {
+            if (state) {
+                $scope.typeIncludes.push(this.value);
+            } else {
+                var i = $.inArray(this.value, $scope.typeIncludes);
+                $scope.typeIncludes.splice(i, 1);
+            }
+            $scope.$apply();
+        });
+        $scope.typeFilter = function (entry) {
+            if ($scope.typeIncludes.length > 0) {
+                var fits = 0;
+                for (item in $scope.typeIncludes) {
+                    if (entry["Card"]["CardTypes"].toString().indexOf($scope.typeIncludes[item]) != -1) {
+                        fits = 1;
+                    }
+                }
+                return fits === 1;
+            }
+            return true;
+        }
+
+        //Cost
+        $scope.costIncludes = [];
+        $scope.lowerBoundry = [0, 2, 4, 6];
+        $scope.upperBoundry = [1, 3, 5, 99];
+
+        $('.cost').on('switchChange.bootstrapSwitch', function (event, state) {
+            if (state) {
+                $scope.costIncludes.push(this.value);
+            } else {
+                var i = $.inArray(this.value, $scope.costIncludes);
+                $scope.costIncludes.splice(i, 1);
+            }
+            $scope.$apply();
+        });
+        $scope.costFilter = function (entry) {
+            if ($scope.costIncludes.length > 0) {
+                var fits = 0;
+                for (item in $scope.costIncludes) {
+                    if (entry["Card"]["CardCmc"] >= $scope.lowerBoundry[$scope.costIncludes[item]]) {
+                        if (entry["Card"]["CardCmc"] <= $scope.upperBoundry[$scope.costIncludes[item]]) {
+                            fits = 1;
+                        }
+                    }
+                }
+                return fits === 1;
+            }
+            return true;
+            
+        }
+
+        //Owned
+        $scope.owned = 0;
+        $('#owned').on('switchChange.bootstrapSwitch', function (event, state) {
+            if (state) {
+                $scope.owned = 1;
+            } else {
+                $scope.owned = 0;
+            }
+            $scope.$apply();
+        });
+        $scope.ownedFilter = function (entry) {
+            if ($scope.owned > 0) {
+                return entry["Quantity"] > 0;
+            }
+            return true;           
+        }
+
+    });
+</script>
+}
