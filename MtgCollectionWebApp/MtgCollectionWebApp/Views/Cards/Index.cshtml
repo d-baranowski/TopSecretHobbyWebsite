@@ -7,18 +7,18 @@
 <h2>Index</h2>
 
 <div ng-app="myApp" ng-controller="myCtrl">
-    <p>{{colorIncludes}}</p>
+    <p>{{legalityIncludes}}</p>
     <div>
         <input ng-model="searchBox" type="text"><br><br>
     </div>
 
     <div>
-        <input data-on-text="Creature" data-off-text="Creature" type="checkbox" class="switch" />
-        <input data-on-text="Instant" data-off-text="Instant" type="checkbox" class="switch" />
-        <input data-on-text="Artifact" data-off-text="Artifact" type="checkbox" class="switch" />
-        <input data-on-text="Sorcery" data-off-text="Sorcery" type="checkbox" class="switch" />
-        <input data-on-text="Land" data-off-text="Land" type="checkbox" class="switch" />
-        <input data-on-text="Enchantment" data-off-text="Enchantment" type="checkbox" class="switch" />
+        <input value="Creature" data-on-text="Creature" data-off-text="Creature" type="checkbox" class="switch type" />
+        <input value="Instant" data-on-text="Instant" data-off-text="Instant" type="checkbox" class="switch type" />
+        <input value="Artifact" data-on-text="Artifact" data-off-text="Artifact" type="checkbox" class="switch type" />
+        <input value="Sorcery" data-on-text="Sorcery" data-off-text="Sorcery" type="checkbox" class="switch type" />
+        <input value="Land" data-on-text="Land" data-off-text="Land" type="checkbox" class="switch type" />
+        <input value="Enchantment"  data-on-text="Enchantment"   data-off-text="Enchantment" type="checkbox" class="switch type" />
     </div>
     <div>
         <input value="White" data-on-text="White" data-off-text="White" type="checkbox" class="switch color" />
@@ -30,10 +30,10 @@
     </div>
 
     <div>
-        <input data-on-text="0-1" data-off-text="0-1" type="checkbox" class="switch" />
-        <input data-on-text="2-3" data-off-text="2-3" type="checkbox" class="switch" />
-        <input data-on-text="4-5" data-off-text="4-5" type="checkbox" class="switch" />
-        <input data-on-text="6+" data-off-text="6+" type="checkbox" class="switch" />
+        <input value="0" data-on-text="0-1" data-off-text="0-1" type="checkbox" class="switch cost" />
+        <input value="1" data-on-text="2-3" data-off-text="2-3" type="checkbox" class="switch cost" />
+        <input value="2" data-on-text="4-5" data-off-text="4-5" type="checkbox" class="switch cost" />
+        <input value="3" data-on-text="6+" data-off-text="6+" type="checkbox" class="switch cost" />
     </div>
         
     <div>
@@ -44,19 +44,20 @@
     </div>
 
     <div>
-        <input id="owned" data-on-text="Owned" data-off-text="Owned" type="checkbox" class="switch" />
-    </div>
- 
+        <input id="owned" data-on-text="Owned" data-off-text="Owned" type="checkbox" class="switch legality" /> 
+        <input value="Commander"  data-on-text="Commander" data-off-text="Commander" type="checkbox" class="switch legality" />
+        <input value="Legacy" data-on-text="Legacy" data-off-text="Legacy" type="checkbox" class="switch legality" /> 
+        <input value="Vintage" data-on-text="Vintage" data-off-text="Vintage" type="checkbox" class="switch legality" /> 
+        <input value="Standard" data-on-text="Standard" data-off-text="Standard" type="checkbox" class="switch legality" />  
     <br>
     <br>
 
-    <div id="dvCards" ng-repeat="x in data | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:searchBox">
+    <div id="dvCards" ng-repeat="x in data | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter | filter:costFilter | filter:legalityFilter | filter:searchBox">
         <div class="col-md-3 panel" style="margin-bottom: 20px;">
             <img class="img-rounded" ng-src={{x["Card"]["CardImageUrl"]}} width ="223" height="310"/>
-            
             <div class="EntryControlls" role="group">
                 <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
-                <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
+                 <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
                 <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
             </div>
         </div>
@@ -111,7 +112,46 @@ $(window).load(function(){
             });
         }
 
+        $scope.getLegality = function (item, format) {
+            if (item["Card"]["CardLegalities"] != "") {
+                var obj = angular.fromJson(item["Card"]["CardLegalities"]);
+                for (i = 0; i < obj.length; i++) {
+                    if (obj[i]["format"] === format) {
+                        if (obj[i]["legality"] === "Legal") {
+                            return true;
+                        }
+                    } 
+                }
+            }
+            return false;
+        }
+
         //Filters
+        //Legality
+        $scope.legalityIncludes = [];
+        $('.legality').on('switchChange.bootstrapSwitch', function (event, state) {
+            if (state) {
+                $scope.legalityIncludes.push(this.value);
+            } else {
+                var i = $.inArray(this.value, $scope.legalityIncludes);
+                $scope.legalityIncludes.splice(i, 1);
+            }
+            $scope.$apply();
+        });
+        $scope.legalityFilter = function (entry) {
+            if ($scope.legalityIncludes.length > 0) {
+                var inc = 0;
+                for (item in $scope.legalityIncludes) {
+                    if ($scope.getLegality(entry, $scope.legalityIncludes[item])) {
+                        inc = 1;
+                    }
+                }
+                return inc === 1;
+            }
+            return true;
+        }
+
+
         //Rarity
         $scope.rarityIncludes = [];
         $('.rarity').on('switchChange.bootstrapSwitch', function (event, state) {
@@ -155,6 +195,60 @@ $(window).load(function(){
             }
             return true;
         }
+        //Types
+        $scope.typeIncludes = [];
+        $('.type').on('switchChange.bootstrapSwitch', function (event, state) {
+            if (state) {
+                $scope.typeIncludes.push(this.value);
+            } else {
+                var i = $.inArray(this.value, $scope.typeIncludes);
+                $scope.typeIncludes.splice(i, 1);
+            }
+            $scope.$apply();
+        });
+        $scope.typeFilter = function (entry) {
+            if ($scope.typeIncludes.length > 0) {
+                var fits = 0;
+                for (item in $scope.typeIncludes) {
+                    if (entry["Card"]["CardTypes"].toString().indexOf($scope.typeIncludes[item]) != -1) {
+                        fits = 1;
+                    }
+                }
+                return fits === 1;
+            }
+            return true;
+        }
+
+        //Cost
+        $scope.costIncludes = [];
+        $scope.lowerBoundry = [0, 2, 4, 6];
+        $scope.upperBoundry = [1, 3, 5, 99];
+
+        $('.cost').on('switchChange.bootstrapSwitch', function (event, state) {
+            if (state) {
+                $scope.costIncludes.push(this.value);
+            } else {
+                var i = $.inArray(this.value, $scope.costIncludes);
+                $scope.costIncludes.splice(i, 1);
+            }
+            $scope.$apply();
+        });
+        $scope.costFilter = function (entry) {
+            if ($scope.costIncludes.length > 0) {
+                var fits = 0;
+                for (item in $scope.costIncludes) {
+                    if (entry["Card"]["CardCmc"] >= $scope.lowerBoundry[$scope.costIncludes[item]]) {
+                        if (entry["Card"]["CardCmc"] <= $scope.upperBoundry[$scope.costIncludes[item]]) {
+                            fits = 1;
+                        }
+                    }
+                }
+                return fits === 1;
+            }
+            return true;
+            
+        }
+
         //Owned
         $scope.owned = 0;
         $('#owned').on('switchChange.bootstrapSwitch', function (event, state) {
