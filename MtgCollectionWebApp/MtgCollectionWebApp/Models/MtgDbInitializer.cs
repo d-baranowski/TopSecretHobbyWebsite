@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Web;
 
 /* Api used documentation
    https://mtgapi.com/docs */
@@ -82,49 +79,62 @@ namespace MtgCollectionWebApp.Models
                     {
                         if (multiverseId != 0)
                         {
-                            if (context.Cards.Find(multiverseId) == null)
+                            if (context.CardPrintings.Find(multiverseId) == null)
                             {
-                                System.IO.StreamWriter file = new System.IO.StreamWriter("c:\\test.txt", true);
-                                file.WriteLine(name + " " + multiverseId);
-                                file.Close();
-                                context.Cards.Add(new Card
+                                var printing = context.CardPrintings.Add(new CardPrinting
                                 {
-                                    CardId = multiverseId,
-                                    CardArtist = artist,
-                                    CardCmc = cmc,
-                                    CardColors = colors,
-                                    CardFlavour = flavour,
-                                    CardForeignNames = foreignNames,
-                                    CardHand = hand,
-                                    CardImageUrl = imageUrl,
-                                    CardLayout = layout,
-                                    CardLegalities = legalities,
-                                    CardLife = life,
-                                    CardLoyalty = loyalty,
-                                    CardManaCost = manaCost,
-                                    CardMultiverseId = multiverseId,
-                                    CardName = name,
-                                    CardNames = names,
-                                    CardPower = power,
-                                    CardPrintings = printings,
-                                    CardRarity = rarity,
-                                    CardSet = set,
-                                    CardSubTypes = subTypes,
-                                    CardSuperTypes = superTypes,
-                                    CardText = textC,
-                                    CardToughness = toughness,
-                                    CardType = type,
-                                    CardTypes = types,
-                                    CardVariations = variations,
-                                    CardWatermark = watermark,
-                                    CardUrl = url
+                                    PrintingId = multiverseId,
+                                    PrintingUrl = url,
+                                    PrintingArtist = artist,
+                                    PrintingImageUrl = imageUrl,
+                                    PrintingMultiverseId = multiverseId,
+                                    PrintingWatermark = watermark
                                 });
+
+                                if (context.CardGroups.Find(name.GetHashCode()) == null)
+                                {
+                                    var groupMembers = new List<CardPrinting>();
+                                    groupMembers.Add(printing);
+
+                                    context.CardGroups.Add(new CardGroup
+                                    {
+                                        CardId = name.GetHashCode(),
+                                        CardCmc = cmc,
+                                        CardColors = colors,
+                                        CardFlavour = flavour,
+                                        CardForeignNames = foreignNames,
+                                        CardHand = hand,
+                                        CardLayout = layout,
+                                        CardLegalities = legalities,
+                                        CardLife = life,
+                                        CardLoyalty = loyalty,
+                                        CardManaCost = manaCost,
+                                        CardName = name,
+                                        CardNames = names,
+                                        CardPower = power,
+                                        CardPrintings = printings,
+                                        CardRarity = rarity,
+                                        CardSet = set,
+                                        CardSubTypes = subTypes,
+                                        CardSuperTypes = superTypes,
+                                        CardText = text,
+                                        CardType = type,
+                                        CardTypes = types,
+                                        CardToughness = toughness,
+                                        CardVariations = variations,
+                                        CardGroupMembers = groupMembers
+                                    });
+                                } else
+                                {
+                                    var group = context.CardGroups.Find(name.GetHashCode());
+                                    group.CardGroupMembers.Add(printing);
+                                }
                             }
                         }
                     }
-                    catch (System.Data.DataException e)
+                    catch (System.Data.DataException)
                     {
-
+                                 
                     }
 
                 }

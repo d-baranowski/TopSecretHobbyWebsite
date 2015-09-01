@@ -208,7 +208,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\CardGroup.cs" />
+    <Compile Include="Models\CardPrinting.cs" />
     <Compile Include="Models\CardsViewModel.cs" />
     <Compile Include="Models\Collection.cs" />
     <Compile Include="Models\CollectionEntry.cs" />

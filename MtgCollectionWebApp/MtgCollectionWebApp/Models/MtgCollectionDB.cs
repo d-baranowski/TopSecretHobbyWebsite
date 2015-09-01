@@ -8,8 +8,10 @@ namespace MtgCollectionWebApp.Models
         {
         }
 
-        public System.Data.Entity.DbSet<MtgCollectionWebApp.Models.Collection> Collections { get; set; }
-        public System.Data.Entity.DbSet<MtgCollectionWebApp.Models.CollectionEntry> CollectionsEntries { get; set; }
-        public System.Data.Entity.DbSet<MtgCollectionWebApp.Models.Card> Cards { get; set; }
+        public DbSet<Collection> Collections { get; set; }
+        public DbSet<CollectionEntry> CollectionsEntries { get; set; }
+        public DbSet<CardPrinting> CardPrintings { get; set; } //Card variants by multiverseId
+        public DbSet<CardGroup> CardGroups { get; set; } //Unique cards by name
+
     }
 }
