@@ -1,11 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Web;
 
 /* Api used documentation
    https://mtgapi.com/docs */
@@ -122,7 +118,7 @@ namespace MtgCollectionWebApp.Models
                             }
                         }
                     }
-                    catch (System.Data.DataException e)
+                    catch (System.Data.DataException)
                     {
 
                     }
