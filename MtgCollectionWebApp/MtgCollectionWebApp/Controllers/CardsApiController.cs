@@ -20,15 +20,23 @@ namespace MtgCollectionWebApp.Controllers
 
             foreach (Card c in db.Cards)
             {
+                var ratings = db.Ratings.Where(r => r.RatingCardName == c.CardName);
                 var entry = db.CollectionsEntries.Find(c.CardId);
+                int quantity = 0;
+                int ratingVal = 0; 
+
+                if (ratings.Count() > 0)
+                {
+                    int sum = ratings.Sum(r => r.RatingValue);
+                    ratingVal = sum / ratings.Count();
+                }
+
                 if (entry != null)
                 {
-                    data.Add(new CardsViewModel { Card = c, Quantity = entry.Quantity });
+                    quantity = entry.Quantity;
                 }
-                else
-                {
-                    data.Add(new CardsViewModel { Card = c, Quantity = 0 });
-                }
+
+                data.Add(new CardsViewModel { Card = c, Quantity = quantity, Rating = ratingVal });
 
             }
 

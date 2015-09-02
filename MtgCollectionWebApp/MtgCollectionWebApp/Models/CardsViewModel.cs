@@ -9,5 +9,6 @@ namespace MtgCollectionWebApp.Models
     {
         public Card Card { get; set; }
         public virtual int Quantity { get; set; }
+        public virtual int Rating { get; set; }
     }   
 }

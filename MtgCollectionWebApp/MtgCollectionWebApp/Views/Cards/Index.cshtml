@@ -62,12 +62,16 @@
                 <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
             </div>
             
-            <div class="btn-toolbar" role="toolbar">
-                <div class="btn btn-default btn-group" role="group">1</div>
-                <div class="btn btn-default btn-group" role="group">2</div>
-                <div class="btn btn-default btn-group" role="group">3</div>
-                <div class="btn btn-default btn-group" role="group">4</div>
-                <div class="btn btn-default btn-group" role="group">5</div>
+            <div class="btn-group" role="group" ng-repeat="a in range(5) track by $index">
+                <div ng-switch="x.Rating >= $index + 1">
+                    <p>{{x.Rating}}</p>
+                    <div ng-switch-when="true">
+                        <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-true">Y</button> 
+                    </div>
+                    <div ng-switch-when="false">
+                        <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-false">{{$index + 1}}</button>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -109,6 +113,25 @@ $(window).load(function(){
                 entry["Quantity"] = entry["Quantity"] - 1;
             }
         }
+
+        $scope.rateCard = function (name, rating,entry) {
+            entry["Rating"] = rating;
+            $.ajax({
+                url: 'http://localhost:59756/api/RatingApi',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: '{"RatingId": "0","UserId": "0","RatingValue": "'+ rating +'", "RatingCardName": "' + name + '"}'
+            }).done(function (data) {
+            }).fail(function (err) {
+                alert('Sorry I failed you :(');
+            }).success(function (result) {
+            });
+        }
+
+        $scope.range = function (n) {
+            return new Array(n);
+        };
 
         function changeQuantity(cardId, value) {
             $.ajax({

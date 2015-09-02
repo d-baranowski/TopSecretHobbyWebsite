@@ -38,9 +38,7 @@ namespace MtgCollectionWebApp.Models
 
                 db.CollectionsEntries.Add(collectionEntry);
             }
-
             db.SaveChanges();
-          
         }
     }
 }

@@ -6,7 +6,6 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MtgCollectionWebApp.Models;
@@ -17,17 +16,17 @@ namespace MtgCollectionWebApp.Controllers
     {
         private MtgCollectionDB db = new MtgCollectionDB();
 
-        // GET: api/Rating
+        // GET: api/RatingApi
         public IQueryable<Rating> GetRatings()
         {
             return db.Ratings;
         }
 
-        // GET: api/Rating/5
+        // GET: api/RatingApi/5
         [ResponseType(typeof(Rating))]
-        public async Task<IHttpActionResult> GetRating(int id)
+        public IHttpActionResult GetRating(int id)
         {
-            Rating rating = await db.Ratings.FindAsync(id);
+            Rating rating = db.Ratings.Find(id);
             if (rating == null)
             {
                 return NotFound();
@@ -36,9 +35,9 @@ namespace MtgCollectionWebApp.Controllers
             return Ok(rating);
         }
 
-        // PUT: api/Rating/5
+        // PUT: api/RatingApi/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutRating(int id, Rating rating)
+        public IHttpActionResult PutRating(int id, Rating rating)
         {
             if (!ModelState.IsValid)
             {
@@ -54,7 +53,7 @@ namespace MtgCollectionWebApp.Controllers
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -71,41 +70,55 @@ namespace MtgCollectionWebApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Rating
+        // POST: api/RatingApi
         [ResponseType(typeof(Rating))]
-        public async Task<IHttpActionResult> PostRating(String cardName, int grade)
+        public IHttpActionResult PostRating(Rating data)
         {
-            if (!User.Identity.IsAuthenticated)
-                return BadRequest(ModelState);
+            
+            Rating rating = null;
+            int userId = User.Identity.Name.GetHashCode();
 
-            var rating = new Rating();
-            if (!ModelState.IsValid)
+            var userRatings = db.Ratings.Where(r => r.UserId == userId);
+            int test = userRatings.Count();
+            
+            if (test > 0)
             {
-                return BadRequest(ModelState);
+                var cardRating = userRatings.Where(r => r.RatingCardName == data.RatingCardName);
+                int test2 = cardRating.Count();
+                if (test2 > 0) //If there exist a rating from this user for this card 
+                {
+                    rating = cardRating.First();
+                    rating.RatingValue = data.RatingValue;
+                    db.Entry(rating).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return CreatedAtRoute("DefaultApi", new { id = rating.RatingId }, rating);
+                }
             }
-            rating.RatingId = cardName.GetHashCode();
-            rating.Cards = db.Cards.Where( a => a.CardName == cardName).ToList();
-            rating.RatingValue = grade;
-            rating.UserId = User.Identity.Name.GetHashCode();
 
+            rating = new Rating();
+            rating.RatingValue = data.RatingValue;
+            rating.RatingCardName = data.RatingCardName;
+            rating.UserId = userId; //This might throw an exception 
+
+            //Success
             db.Ratings.Add(rating);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = rating.RatingId }, rating);
+            return CreatedAtRoute("DefaultApi", new { id = rating.RatingId }, rating); 
         }
 
-        // DELETE: api/Rating/5
+        // DELETE: api/RatingApi/5
         [ResponseType(typeof(Rating))]
-        public async Task<IHttpActionResult> DeleteRating(int id)
+        public IHttpActionResult DeleteRating(int id)
         {
-            Rating rating = await db.Ratings.FindAsync(id);
+            Rating rating = db.Ratings.Find(id);
             if (rating == null)
             {
                 return NotFound();
             }
 
             db.Ratings.Remove(rating);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
             return Ok(rating);
         }

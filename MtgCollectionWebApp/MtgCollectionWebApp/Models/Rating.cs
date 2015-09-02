@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MtgCollectionWebApp.Models
 {
     public class Rating
     {
-        public int RatingId { get; set; } //Card name get hash
+        [Key]
+        public int RatingId { get; set; }
         public int UserId { get; set; } //Who's rating is it
         public int RatingValue { get; set; } //Rating 0 to 5
-        public ICollection<Card> Cards { get; set; } //Set of different prints of the rated card
-
+        public virtual string RatingCardName { get; set; } //Name of the rated card
     }
 }
