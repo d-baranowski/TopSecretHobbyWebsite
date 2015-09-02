@@ -50,33 +50,68 @@
         <input value="Vintage" data-on-text="Vintage" data-off-text="Vintage" type="checkbox" class="switch legality" /> 
         <input value="Standard" data-on-text="Standard" data-off-text="Standard" type="checkbox" class="switch legality" />  
     </div>  
+        <input type="checkbox" class="switch" />
+    <div>
+
+    </div>
     <br>
     <br>
 
-    <div id="dvCards" ng-repeat="x in data | orderBy: 'Card.CardName' | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter | filter:costFilter | filter:legalityFilter | filter:searchBox">
-        <div class="col-md-3 panel" style="margin-bottom: 20px;">
-            <img class="img-rounded" ng-src={{x["Card"]["CardImageUrl"]}} width ="223" height="310"/>
-            <div class="EntryControlls" role="group">
-                <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
-                 <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
-                <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
+    <div ng-switch="uniqueCheck == Hello">
+        <div ng-switch-when="true">
+            <div id="dvCards" ng-repeat="x in data | unique: 'Card.CardName' | orderBy: 'Card.CardName' | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter | filter:costFilter | filter:legalityFilter | filter:searchBox">
+                <div class="col-md-3 panel" style="margin-bottom: 20px;">
+                    <img class="img-rounded" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
+                    <div class="EntryControlls" role="group">
+                        <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
+                        <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
+                        <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
+                    </div>
+
+                    <div class="btn-group" role="group" ng-repeat="a in range(5) track by $index">
+                        <div ng-switch="x.Rating >= $index + 1">
+                            <div ng-switch-when="true">
+                                <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-true">Y</button>
+                            </div>
+                            <div ng-switch-when="false">
+                                <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-false">{{$index + 1}}</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            
-            <div class="btn-group" role="group" ng-repeat="a in range(5) track by $index">
-                <div ng-switch="x.Rating >= $index + 1">
-                    <p>{{x.Rating}}</p>
-                    <div ng-switch-when="true">
-                        <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-true">Y</button> 
+        </div>
+
+        <div ng-switch-when="false">
+
+            <div id="dvCards" ng-repeat="x in data | orderBy: 'Card.CardName' | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter | filter:costFilter | filter:legalityFilter | filter:searchBox">
+                <div class="col-md-3 panel" style="margin-bottom: 20px;">
+                    <img class="img-rounded" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
+                    <div class="EntryControlls" role="group">
+                        <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
+                        <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
+                        <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
                     </div>
-                    <div ng-switch-when="false">
-                        <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-false">{{$index + 1}}</button>
+
+                    <div class="btn-group" role="group" ng-repeat="a in range(5) track by $index">
+                        <div ng-switch="x.Rating >= $index + 1">
+                            <div ng-switch-when="true">
+                                <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-true">Y</button>
+                            </div>
+                            <div ng-switch-when="false">
+                                <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-false">{{$index + 1}}</button>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
 
+
+
         </div>
     </div>
-</div>
 
 @section scripts{
 
@@ -95,7 +130,7 @@ $(window).load(function(){
 </script>
 
 <script>
-    var app = angular.module('myApp', []);
+    var app = angular.module('myApp', ['angular.filter']);
     app.controller('myCtrl', function ($scope, $http) {
 
         $http.get("http://localhost:59756/api/CardsApi/").success(function (response) {
