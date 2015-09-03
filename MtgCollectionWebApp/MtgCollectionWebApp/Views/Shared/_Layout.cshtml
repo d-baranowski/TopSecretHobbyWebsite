@@ -10,7 +10,9 @@
     @Styles.Render("~/Content/bootstrap.css")
     @Styles.Render("~/Content/bootstrap.min.css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
     <link href="bootstrap-switch.css" rel="stylesheet">
+
 
 
 </head>
@@ -35,12 +37,8 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
 
     <link href="bootstrap.css" rel="stylesheet">

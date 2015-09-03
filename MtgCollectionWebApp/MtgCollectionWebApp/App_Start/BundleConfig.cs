@@ -27,6 +27,18 @@ namespace MtgCollectionWebApp
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/templates/bs-ecosave/css").Include(
+                      "~/templates/bs-ecosave/dark/assets/css/animate.css",
+                      "~/templates/bs-ecosave/dark/assets/css/font-awesome.min.css",
+                      "~/templates/bs-ecosave/dark/assets/css/prettyPhoto.css",
+                      "~/templates/bs-ecosave/dark/assets/css/style.css"));
+
+            bundles.Add(new ScriptBundle("~/templates/bs-ecosave/").Include(
+                      "~/templates/bs-ecosave/dark/assets/js/custom.js",
+                      "~/templates/bs-ecosave/dark/assets/js/jquery.easing.min.js",
+                      "~/templates/bs-ecosave/dark/assets/js/jquery.prettyPhoto.js",
+                      "~/templates/bs-ecosave/dark/assets/js/wow.min.js"));
         }
     }
 }

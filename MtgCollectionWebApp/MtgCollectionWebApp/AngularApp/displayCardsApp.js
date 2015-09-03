@@ -112,15 +112,21 @@ app.controller('myCtrl', function ($scope, $http) {
 
     //Color
     $scope.colorIncludes = [];
-    $('.color').on('switchChange.bootstrapSwitch', function (event, state) {
-        if (state) {
-            $scope.colorIncludes.push(this.value);
+    $scope.colorToggler = function (id) {
+        var btn = $('#' + id);
+        btn.toggleClass("down");
+        var state = btn.attr("class");
+
+
+        if (state.indexOf('down') > -1) {
+            $scope.colorIncludes.push(btn.attr("value"));
         } else {
-            var i = $.inArray(this.value, $scope.colorIncludes);
+            var i = $.inArray(btn.attr("value"), $scope.typeIncludes);
             $scope.colorIncludes.splice(i, 1);
         }
         $scope.$apply();
-    });
+
+    }
     $scope.colorFilter = function (entry) {
         if ($scope.colorIncludes.length > 0) {
             var fits = 1;
@@ -145,6 +151,9 @@ app.controller('myCtrl', function ($scope, $http) {
         }
         $scope.$apply();
     });
+
+   
+
     $scope.typeFilter = function (entry) {
         if ($scope.typeIncludes.length > 0) {
             var fits = 0;
@@ -226,5 +235,15 @@ app.controller('myCtrl', function ($scope, $http) {
         $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
         $scope.predicate = predicate;
     };
+
+
+    $scope.modalDescription = "Kupeczka";
+    $scope.displayCardDetailsModal = function (entry) {
+        $('#cardDetailsModalTitle').html(entry["Card"]["CardName"]);
+        $scope.modalDescription = entry["Card"]["CardText"];
+        $scope.$apply;
+        $('#cardDetailsModal').modal();
+        
+    }
 
 });

@@ -3,6 +3,10 @@
     ViewBag.Title = "Index";
 }
 
+@section styles{
+    <link rel="stylesheet" type="text/css" href='../../Content/displayCards.css' />
+}
+
 
 <h2>Index</h2>
 
@@ -20,12 +24,11 @@
         <input value="Enchantment" data-on-text="Enchantment" data-off-text="Enchantment" type="checkbox" class="switch type" />
     </div>
     <div>
-        <input value="White" data-on-text="White" data-off-text="White" type="checkbox" class="switch color" />
-        <input value="Blue" data-on-text="Blue" data-off-text="Blue" type="checkbox" class="switch color" />
-        <input value="Green" data-on-text="Green" data-off-text="Green" type="checkbox" class="switch color" />
-        <input value="Black" data-off-text="Black" data-on-text="Black" type="checkbox" class="switch color" />
-        <input value="Red" data-off-text="Red" data-on-text="Red" type="checkbox" class="switch color" />
-        <input data-off-text="Colorless" data-on-text="Colorless" type="checkbox" class="switch color" />
+        <button ng-click="colorToggler('whiteTgl')" value="White" class="toggleButton" id="whiteTgl">White</button>
+        <button ng-click="colorToggler('blueTgl')" value="Blue" class="toggleButton" id="blueTgl">Blue</button>
+        <button ng-click="colorToggler('greenTgl')" value="Green" class="toggleButton" id="greenTgl">Green</button>
+        <button ng-click="colorToggler('blackTgl')" value="Black" class="toggleButton" id="blackTgl">Black</button>
+        <button ng-click="colorToggler('redTgl')" value="Red" class="toggleButton" id="redTgl">Red</button>
     </div>
 
     <div>
@@ -61,7 +64,7 @@
 
     <div id="dvCards" ng-repeat="x in data | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter | filter:costFilter | filter:legalityFilter | filter:searchBox">
         <div class="col-md-3 panel" style="margin-bottom: 20px;">
-            <img class="img-rounded" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
+            <img ng-click="displayCardDetailsModal(x)" class="img-rounded cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
             <div class="EntryControlls" role="group">
                 <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
                 <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
@@ -78,19 +81,32 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
+
+<!-- http://www.jasonbutz.info/bootstrap-lightbox/ 
+     http://twitter.github.io/typeahead.js/ Check this out man  -->
+    <div class="modal" id="cardDetailsModal">
+        <div style="width: 40%;" class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="cardDetailsModalCloseButton">X</button>
+                    <h2 class="modal-title" id="cardDetailsModalTitle"></h2>
+                </div>
+                <div id="cardDetailsModalBody" class="modal-body">
+                    {{modalDescription}}
+                </div>
+
+                <div id="cardDetailsModalFooter" class="modal-footer">
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-
-
-
-
-
-
 @section scripts{
-
     <link rel="stylesheet" type="text/css" href="http://www.bootstrap-switch.org/dist/css/bootstrap3/bootstrap-switch.css">
     <script type='text/javascript' src="http://www.bootstrap-switch.org/dist/js/bootstrap-switch.js"></script>
 
@@ -102,4 +118,5 @@
         });
     </script>
     <script src="~/AngularApp/displayCardsApp.js"></script>
+    <script src="~/Scripts/Cards/CardsModals.js"></script>
 }
