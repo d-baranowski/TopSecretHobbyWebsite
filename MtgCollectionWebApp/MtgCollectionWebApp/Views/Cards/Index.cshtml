@@ -50,12 +50,16 @@
         <input value="Standard" data-on-text="Standard" data-off-text="Standard" type="checkbox" class="switch legality" />
     </div>
     <input id="unique" data-on-text="Card Variations" data-off-text="Card Variations" type="checkbox" class="switch" />
-
+    <button ng-click="order('Card.CardName')">Name</button>
+    <button ng-click="order('Rating')">Rating</button>
+    <button ng-click="order('Card.CardSet')">Set</button>
+    <button ng-click="order('Card.CardArtist')">Atrist</button>
+    <button ng-click="order('Card.CardCmc')">Mana Cost</button>
     <br>
     <br>
 
 
-    <div id="dvCards" ng-repeat="x in data | unique: myUnique | orderBy:'Card.CardName' | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter | filter:costFilter | filter:legalityFilter | filter:searchBox">
+    <div id="dvCards" ng-repeat="x in data | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter | filter:costFilter | filter:legalityFilter | filter:searchBox">
         <div class="col-md-3 panel" style="margin-bottom: 20px;">
             <img class="img-rounded" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
             <div class="EntryControlls" role="group">

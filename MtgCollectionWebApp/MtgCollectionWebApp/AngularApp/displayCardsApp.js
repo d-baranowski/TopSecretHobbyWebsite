@@ -64,7 +64,6 @@ app.controller('myCtrl', function ($scope, $http) {
     }
 
     //Filters
-  
     //Legality
     $scope.legalityIncludes = [];
     $('.legality').on('switchChange.bootstrapSwitch', function (event, state) {
@@ -206,10 +205,7 @@ app.controller('myCtrl', function ($scope, $http) {
         return true;           
     }
     
-
-    $scope.turnShitOff = function () {
-       
-    }
+    
     //Show variations
     $scope.myUnique = 'Card.CardName';
     $('#unique').on('switchChange.bootstrapSwitch', function (event, state) {
@@ -222,4 +218,13 @@ app.controller('myCtrl', function ($scope, $http) {
         }
         $scope.$apply();
     });
+
+    //Order By
+    $scope.predicate = 'Card.CardName';
+    $scope.reverse = false;
+    $scope.order = function (predicate) {
+        $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+        $scope.predicate = predicate;
+    };
+
 });
