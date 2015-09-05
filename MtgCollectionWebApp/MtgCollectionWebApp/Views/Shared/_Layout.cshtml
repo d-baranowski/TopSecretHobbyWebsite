@@ -4,49 +4,41 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    
-    
+
+
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/bootstrap.css")
     @Styles.Render("~/Content/bootstrap.min.css")
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("styles", required: false)
     <link href="bootstrap-switch.css" rel="stylesheet">
-
-
-
+    <link href="~/templates/cssmenu/styles.css" rel="stylesheet" />
+    <script src="~/templates/cssmenu/script.js"></script>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-fixed-top navbar-inverse">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+                <div id='cssmenu'>
+                    <ul>
+                        <li class='active'><a href='#'><span>Home</span></a></li>
+                        <li><a href='#'><span>Products</span></a></li>
+                        <li><a href='#'><span>Company</span></a></li>
+                        <li class='last'><a href='#'><span>Contact</span></a></li>
+                    </ul>
+                </div>
+
             </div>
         </div>
     </div>
     <div class="body-content">
         @RenderBody()
     </div>
-
     <link href="bootstrap.css" rel="stylesheet">
-
     <script src="bootstrap-switch.js"></script>
     <script src="~/scripts/angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.5/angular-filter.js"></script>
-    
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("bootstrap.min.js")

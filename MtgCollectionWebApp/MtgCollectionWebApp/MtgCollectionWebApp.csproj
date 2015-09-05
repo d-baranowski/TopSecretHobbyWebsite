@@ -1221,6 +1221,10 @@
     <Content Include="templates\bs-ecosave\light\assets\js\jquery.prettyPhoto.js" />
     <Content Include="templates\bs-ecosave\light\assets\js\wow.min.js" />
     <Content Include="templates\bs-ecosave\light\index.html" />
+    <Content Include="templates\cssmenu\images\bg.png" />
+    <Content Include="templates\cssmenu\index.html" />
+    <Content Include="templates\cssmenu\script.js" />
+    <Content Include="templates\cssmenu\styles.css" />
     <Content Include="templates\Domainer\assets\css\grid.css" />
     <Content Include="templates\Domainer\assets\css\ie.css" />
     <Content Include="templates\Domainer\assets\css\skin-abyss.css" />
@@ -1243,16 +1247,6 @@
     <Content Include="templates\Domainer\assets\images\stats_div.png" />
     <Content Include="templates\Domainer\assets\js\main.js" />
     <Content Include="templates\Domainer\index.html" />
-    <Content Include="templates\siimple\assets\css\bootstrap-theme.css" />
-    <Content Include="templates\siimple\assets\css\bootstrap.css" />
-    <Content Include="templates\siimple\assets\css\style.css" />
-    <Content Include="templates\siimple\assets\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="templates\siimple\assets\img\main-bg.jpg" />
-    <Content Include="templates\siimple\assets\img\slide1.png" />
-    <Content Include="templates\siimple\assets\img\slide2.png" />
-    <Content Include="templates\siimple\assets\img\slide3.png" />
-    <Content Include="templates\siimple\assets\js\bootstrap.min.js" />
-    <Content Include="templates\siimple\index.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1311,9 +1305,6 @@
     <Content Include="templates\Domainer\assets\font\webhostinghub-glyphs.ttf" />
     <Content Include="templates\Domainer\README.md" />
     <Content Include="templates\Domainer\sendthedata.php" />
-    <Content Include="templates\siimple\assets\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="templates\siimple\assets\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="templates\siimple\assets\fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
