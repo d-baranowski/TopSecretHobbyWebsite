@@ -17,5 +17,19 @@ button.toggleButton.down {
     }
 
  #pageContainer {
-    background-color:silver
+    background: url('../../img/background.jpg') no-repeat center center fixed;
+    background-size: cover;
  }
+
+.darkerPic {
+    background: rgba(0, 0, 0, 0.9) none repeat scroll 0% 0%;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-image: none;
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-position: 0% 0%;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+}
+

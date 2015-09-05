@@ -5,12 +5,8 @@
 
 @section styles{
     @Styles.Render("~/templates/bs-ecosave/css")
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.4.js"></script>
     <link rel="stylesheet" type="text/css" href='../../Content/displayCards.css' />
-
-<style>
- 
-</style>
-
 }
 
 <div id="pre-div">
@@ -20,7 +16,9 @@
 
 
 <div id="pageContainer" ng-app="myApp" ng-controller="myCtrl">
-    <br />
+    <div class="darkerPic">
+        <br />
+        <div class="container">
             <div style="background-color:#ffffff; padding:10px" class="searchToolBox container">
                 <br />
                 <div>
@@ -44,6 +42,7 @@
                 </div>
 
                 <div>
+                    <button ng-click="test()">Tester</button>
                     <input value="0" data-on-text="0-1" data-off-text="0-1" type="checkbox" class="switch cost" />
                     <input value="1" data-on-text="2-3" data-off-text="2-3" type="checkbox" class="switch cost" />
                     <input value="2" data-on-text="4-5" data-off-text="4-5" type="checkbox" class="switch cost" />
@@ -74,32 +73,40 @@
 
             <br>
 
-            <div style="background-color:#ffffff; padding:10px" id="cardDisplay" class="container">
-                <div id="dvCards" ng-repeat="x in data | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter | filter:costFilter | filter:legalityFilter | filter:searchBox">
-                    <div class="col-md-3 container" style="margin-bottom: 20px;">
-                        <img ng-click="displayCardDetailsModal(x)" class="img-rounded cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
-                        <div class="EntryControlls" role="group">
-                            <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
-                            <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
-                            <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
-                        </div>
+            <div style="background-color:#ffffff;" id="cardDisplay" class="container">
+                <center>
+                <br />
+                    <br />
+                    <div id="dvCards" dir-paginate="x in data | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter  | filter:legalityFilter | filter:costFilter |filter:searchBox | itemsPerPage:16 ">
+                        <div class="col-md-3" style="margin-bottom: 20px;">
+                            <img ng-click="displayCardDetailsModal(x)" class="img-rounded cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
+                            <div class="EntryControlls" role="group">
+                                <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
+                                <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
+                                <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
+                            </div>
 
-                        <div class="btn-group" role="group" ng-repeat="a in range(5) track by $index">
-                            <div ng-switch="x.Rating >= $index + 1">
-                                <div ng-switch-when="true">
-                                    <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-true">Y</button>
-                                </div>
-                                <div ng-switch-when="false">
-                                    <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-false">{{$index + 1}}</button>
+                            <div class="btn-group" role="group" ng-repeat="a in range(5) track by $index">
+                                <div ng-switch="x.Rating >= $index + 1">
+                                    <div ng-switch-when="true">
+                                        <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-true">Y</button>
+                                    </div>
+                                    <div ng-switch-when="false">
+                                        <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-false">{{$index + 1}}</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                    <div class="container"><center><nav class="pagination pagination-lg"><dir-pagination-controls></dir-pagination-controls></nav></center></div></center>
+
+</div>
+
+            
+
 
             <!-- http://www.jasonbutz.info/bootstrap-lightbox/
-                 http://twitter.github.io/typeahead.js/ Check this out man  -->
+             http://twitter.github.io/typeahead.js/ Check this out man  -->
             <div class="modal" id="cardDetailsModal">
                 <div style="width: 40%;" class="modal-dialog">
                     <div class="modal-content">
@@ -118,7 +125,8 @@
                 </div>
             </div>
         </div>
-
+    </div>
+</div>
 
 @section scripts{
 
@@ -137,4 +145,6 @@
     </script>
     <script src="~/AngularApp/displayCardsApp.js"></script>
     <script src="~/Scripts/Cards/CardsModals.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.4.js"></script>
 }

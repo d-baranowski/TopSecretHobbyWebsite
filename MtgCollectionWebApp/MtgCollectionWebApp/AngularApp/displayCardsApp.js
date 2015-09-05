@@ -1,10 +1,11 @@
-﻿var app = angular.module('myApp', ['angular.filter']);
+﻿var app = angular.module('myApp', ['angular.filter', 'angularUtils.directives.dirPagination']);
 
 app.controller('myCtrl', function ($scope, $http) {
 
     $http.get("http://localhost:59756/api/CardsApi/").success(function (response) {
         $scope.data = response;
     });
+   
 
     $scope.addOne = function (entry) {
         changeQuantity(entry["Card"]["CardId"], +1);
@@ -107,7 +108,7 @@ app.controller('myCtrl', function ($scope, $http) {
                 return;
             }    
         }
-        return entry;
+        return true;
     }
 
     //Color
@@ -193,8 +194,7 @@ app.controller('myCtrl', function ($scope, $http) {
             }
             return fits === 1;
         }
-        return true;
-            
+        return true;     
     }
 
     //Owned
@@ -236,8 +236,6 @@ app.controller('myCtrl', function ($scope, $http) {
         $scope.predicate = predicate;
     };
 
-
-    $scope.modalDescription = "Kupeczka";
     $scope.displayCardDetailsModal = function (entry) {
         $('#cardDetailsModalTitle').html(entry["Card"]["CardName"]);
         $scope.modalDescription = entry["Card"]["CardText"];
@@ -246,4 +244,10 @@ app.controller('myCtrl', function ($scope, $http) {
         
     }
 
+    /* Carousel Controlls */
+    $scope.myInterval = 0;
+    $scope.noWrapSlides = false;
+    
+
 });
+
