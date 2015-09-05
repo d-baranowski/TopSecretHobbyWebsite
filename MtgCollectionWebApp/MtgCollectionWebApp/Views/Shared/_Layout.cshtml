@@ -13,19 +13,24 @@
     @RenderSection("styles", required: false)
     <link href="bootstrap-switch.css" rel="stylesheet">
     <link href="~/templates/cssmenu/styles.css" rel="stylesheet" />
-    <script src="~/templates/cssmenu/script.js"></script>
 </head>
 <body>
     <div class="navbar navbar-fixed-top navbar-inverse">
         <div class="container">
             <div class="navbar-collapse collapse">
                 <div id='cssmenu'>
+
+                    <img id="logoImg" src="~/img/logo.png" />
                     <ul>
-                        <li class='active'><a href='#'><span>Home</span></a></li>
+                        <li class='pull-left nohover'><a href='#'><span style="font-weight:800">App Title</span></a></li>
+                        <li class='active nohover' style="margin-left:10px"><a href='#'><span>Home</span></a></li>
                         <li><a href='#'><span>Products</span></a></li>
                         <li><a href='#'><span>Company</span></a></li>
-                        <li class='last'><a href='#'><span>Contact</span></a></li>
+                        <li class='last pull-right'><a href='#'><span>Log in</span></a></li>
+
                     </ul>
+
+                
                 </div>
 
             </div>

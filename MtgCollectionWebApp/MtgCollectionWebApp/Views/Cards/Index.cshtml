@@ -4,109 +4,127 @@
 }
 
 @section styles{
+    @Styles.Render("~/templates/bs-ecosave/css")
     <link rel="stylesheet" type="text/css" href='../../Content/displayCards.css' />
+
+<style>
+ 
+</style>
+
 }
 
-
-<h2>Index</h2>
-
-<div ng-app="myApp" ng-controller="myCtrl">
-    <div>
-        <input ng-model="searchBox" type="text"><br><br>
-    </div>
-
-    <div>
-        <input value="Creature" data-on-text="Creature" data-off-text="Creature" type="checkbox" class="switch type" />
-        <input value="Instant" data-on-text="Instant" data-off-text="Instant" type="checkbox" class="switch type" />
-        <input value="Artifact" data-on-text="Artifact" data-off-text="Artifact" type="checkbox" class="switch type" />
-        <input value="Sorcery" data-on-text="Sorcery" data-off-text="Sorcery" type="checkbox" class="switch type" />
-        <input value="Land" data-on-text="Land" data-off-text="Land" type="checkbox" class="switch type" />
-        <input value="Enchantment" data-on-text="Enchantment" data-off-text="Enchantment" type="checkbox" class="switch type" />
-    </div>
-    <div>
-        <button ng-click="colorToggler('whiteTgl')" value="White" class="toggleButton" id="whiteTgl">White</button>
-        <button ng-click="colorToggler('blueTgl')" value="Blue" class="toggleButton" id="blueTgl">Blue</button>
-        <button ng-click="colorToggler('greenTgl')" value="Green" class="toggleButton" id="greenTgl">Green</button>
-        <button ng-click="colorToggler('blackTgl')" value="Black" class="toggleButton" id="blackTgl">Black</button>
-        <button ng-click="colorToggler('redTgl')" value="Red" class="toggleButton" id="redTgl">Red</button>
-    </div>
-
-    <div>
-        <input value="0" data-on-text="0-1" data-off-text="0-1" type="checkbox" class="switch cost" />
-        <input value="1" data-on-text="2-3" data-off-text="2-3" type="checkbox" class="switch cost" />
-        <input value="2" data-on-text="4-5" data-off-text="4-5" type="checkbox" class="switch cost" />
-        <input value="3" data-on-text="6+" data-off-text="6+" type="checkbox" class="switch cost" />
-    </div>
-
-    <div>
-        <input value="Common" data-on-text="Common" data-off-text="Common" type="checkbox" class="switch rarity" />
-        <input value="Uncommon" data-on-text="Uncommon" data-off-text="Uncommon" type="checkbox" class="switch rarity" />
-        <input value="Rare" data-on-text="Rare" data-off-text="Rare" type="checkbox" class="switch rarity" />
-        <input value="Mythic" data-on-text="Mythic" data-off-text="Mythic" type="checkbox" class="switch rarity" />
-    </div>
-
-    <div>
-        <input id="owned" data-on-text="Owned" data-off-text="Owned" type="checkbox" class="switch" />
-        <input value="Commander" data-on-text="Commander" data-off-text="Commander" type="checkbox" class="switch legality" />
-        <input value="Legacy" data-on-text="Legacy" data-off-text="Legacy" type="checkbox" class="switch legality" />
-        <input value="Vintage" data-on-text="Vintage" data-off-text="Vintage" type="checkbox" class="switch legality" />
-        <input value="Standard" data-on-text="Standard" data-off-text="Standard" type="checkbox" class="switch legality" />
-    </div>
-    <input id="unique" data-on-text="Card Variations" data-off-text="Card Variations" type="checkbox" class="switch" />
-    <button ng-click="order('Card.CardName')">Name</button>
-    <button ng-click="order('Rating')">Rating</button>
-    <button ng-click="order('Card.CardSet')">Set</button>
-    <button ng-click="order('Card.CardArtist')">Atrist</button>
-    <button ng-click="order('Card.CardCmc')">Mana Cost</button>
-    <br>
-    <br>
-
-
-    <div id="dvCards" ng-repeat="x in data | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter | filter:costFilter | filter:legalityFilter | filter:searchBox">
-        <div class="col-md-3 panel" style="margin-bottom: 20px;">
-            <img ng-click="displayCardDetailsModal(x)" class="img-rounded cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
-            <div class="EntryControlls" role="group">
-                <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
-                <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
-                <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
-            </div>
-
-            <div class="btn-group" role="group" ng-repeat="a in range(5) track by $index">
-                <div ng-switch="x.Rating >= $index + 1">
-                    <div ng-switch-when="true">
-                        <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-true">Y</button>
-                    </div>
-                    <div ng-switch-when="false">
-                        <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-false">{{$index + 1}}</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-<!-- http://www.jasonbutz.info/bootstrap-lightbox/ 
-     http://twitter.github.io/typeahead.js/ Check this out man  -->
-    <div class="modal" id="cardDetailsModal">
-        <div style="width: 40%;" class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="cardDetailsModalCloseButton">X</button>
-                    <h2 class="modal-title" id="cardDetailsModalTitle"></h2>
-                </div>
-                <div id="cardDetailsModalBody" class="modal-body">
-                    {{modalDescription}}
-                </div>
-
-                <div id="cardDetailsModalFooter" class="modal-footer">
-
-                </div>
-            </div>
-        </div>
+<div id="pre-div">
+    <div id="loader">
     </div>
 </div>
 
+
+<div id="pageContainer" ng-app="myApp" ng-controller="myCtrl">
+    <br />
+            <div style="background-color:#ffffff; padding:10px" class="searchToolBox container">
+                <br />
+                <div>
+                    <input ng-model="searchBox" type="text"><br><br>
+                </div>
+
+                <div>
+                    <input value="Creature" data-on-text="Creature" data-off-text="Creature" type="checkbox" class="switch type" />
+                    <input value="Instant" data-on-text="Instant" data-off-text="Instant" type="checkbox" class="switch type" />
+                    <input value="Artifact" data-on-text="Artifact" data-off-text="Artifact" type="checkbox" class="switch type" />
+                    <input value="Sorcery" data-on-text="Sorcery" data-off-text="Sorcery" type="checkbox" class="switch type" />
+                    <input value="Land" data-on-text="Land" data-off-text="Land" type="checkbox" class="switch type" />
+                    <input value="Enchantment" data-on-text="Enchantment" data-off-text="Enchantment" type="checkbox" class="switch type" />
+                </div>
+                <div>
+                    <button ng-click="colorToggler('whiteTgl')" value="White" class="toggleButton" id="whiteTgl">White</button>
+                    <button ng-click="colorToggler('blueTgl')" value="Blue" class="toggleButton" id="blueTgl">Blue</button>
+                    <button ng-click="colorToggler('greenTgl')" value="Green" class="toggleButton" id="greenTgl">Green</button>
+                    <button ng-click="colorToggler('blackTgl')" value="Black" class="toggleButton" id="blackTgl">Black</button>
+                    <button ng-click="colorToggler('redTgl')" value="Red" class="toggleButton" id="redTgl">Red</button>
+                </div>
+
+                <div>
+                    <input value="0" data-on-text="0-1" data-off-text="0-1" type="checkbox" class="switch cost" />
+                    <input value="1" data-on-text="2-3" data-off-text="2-3" type="checkbox" class="switch cost" />
+                    <input value="2" data-on-text="4-5" data-off-text="4-5" type="checkbox" class="switch cost" />
+                    <input value="3" data-on-text="6+" data-off-text="6+" type="checkbox" class="switch cost" />
+                </div>
+
+                <div>
+                    <input value="Common" data-on-text="Common" data-off-text="Common" type="checkbox" class="switch rarity" />
+                    <input value="Uncommon" data-on-text="Uncommon" data-off-text="Uncommon" type="checkbox" class="switch rarity" />
+                    <input value="Rare" data-on-text="Rare" data-off-text="Rare" type="checkbox" class="switch rarity" />
+                    <input value="Mythic" data-on-text="Mythic" data-off-text="Mythic" type="checkbox" class="switch rarity" />
+                </div>
+
+                <div>
+                    <input id="owned" data-on-text="Owned" data-off-text="Owned" type="checkbox" class="switch" />
+                    <input value="Commander" data-on-text="Commander" data-off-text="Commander" type="checkbox" class="switch legality" />
+                    <input value="Legacy" data-on-text="Legacy" data-off-text="Legacy" type="checkbox" class="switch legality" />
+                    <input value="Vintage" data-on-text="Vintage" data-off-text="Vintage" type="checkbox" class="switch legality" />
+                    <input value="Standard" data-on-text="Standard" data-off-text="Standard" type="checkbox" class="switch legality" />
+                </div>
+                <input id="unique" data-on-text="Card Variations" data-off-text="Card Variations" type="checkbox" class="switch" />
+                <button ng-click="order('Card.CardName')">Name</button>
+                <button ng-click="order('Rating')">Rating</button>
+                <button ng-click="order('Card.CardSet')">Set</button>
+                <button ng-click="order('Card.CardArtist')">Atrist</button>
+                <button ng-click="order('Card.CardCmc')">Mana Cost</button>
+            </div>
+
+            <br>
+
+            <div style="background-color:#ffffff; padding:10px" id="cardDisplay" class="container">
+                <div id="dvCards" ng-repeat="x in data | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter | filter:costFilter | filter:legalityFilter | filter:searchBox">
+                    <div class="col-md-3 container" style="margin-bottom: 20px;">
+                        <img ng-click="displayCardDetailsModal(x)" class="img-rounded cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
+                        <div class="EntryControlls" role="group">
+                            <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
+                            <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
+                            <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
+                        </div>
+
+                        <div class="btn-group" role="group" ng-repeat="a in range(5) track by $index">
+                            <div ng-switch="x.Rating >= $index + 1">
+                                <div ng-switch-when="true">
+                                    <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-true">Y</button>
+                                </div>
+                                <div ng-switch-when="false">
+                                    <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-false">{{$index + 1}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- http://www.jasonbutz.info/bootstrap-lightbox/
+                 http://twitter.github.io/typeahead.js/ Check this out man  -->
+            <div class="modal" id="cardDetailsModal">
+                <div style="width: 40%;" class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="cardDetailsModalCloseButton">X</button>
+                            <h2 class="modal-title" id="cardDetailsModalTitle"></h2>
+                        </div>
+                        <div id="cardDetailsModalBody" class="modal-body">
+                            {{modalDescription}}
+                        </div>
+
+                        <div id="cardDetailsModalFooter" class="modal-footer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 @section scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/templates/bs-ecosave/")
+
     <link rel="stylesheet" type="text/css" href="http://www.bootstrap-switch.org/dist/css/bootstrap3/bootstrap-switch.css">
     <script type='text/javascript' src="http://www.bootstrap-switch.org/dist/js/bootstrap-switch.js"></script>
 

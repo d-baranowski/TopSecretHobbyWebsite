@@ -15,3 +15,7 @@ button.toggleButton.down {
     border-bottom:solid 2px  #eaeaea;
     border-right: solid 2px #eaeaea;
     }
+
+ #pageContainer {
+    background-color:silver
+ }

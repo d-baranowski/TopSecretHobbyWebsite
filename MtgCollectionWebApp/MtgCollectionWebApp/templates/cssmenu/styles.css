@@ -1,114 +1,123 @@
 @import url(http://fonts.googleapis.com/css?family=Capriola);
+
 #cssmenu,
 #cssmenu ul,
 #cssmenu ul li,
 #cssmenu ul li a {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  list-style: none;
-  line-height: 1;
-  display: block;
-  position: relative;
-  font-family: Capriola, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    line-height: 1;
+    display: block;
+    position: relative;
+    font-family: Capriola, Helvetica, sans-serif;
 }
 
 .navbar {
-  background: #4a4646;
-  background-image: -webkit-linear-gradient(top, #4a4646, #000000);
-  background-image: -moz-linear-gradient(top, #4a4646, #000000);
-  background-image: -o-linear-gradient(top, #4a4646, #000000);
-  background-image: linear-gradient(to bottom, #4a4646, #000000);
-  color: #ffffff;
-  font-size: 20px;
-  text-decoration: none;
+    background: #4a4646;
+    background-image: -webkit-linear-gradient(top, #4a4646, #000000);
+    background-image: -moz-linear-gradient(top, #4a4646, #000000);
+    background-image: -o-linear-gradient(top, #4a4646, #000000);
+    background-image: linear-gradient(to bottom, #4a4646, #000000);
+    color: #ffffff;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+@font-face {
+  font-family: 'Iceland';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Iceland'), local('Iceland-Regular'), url(http://themes.googleusercontent.com/static/fonts/iceland/v3/F6LYTZLHrG9BNYXRjU7RSw.woff) format('woff');
+}
+
+#cssmenu li:first-child a {
+    padding-left: 0px;
+    color: #ffffff;
+    margin-bottom: -50px;
+    margin-top: -5px;
+}
+
+#cssmenu li:first-child span {
+    font-size: 30px;
+    text-decoration: none;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    transition: all 0.5s;
+    font-family:Iceland;
+    text-shadow: 0px 0px 5px #4195fc; 
+}
+
+#logoImg {
+    max-width: 59px;
+    display: inline;
+    float: left;
+    margin-right: -25px;
+    background-color: #444444;
+    border-radius: 100px;
+    border-color: silver;
+    border: 2px solid silver;
 }
 
 #cssmenu {
-  width: auto;
-  height: 56px;
+    width: auto;
+    height: 56px;
 }
-#cssmenu.align-right {
-  float: right;
-}
-#cssmenu.align-right ul li {
-  float: right;
-  margin-right: 0;
-  margin-left: 0px;
-}
-#cssmenu.align-right ul li:first-child,
-#cssmenu.align-right ul li:first-child > a {
-  border-bottom-right-radius: 3px;
-}
-#cssmenu #bg-one,
-#cssmenu #bg-two,
-#cssmenu #bg-three,
-#cssmenu #bg-four {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-#cssmenu #bg-one {
-  height: 10px;
-  background: #0f71ba;
-}
-#cssmenu #bg-two {
-  height: 59px;
-  z-index: 2;
-  background: url('images/bg.png');
-}
-#cssmenu #bg-three {
-  bottom: 4px;
-  height: 55px;
-  z-index: 3;
-  background: #222222;
-  background: -moz-linear-gradient(top, #555555 0%, #222222 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #555555), color-stop(100%, #222222));
-  background: -webkit-linear-gradient(top, #555555 0%, #222222 100%);
-  background: -o-linear-gradient(top, #555555 0%, #222222 100%);
-  background: -ms-linear-gradient(top, #555555 0%, #222222 100%);
-  background: linear-gradient(to bottom, #555555 0%, #222222 100%);
-}
-#cssmenu #bg-four {
-  bottom: 4px;
-  height: 55px;
-  z-index: 4;
-  background: url('images/bg.png');
-}
-#cssmenu ul {
-  height: 59px;
-}
+
+    #cssmenu.align-right {
+        float: right;
+    }
+
+        #cssmenu.align-right ul li {
+            float: right;
+            margin-right: 0;
+            margin-left: 0px;
+        }
+
+            #cssmenu.align-right ul li:first-child,
+            #cssmenu.align-right ul li:first-child > a {
+                border-bottom-right-radius: 3px;
+            }
+
+  
+
+
+    #cssmenu ul {
+        height: 59px;
+    }
+
+
+
 #cssmenu ul li {
-  float: left;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-#cssmenu ul li a {
-  padding: 24px 28px 20px 30px;
-  color: #eeeeee;
-  font-size: 15px;
-  text-decoration: none;
+    float: left;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 
+    #cssmenu ul li a {
+        padding: 24px 28px 20px 30px;
+        color: #eeeeee;
+        font-size: 15px;
+        text-decoration: none;
+    }
 
-#cssmenu li:not(.active):hover  {
+
+#cssmenu li:not(.nohover):hover {
     /* make it glow! */
-    -webkit-box-shadow: inset  0px 0px 4px #4195fc;
-       -moz-box-shadow: inset 0px 0px 4px #4195fc;
-            box-shadow: inset 0px 0px 4px #4195fc; /* some variation of blue for the shadow */
-
+    -webkit-box-shadow: inset 0px 0px 4px #4195fc;
+    -moz-box-shadow: inset 0px 0px 4px #4195fc;
+    box-shadow: inset 0px 0px 4px #4195fc; /* some variation of blue for the shadow */
 }
 
 #cssmenu ul li.active {
-  border: 1px solid #0a356c;
-  background: #0f71ba;
-  background: -moz-linear-gradient(inset top, #3fa4f0 0%, #0f71ba 100%);
-  background: -webkit-gradient(inset linear, left top, left bottom, color-stop(0%, #3fa4f0), color-stop(100%, #0f71ba));
-  background: -webkit-linear-gradient(inset top, #3fa4f0 0%, #0f71ba 100%);
-  background: -o-linear-gradient(inset top, #3fa4f0 0%, #0f71ba 100%);
-  background: linear-gradient(inset to bottom, #3fa4f0 0%, #0f71ba 100%);
+    border: 1px solid #0a356c;
+    background: #0f71ba;
+    background: -moz-linear-gradient(inset top, #3fa4f0 0%, #0f71ba 100%);
+    background: -webkit-gradient(inset linear, left top, left bottom, color-stop(0%, #3fa4f0), color-stop(100%, #0f71ba));
+    background: -webkit-linear-gradient(inset top, #3fa4f0 0%, #0f71ba 100%);
+    background: -o-linear-gradient(inset top, #3fa4f0 0%, #0f71ba 100%);
+    background: linear-gradient(inset to bottom, #3fa4f0 0%, #0f71ba 100%);
 }
