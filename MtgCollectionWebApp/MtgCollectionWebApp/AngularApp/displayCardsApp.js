@@ -67,15 +67,20 @@ app.controller('myCtrl', function ($scope, $http) {
     //Filters
     //Legality
     $scope.legalityIncludes = [];
-    $('.legality').on('switchChange.bootstrapSwitch', function (event, state) {
-        if (state) {
-            $scope.legalityIncludes.push(this.value);
+    $scope.legalityToggler = function (id) {
+        var btn = $('#' + id);
+        btn.toggleClass("down");
+        var state = btn.attr("class");
+
+
+        if (state.indexOf('down') > -1) {
+            $scope.legalityIncludes.push(btn.attr("value"));
         } else {
-            var i = $.inArray(this.value, $scope.legalityIncludes);
+            var i = $.inArray(btn.attr("value"), $scope.legalityIncludes);
             $scope.legalityIncludes.splice(i, 1);
         }
         $scope.$apply();
-    });
+    }
     $scope.legalityFilter = function (entry) {
         if ($scope.legalityIncludes.length > 0) {
             var inc = 0;
@@ -92,16 +97,21 @@ app.controller('myCtrl', function ($scope, $http) {
 
     //Rarity
     $scope.rarityIncludes = [];
-    $('.rarity').on('switchChange.bootstrapSwitch', function (event, state) {
-        if (state) {
-            $scope.rarityIncludes.push(this.value);
+
+    $scope.rarityToggler = function (id) {
+        var btn = $('#' + id);
+        btn.toggleClass("down");
+        var state = btn.attr("class");
+
+
+        if (state.indexOf('down') > -1) {
+            $scope.rarityIncludes.push(btn.attr("value"));
         } else {
-            var i = $.inArray(this.value, $scope.rarityIncludes);
+            var i = $.inArray(btn.attr("value"), $scope.rarityIncludes);
             $scope.rarityIncludes.splice(i, 1);
         }
         $scope.$apply();
-    });
-
+    }   
     $scope.rarityFilter = function (entry) {
         if ($scope.rarityIncludes.length > 0) {
             if ($.inArray(entry["Card"]["CardRarity"], $scope.rarityIncludes) < 0) {
@@ -143,15 +153,21 @@ app.controller('myCtrl', function ($scope, $http) {
 
     //Types
     $scope.typeIncludes = [];
-    $('.type').on('switchChange.bootstrapSwitch', function (event, state) {
-        if (state) {
-            $scope.typeIncludes.push(this.value);
+    $scope.typeToggler = function (id) {
+        var btn = $('#' + id);
+        btn.toggleClass("down");
+        var state = btn.attr("class");
+
+
+        if (state.indexOf('down') > -1) {
+            $scope.typeIncludes.push(btn.attr("value"));
         } else {
-            var i = $.inArray(this.value, $scope.typeIncludes);
+            var i = $.inArray(btn.attr("value"), $scope.typeIncludes);
             $scope.typeIncludes.splice(i, 1);
         }
         $scope.$apply();
-    });
+
+    }
 
     $scope.typeFilter = function (entry) {
         //Filter out Planes and Schemes due to image incompatibilities 
@@ -175,15 +191,23 @@ app.controller('myCtrl', function ($scope, $http) {
     $scope.lowerBoundry = [0, 2, 4, 6];
     $scope.upperBoundry = [1, 3, 5, 99];
 
-    $('.cost').on('switchChange.bootstrapSwitch', function (event, state) {
-        if (state) {
-            $scope.costIncludes.push(this.value);
+
+    $scope.costToggler = function (id) {
+        var btn = $('#' + id);
+        btn.toggleClass("down");
+        var state = btn.attr("class");
+
+
+        if (state.indexOf('down') > -1) {
+            $scope.costIncludes.push(btn.attr("value"));
         } else {
-            var i = $.inArray(this.value, $scope.costIncludes);
+            var i = $.inArray(btn.attr("value"), $scope.costIncludes);
             $scope.costIncludes.splice(i, 1);
         }
         $scope.$apply();
-    });
+    }
+
+  
     $scope.costFilter = function (entry) {
         if ($scope.costIncludes.length > 0) {
             var fits = 0;
@@ -201,6 +225,19 @@ app.controller('myCtrl', function ($scope, $http) {
 
     //Owned
     $scope.owned = 0;
+
+    $scope.ownedToggler = function (id) {
+        var btn = $('#' + id);
+        btn.toggleClass("down");
+        var state = btn.attr("class");
+
+        if (state.indexOf('down') > -1) {
+            $scope.owned = 1;
+        } else {
+            $scope.owned = 0;
+        }
+        $scope.$apply();
+    }
     $('#owned').on('switchChange.bootstrapSwitch', function (event, state) {
         if (state) {
             $scope.owned = 1;
@@ -219,8 +256,12 @@ app.controller('myCtrl', function ($scope, $http) {
     
     //Show variations
     $scope.myUnique = 'Card.CardName';
-    $('#unique').on('switchChange.bootstrapSwitch', function (event, state) {
-        if (state) {
+    $scope.uniqueToggler = function (id) {
+        var btn = $('#' + id);
+        btn.toggleClass("down");
+        var state = btn.attr("class");
+
+        if (state.indexOf('down') > -1) {
             $scope.myUnique = '';
             $scope.$apply();
         } else {
@@ -228,8 +269,8 @@ app.controller('myCtrl', function ($scope, $http) {
             $scope.$apply();
         }
         $scope.$apply();
-    });
-
+    }
+    
     //Order By
     $scope.predicate = 'Card.CardName';
     $scope.reverse = false;
@@ -245,11 +286,6 @@ app.controller('myCtrl', function ($scope, $http) {
         $('#cardDetailsModal').modal();
         
     }
-
-    /* Carousel Controlls */
-    $scope.myInterval = 0;
-    $scope.noWrapSlides = false;
-    
 
 });
 

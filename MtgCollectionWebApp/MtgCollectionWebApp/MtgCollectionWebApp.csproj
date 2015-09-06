@@ -232,6 +232,8 @@
     <Content Include="bower_components\angular\angular.js" />
     <Content Include="bower_components\angular\angular.min.js" />
     <Content Include="bower_components\angular\index.js" />
+    <Content Include="bower_components\jquery.scrollTo\jquery.scrollTo.js" />
+    <Content Include="bower_components\jquery.scrollTo\jquery.scrollTo.min.js" />
     <Content Include="Content\bootstrap-switch\bootstrap2\bootstrap-switch.css" />
     <Content Include="Content\bootstrap-switch\bootstrap2\bootstrap-switch.min.css" />
     <Content Include="Content\bootstrap-switch\bootstrap3\bootstrap-switch.css" />
@@ -271,6 +273,9 @@
     <Content Include="bower_components\angular\bower.json" />
     <Content Include="bower_components\angular\package.json" />
     <Content Include="bower_components\angular\README.md" />
+    <Content Include="bower_components\jquery.scrollTo\.bower.json" />
+    <Content Include="bower_components\jquery.scrollTo\bower.json" />
+    <Content Include="bower_components\jquery.scrollTo\LICENSE" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -26,12 +26,12 @@
                 </div>
 
                 <div>
-                    <input value="Creature" data-on-text="Creature" data-off-text="Creature" type="checkbox" class="switch type" />
-                    <input value="Instant" data-on-text="Instant" data-off-text="Instant" type="checkbox" class="switch type" />
-                    <input value="Artifact" data-on-text="Artifact" data-off-text="Artifact" type="checkbox" class="switch type" />
-                    <input value="Sorcery" data-on-text="Sorcery" data-off-text="Sorcery" type="checkbox" class="switch type" />
-                    <input value="Land" data-on-text="Land" data-off-text="Land" type="checkbox" class="switch type" />
-                    <input value="Enchantment" data-on-text="Enchantment" data-off-text="Enchantment" type="checkbox" class="switch type" />
+                    <button ng-click="typeToggler('creatureTgl')" value="Creature" class="toggleButton" id="creatureTgl">Creature</button>
+                    <button ng-click="typeToggler('instantTgl')" value="Instant" class="toggleButton" id="instantTgl">Instant</button>
+                    <button ng-click="typeToggler('artifactTgl')" value="Artifact" class="toggleButton" id="artifactTgl">Artifact</button>
+                    <button ng-click="typeToggler('sorceryTgl')" value="Sorcery" class="toggleButton" id="sorceryTgl">Sorcery</button>
+                    <button ng-click="typeToggler('landTgl')" value="Land" class="toggleButton" id="landTgl">Land</button>
+                    <button ng-click="typeToggler('enchantmentTgl')" value="Enchantment" class="toggleButton" id="enchantmentTgl">Enchantment</button>
                 </div>
                 <div>
                     <button ng-click="colorToggler('whiteTgl')" value="White" class="toggleButton" id="whiteTgl">White</button>
@@ -42,28 +42,28 @@
                 </div>
 
                 <div>
-                    <button ng-click="test()">Tester</button>
-                    <input value="0" data-on-text="0-1" data-off-text="0-1" type="checkbox" class="switch cost" />
-                    <input value="1" data-on-text="2-3" data-off-text="2-3" type="checkbox" class="switch cost" />
-                    <input value="2" data-on-text="4-5" data-off-text="4-5" type="checkbox" class="switch cost" />
-                    <input value="3" data-on-text="6+" data-off-text="6+" type="checkbox" class="switch cost" />
+                    <button ng-click="costToggler('oneTgl')" value="0" class="toggleButton" id="oneTgl">0 - 1</button>
+                    <button ng-click="costToggler('twoTgl')" value="1" class="toggleButton" id="twoTgl">2 - 3</button>
+                    <button ng-click="costToggler('threeTgl')" value="2" class="toggleButton" id="threeTgl">4 - 5</button>
+                    <button ng-click="costToggler('fourTgl')" value="3" class="toggleButton" id="fourTgl">6 +</button>
                 </div>
 
                 <div>
-                    <input value="Common" data-on-text="Common" data-off-text="Common" type="checkbox" class="switch rarity" />
-                    <input value="Uncommon" data-on-text="Uncommon" data-off-text="Uncommon" type="checkbox" class="switch rarity" />
-                    <input value="Rare" data-on-text="Rare" data-off-text="Rare" type="checkbox" class="switch rarity" />
-                    <input value="Mythic" data-on-text="Mythic" data-off-text="Mythic" type="checkbox" class="switch rarity" />
+                    <button ng-click="rarityToggler('commonTgl')" value="Common" class="toggleButton" id="commonTgl">Common</button>
+                    <button ng-click="rarityToggler('uncommonTgl')" value="Uncommon" class="toggleButton" id="uncommonTgl">Uncommon</button>
+                    <button ng-click="rarityToggler('rareTgl')" value="Rare" class="toggleButton" id="rareTgl">Rare</button>
+                    <button ng-click="rarityToggler('mythicTgl')" value="Mythic" class="toggleButton" id="mythicTgl">Mythic</button>
                 </div>
 
                 <div>
-                    <input id="owned" data-on-text="Owned" data-off-text="Owned" type="checkbox" class="switch" />
-                    <input value="Commander" data-on-text="Commander" data-off-text="Commander" type="checkbox" class="switch legality" />
-                    <input value="Legacy" data-on-text="Legacy" data-off-text="Legacy" type="checkbox" class="switch legality" />
-                    <input value="Vintage" data-on-text="Vintage" data-off-text="Vintage" type="checkbox" class="switch legality" />
-                    <input value="Standard" data-on-text="Standard" data-off-text="Standard" type="checkbox" class="switch legality" />
+                    <button ng-click="ownedToggler('owned')" class="toggleButton" id="owned">Owned</button>
+                    <button ng-click="legalityToggler('commanderTgl')" value="Commander" class="toggleButton" id="commanderTgl">Commander</button>
+                    <button ng-click="legalityToggler('legacyTgl')" value="Legacy" class="toggleButton" id="legacyTgl">Legacy</button>
+                    <button ng-click="legalityToggler('vintageTgl')" value="Vintage" class="toggleButton" id="vintageTgl">Vintage</button>
+                    <button ng-click="legalityToggler('standardTgl')" value="Standard" class="toggleButton" id="standardTgl">Standard</button>
                 </div>
-                <input id="unique" data-on-text="Card Variations" data-off-text="Card Variations" type="checkbox" class="switch" />
+
+                <button ng-click="uniqueToggler('unique')" class="toggleButton" id="unique">Show variations</button>
                 <button ng-click="order('Card.CardName')">Name</button>
                 <button ng-click="order('Rating')">Rating</button>
                 <button ng-click="order('Card.CardSet')">Set</button>
@@ -95,10 +95,10 @@
                                 <div class="btn-group" role="group" ng-repeat="a in range(5) track by $index">
                                     <div ng-switch="x.Rating >= $index + 1">
                                         <div ng-switch-when="true">
-                                            <img src="~/img/star_full.png" ng-click="rateCard(x.Card.CardName, $index + 1, x);" class="star-true" />
+                                            <img src="~/img/star_full.png" ng-click="rateCard(x.Card.CardName, $index + 1, x);" class="star" />
                                         </div>
                                         <div ng-switch-when="false">
-                                            <img src="~/img/star_none.png" ng-click="rateCard(x.Card.CardName, $index + 1, x);" class="star-false" />
+                                            <img src="~/img/star_none.png" ng-click="rateCard(x.Card.CardName, $index + 1, x);" class="star" />
                                         </div>
                                     </div>
                                 </div>
@@ -106,8 +106,8 @@
 
                         </div>
                     </div>
-                    <center><nav class="pagination pagination-lg nav-justified paginatorController"><dir-pagination-controls template-url="~/bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls></nav></center></center>
-
+                    
+                    <center><nav class="pagination pagination-lg nav-justified paginatorController"><dir-pagination-controls id="paginator" on-page-change="myMethod(newPageNumber)" template-url="~/bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls></nav></center></center>
 </div>
 
             
@@ -150,9 +150,12 @@
         $(window).load(function () {
             $("input.switch").bootstrapSwitch();
         });
+
     </script>
     <script src="~/AngularApp/displayCardsApp.js"></script>
     <script src="~/Scripts/Cards/CardsModals.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.js"></script>
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.4.js"></script>
+
 }
+
