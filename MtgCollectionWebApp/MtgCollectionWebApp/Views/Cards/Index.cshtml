@@ -18,8 +18,8 @@
 <div id="pageContainer" ng-app="myApp" ng-controller="myCtrl">
     <div class="darkerPic">
         <br />
-        <div class="container">
-            <div style="background-color:#ffffff; padding:10px" class="searchToolBox container">
+        <div class="container ">
+            <div style="background-color:#ffffff; padding:10px" class="searchToolBox container metalicBackground">
                 <br />
                 <div>
                     <input ng-model="searchBox" type="text"><br><br>
@@ -73,13 +73,13 @@
 
             <br>
 
-            <div style="background-color:#ffffff;" id="cardDisplay" class="container">
+            <div id="cardDisplay" class="container metalicBackground">
                 <center>
                 <br />
                     <br />
                     <div id="dvCards" dir-paginate="x in data | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter  | filter:legalityFilter | filter:costFilter |filter:searchBox | itemsPerPage:16 ">
                         <div class="col-md-3" style="margin-bottom: 20px;">
-                            <img ng-click="displayCardDetailsModal(x)" class="img-rounded cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
+                            <img ng-click="displayCardDetailsModal(x)" class="cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
                             <div class="EntryControlls" role="group">
                                 <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
                                 <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
@@ -98,7 +98,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="container"><center><nav class="pagination pagination-lg"><dir-pagination-controls></dir-pagination-controls></nav></center></div></center>
+                    <center><nav class="pagination pagination-lg nav-justified"><dir-pagination-controls></dir-pagination-controls></nav></center>
 
 </div>
 

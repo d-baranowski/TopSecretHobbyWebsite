@@ -33,3 +33,13 @@ button.toggleButton.down {
     background-size: auto auto;
 }
 
+.metalicBackground {
+    background-image: url('../../img/ws_Dark_Grunge_Metal_Texture_1920x1080.jpg');
+    border-radius:80px;
+    border:2px solid silver;
+}
+
+.cardImage {
+    border:none;border-radius:13px;-webkit-border-radius:18px;-moz-border-radius:13px;
+}
+

@@ -153,9 +153,11 @@ app.controller('myCtrl', function ($scope, $http) {
         $scope.$apply();
     });
 
-   
-
     $scope.typeFilter = function (entry) {
+        //Filter out Planes and Schemes due to image incompatibilities 
+        if (entry["Card"]["CardTypes"].toString().indexOf("Plane") != -1 || entry["Card"]["CardTypes"].toString().indexOf("Scheme") != -1) {
+            return false;
+        }
         if ($scope.typeIncludes.length > 0) {
             var fits = 0;
             for (item in $scope.typeIncludes) {
