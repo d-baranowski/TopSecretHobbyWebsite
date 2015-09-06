@@ -80,25 +80,33 @@
                     <div id="dvCards" dir-paginate="x in data | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter  | filter:legalityFilter | filter:costFilter |filter:searchBox | itemsPerPage:16 ">
                         <div class="col-md-3" style="margin-bottom: 20px;">
                             <img ng-click="displayCardDetailsModal(x)" class="cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
-                            <div class="EntryControlls" role="group">
-                                <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
-                                <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
-                                <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
-                            </div>
 
-                            <div class="btn-group" role="group" ng-repeat="a in range(5) track by $index">
-                                <div ng-switch="x.Rating >= $index + 1">
-                                    <div ng-switch-when="true">
-                                        <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-true">Y</button>
-                                    </div>
-                                    <div ng-switch-when="false">
-                                        <button ng-click="rateCard(x.Card.CardName, $index + 1, x);" type="button" class="btn btn-default star-false">{{$index + 1}}</button>
+                            <div class="container" id="controllers">
+                                <!--Increment and Decrement Quantity in Collection-->
+                                <div class="entryControlls input-group" role="group">
+                                    <center>
+                                        <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
+                                        <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
+                                        <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
+                                    </center>
+                                </div>
+
+                                <!--Display community rating of card and allow user to rate card-->
+                                <div class="btn-group" role="group" ng-repeat="a in range(5) track by $index">
+                                    <div ng-switch="x.Rating >= $index + 1">
+                                        <div ng-switch-when="true">
+                                            <img src="~/img/star_full.png" ng-click="rateCard(x.Card.CardName, $index + 1, x);" class="star-true" />
+                                        </div>
+                                        <div ng-switch-when="false">
+                                            <img src="~/img/star_none.png" ng-click="rateCard(x.Card.CardName, $index + 1, x);" class="star-false" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
-                    <center><nav class="pagination pagination-lg nav-justified"><dir-pagination-controls></dir-pagination-controls></nav></center>
+                    <center><nav class="pagination pagination-lg nav-justified paginatorController"><dir-pagination-controls template-url="~/bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls></nav></center></center>
 
 </div>
 

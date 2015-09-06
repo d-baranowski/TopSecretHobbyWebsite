@@ -246,9 +246,12 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="img\background.jpg" />
+    <Content Include="img\ControlPanelBackround.jpg" />
     <Content Include="img\dark-metal-grid-6.jpg" />
     <Content Include="img\logo.png" />
     <Content Include="img\red.bmp" />
+    <Content Include="img\star_full.png" />
+    <Content Include="img\star_none.png" />
     <Content Include="img\ws_Dark_Grunge_Metal_Texture_1920x1080.jpg" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
