@@ -272,11 +272,26 @@ app.controller('myCtrl', function ($scope, $http) {
     }
     
     //Order By
+    $scope.orderBtns = ['ordName', 'ordRating', 'ordSet', 'ordArtist', 'ordManaCost'];
     $scope.predicate = 'Card.CardName';
     $scope.reverse = false;
-    $scope.order = function (predicate) {
+    $scope.order = function (predicate, id) {
+        for (item in $scope.orderBtns) {
+            var btn = $('#' + $scope.orderBtns[item]);
+            var state = btn.attr("class");
+            if (state.indexOf('down') > -1) {
+                btn.toggleClass("down");
+            }
+        }
+
+        var btn = $('#' + id);
+        btn.toggleClass("down");
         $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
         $scope.predicate = predicate;
+
+        if ($scope.reverse == true) {
+            
+        }
     };
 
     $scope.displayCardDetailsModal = function (entry) {

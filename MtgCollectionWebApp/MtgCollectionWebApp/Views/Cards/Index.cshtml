@@ -26,19 +26,35 @@
                 </div>
 
                 <div>
-                    <button ng-click="typeToggler('creatureTgl')" value="Creature" class="toggleButton" id="creatureTgl">Creature</button>
-                    <button ng-click="typeToggler('instantTgl')" value="Instant" class="toggleButton" id="instantTgl">Instant</button>
-                    <button ng-click="typeToggler('artifactTgl')" value="Artifact" class="toggleButton" id="artifactTgl">Artifact</button>
-                    <button ng-click="typeToggler('sorceryTgl')" value="Sorcery" class="toggleButton" id="sorceryTgl">Sorcery</button>
-                    <button ng-click="typeToggler('landTgl')" value="Land" class="toggleButton" id="landTgl">Land</button>
-                    <button ng-click="typeToggler('enchantmentTgl')" value="Enchantment" class="toggleButton" id="enchantmentTgl">Enchantment</button>
+                    <button ng-click="typeToggler('creatureTgl')" value="Creature" class="toggleButton" id="creatureTgl">
+                        <img class="btnIco" src="~/img/typeIcons/creatureSymbol.png" /> Creature</button>
+                    <button ng-click="typeToggler('instantTgl')" value="Instant" class="toggleButton" id="instantTgl">
+                        <img class="btnIco" src="~/img/typeIcons/instantSymbol.png" />Instant</button>
+                    <button ng-click="typeToggler('artifactTgl')" value="Artifact" class="toggleButton" id="artifactTgl">
+                        <img class="btnIco" src="~/img/typeIcons/artifactSymbol.png" />Artifact</button>
+                    <button ng-click="typeToggler('sorceryTgl')" value="Sorcery" class="toggleButton" id="sorceryTgl">
+                        <img class="btnIco" src="~/img/typeIcons/sorcerySymbol.png" />Sorcery</button>
+                    <button ng-click="typeToggler('landTgl')" value="Land" class="toggleButton" id="landTgl">
+                        <img class="btnIco" src="~/img/typeIcons/landSymbol.png" />Land</button>
+                    <button ng-click="typeToggler('enchantmentTgl')" value="Enchantment" class="toggleButton" id="enchantmentTgl">
+                        <img class="btnIco" src="~/img/typeIcons/enchantmentSymbol.png" />Enchantment</button>
                 </div>
                 <div>
-                    <button ng-click="colorToggler('whiteTgl')" value="White" class="toggleButton" id="whiteTgl">White</button>
-                    <button ng-click="colorToggler('blueTgl')" value="Blue" class="toggleButton" id="blueTgl">Blue</button>
-                    <button ng-click="colorToggler('greenTgl')" value="Green" class="toggleButton" id="greenTgl">Green</button>
-                    <button ng-click="colorToggler('blackTgl')" value="Black" class="toggleButton" id="blackTgl">Black</button>
-                    <button ng-click="colorToggler('redTgl')" value="Red" class="toggleButton" id="redTgl">Red</button>
+                    <button ng-click="colorToggler('whiteTgl')" value="White" class="iconBtn toggleButton" id="whiteTgl">
+                        <img class="btnIcoLg" src="~/img/manaSymbols/White_mana.png" />
+                    </button>
+                    <button ng-click="colorToggler('blueTgl')" value="Blue" class="iconBtn toggleButton" id="blueTgl">
+                        <img class="btnIcoLg"  src="~/img/manaSymbols/Blue_mana.png" />
+                    </button>
+                    <button ng-click="colorToggler('greenTgl')" value="Green" class="iconBtn toggleButton" id="greenTgl">
+                        <img class="btnIcoLg"  src="~/img/manaSymbols/Green_mana.png" />
+                    </button>
+                    <button ng-click="colorToggler('blackTgl')" value="Black" class="iconBtn toggleButton" id="blackTgl">
+                        <img class="btnIcoLg"  src="~/img/manaSymbols/Black_mana.png" />
+                    </button>
+                    <button ng-click="colorToggler('redTgl')" value="Red" class="iconBtn toggleButton" id="redTgl">
+                        <img class="btnIcoLg"  src="~/img/manaSymbols/Red_mana.png" />
+                    </button>
                 </div>
 
                 <div>
@@ -49,26 +65,34 @@
                 </div>
 
                 <div>
-                    <button ng-click="rarityToggler('commonTgl')" value="Common" class="toggleButton" id="commonTgl">Common</button>
-                    <button ng-click="rarityToggler('uncommonTgl')" value="Uncommon" class="toggleButton" id="uncommonTgl">Uncommon</button>
-                    <button ng-click="rarityToggler('rareTgl')" value="Rare" class="toggleButton" id="rareTgl">Rare</button>
-                    <button ng-click="rarityToggler('mythicTgl')" value="Mythic" class="toggleButton" id="mythicTgl">Mythic</button>
+                    <button ng-click="rarityToggler('commonTgl')" value="Common" class="iconBtn toggleButton" id="commonTgl">
+                        <img class="btnIcoLg" src="~/img/raritySymbols/common.png" />
+                    </button>
+                    <button ng-click="rarityToggler('uncommonTgl')" value="Uncommon" class="iconBtn toggleButton" id="uncommonTgl">
+                        <img class="btnIcoLg" src="~/img/raritySymbols/uncommon.png" />
+                    </button>
+                    <button ng-click="rarityToggler('rareTgl')" value="Rare" class="iconBtn toggleButton" id="rareTgl">
+                        <img class="btnIcoLg" src="~/img/raritySymbols/rare.png" />
+                    </button>
+                    <button ng-click="rarityToggler('mythicTgl')" value="Mythic" class="iconBtn toggleButton" id="mythicTgl">
+                        <img class="btnIcoLg" src="~/img/raritySymbols/mythic.png" />
+                    </button>
                 </div>
 
                 <div>
-                    <button ng-click="ownedToggler('owned')" class="toggleButton" id="owned">Owned</button>
-                    <button ng-click="legalityToggler('commanderTgl')" value="Commander" class="toggleButton" id="commanderTgl">Commander</button>
-                    <button ng-click="legalityToggler('legacyTgl')" value="Legacy" class="toggleButton" id="legacyTgl">Legacy</button>
-                    <button ng-click="legalityToggler('vintageTgl')" value="Vintage" class="toggleButton" id="vintageTgl">Vintage</button>
-                    <button ng-click="legalityToggler('standardTgl')" value="Standard" class="toggleButton" id="standardTgl">Standard</button>
+                    <button ng-click="ownedToggler('owned')" class="toggleButton" id="owned"><span class="glyphicon glyphicon-inbox"></span> Owned</button>
+                    <button ng-click="legalityToggler('commanderTgl')" value="Commander" class="toggleButton" id="commanderTgl"><span class="glyphicon glyphicon-tower"></span> Commander</button>
+                    <button ng-click="legalityToggler('legacyTgl')" value="Legacy" class="toggleButton" id="legacyTgl"><span class="glyphicon glyphicon-king"></span> Legacy</button>
+                    <button ng-click="legalityToggler('vintageTgl')" value="Vintage" class="toggleButton" id="vintageTgl"><span class="glyphicon glyphicon-queen"></span> Vintage</button>
+                    <button ng-click="legalityToggler('standardTgl')" value="Standard" class="toggleButton" id="standardTgl"><span class="glyphicon glyphicon-knight"></span> Standard</button>
                 </div>
 
-                <button ng-click="uniqueToggler('unique')" class="toggleButton" id="unique">Show variations</button>
-                <button ng-click="order('Card.CardName')">Name</button>
-                <button ng-click="order('Rating')">Rating</button>
-                <button ng-click="order('Card.CardSet')">Set</button>
-                <button ng-click="order('Card.CardArtist')">Atrist</button>
-                <button ng-click="order('Card.CardCmc')">Mana Cost</button>
+                <button ng-click="uniqueToggler('unique')" class="toggleButton" id="unique"><span class="glyphicon glyphicon-camera"></span> Show variations</button>
+                <button id="ordName" class="toggleButton" ng-click="order('Card.CardName','ordName')">Name </button>
+                <button id="ordRating" class="toggleButton" ng-click="order('Rating','ordRating')">Rating</button>
+                <button id="ordSet" class="toggleButton" ng-click="order('Card.CardSet','ordSet')">Set</button>
+                <button id="ordArtist" class="toggleButton" ng-click="order('Card.CardArtist','ordArtist')">Atrist</button>
+                <button id="ordManaCost" class="toggleButton" ng-click="order('Card.CardCmc','ordManaCost')">Mana Cost</button>
             </div>
 
             <br>
@@ -140,18 +164,7 @@
 
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/templates/bs-ecosave/")
-
-    <link rel="stylesheet" type="text/css" href="http://www.bootstrap-switch.org/dist/css/bootstrap3/bootstrap-switch.css">
-    <script type='text/javascript' src="http://www.bootstrap-switch.org/dist/js/bootstrap-switch.js"></script>
-
-
-    <script type='text/javascript'>
-
-        $(window).load(function () {
-            $("input.switch").bootstrapSwitch();
-        });
-
-    </script>
+   
     <script src="~/AngularApp/displayCardsApp.js"></script>
     <script src="~/Scripts/Cards/CardsModals.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.js"></script>

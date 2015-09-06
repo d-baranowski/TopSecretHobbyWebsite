@@ -1,20 +1,71 @@
 ﻿button.toggleButton {
     cursor: pointer;
-    background: #ccc;
-    border-top: solid 2px #eaeaea;
-    border-left: solid 2px #eaeaea;
-    border-bottom: solid 2px #777;
-    border-right: solid 2px #777;
-    padding: 5px 5px;
+    background-color: transparent;
+    background-image: -moz-linear-gradient(center top, #444, #000);
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-position: 0% 0%;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+    border: solid 2px #8e1b0e;
+    border-radius: 10px;
+    padding: 7px 7px;
+    color: white;
+    font-weight:700;
+    height: 60px;
+    min-width: 60px;
+    margin:3px;
 }
 
-    button.toggleButton.down {
-        background: #bbb;
-        border-top: solid 2px #777;
-        border-left: solid 2px #777;
-        border-bottom: solid 2px #eaeaea;
-        border-right: solid 2px #eaeaea;
-    }
+button.iconBtn {
+    padding:0px;
+    border-radius:100%;
+}
+
+.btnIco {
+    height: 25px;
+    margin: 5px;
+}
+
+.btnIcoLg {
+    height:50px;
+    width:50px;
+}
+
+button.toggleButton.iconBtn {
+    filter: brightness(50%);
+}
+
+.reversed {
+    text-decoration:underline;
+}
+
+button.toggleButton.down {
+    background-color: transparent;
+    background-image: -moz-linear-gradient(center top, #84211E, #000);
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-position: 0% 0%;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+    border-top: solid 2px #777;
+    border-left: solid 2px #777;
+    border-bottom: solid 2px #eaeaea;
+    border-right: solid 2px #eaeaea;
+    filter: grayscale(0%);
+    -webkit-box-shadow: 0px 0px 5px 3px #8e1b0e;
+    -moz-box-shadow: 0px 0px 5px 3px #8e1b0e;
+    box-shadow: 0px 0px 5px 3px #8e1b0e;
+}
+
+button.toggleButton:hover {
+    -webkit-box-shadow: 0px 0px 5px 3px #8e1b0e;
+    -moz-box-shadow: 0px 0px 5px 3px #8e1b0e;
+    box-shadow: 0px 0px 5px 3px #8e1b0e;
+    filter: grayscale(0%);
+}
 
 #pageContainer {
     background: url('../../img/background.jpg') no-repeat center center fixed;
@@ -47,9 +98,9 @@
 }
 
     .cardImage:hover {
-        -webkit-box-shadow: 0px 0px 5px 3px rgba(199,109,109,1);
-        -moz-box-shadow: 0px 0px 5px 3px rgba(199,109,109,1);
-        box-shadow: 0px 0px 5px 3px rgba(199,109,109,1);
+        -webkit-box-shadow: 0px 0px 5px 3px #8e1b0e;
+        -moz-box-shadow: 0px 0px 5px 3px #8e1b0e;
+        box-shadow: 0px 0px 5px 3px #8e1b0e;
     }
 
 .star {

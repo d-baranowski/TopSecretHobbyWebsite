@@ -7,14 +7,19 @@
 
 
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/bootstrap.css")
-    @Styles.Render("~/Content/bootstrap.min.css")
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("styles", required: false)
     <link href="bootstrap-switch.css" rel="stylesheet">
     <link href="~/templates/cssmenu/styles.css" rel="stylesheet" />
+    <style>
+        .body-content{
+           background-color:black;
+           padding: 0px;
+        }      
+    </style>
+    
 </head>
-<body>
+<body style="background-color:#000000;">
     <div class="navbar navbar-fixed-top navbar-inverse">
         <div class="container">
             <div class="navbar-collapse collapse">
@@ -47,6 +52,7 @@
     <script src="~/bower_components/angularUtils-pagination/index.js"></script>
     <script src="~/bower_components/angularUtils-pagination/package.js"></script>
     <script src="~/bower_components/jquery.scrollTo/jquery.scrollTo.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("bootstrap.min.js")
