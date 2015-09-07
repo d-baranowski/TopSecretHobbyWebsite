@@ -272,13 +272,14 @@ app.controller('myCtrl', function ($scope, $http) {
     }
     
     //Order By
-    $scope.orderBtns = ['ordName', 'ordRating', 'ordSet', 'ordArtist', 'ordManaCost'];
+    $scope.orderBtns = ['ordName', 'ordRating', 'ordSet', 'ordArtist', 'ordManaCost','ordType'];
     $scope.predicate = 'Card.CardName';
     $scope.reverse = false;
     $scope.order = function (predicate, id) {
         for (item in $scope.orderBtns) {
             var btn = $('#' + $scope.orderBtns[item]);
             var state = btn.attr("class");
+            btn.children('span').remove();
             if (state.indexOf('down') > -1) {
                 btn.toggleClass("down");
             }
@@ -289,8 +290,12 @@ app.controller('myCtrl', function ($scope, $http) {
         $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
         $scope.predicate = predicate;
 
+        var html = btn.html();
         if ($scope.reverse == true) {
-            
+            btn.append(" <span class='glyphicon glyphicon-arrow-up'></span>");
+        } else {
+            btn.children('span').remove();
+            btn.append(" <span class='glyphicon glyphicon-arrow-down'></span>");
         }
     };
 
