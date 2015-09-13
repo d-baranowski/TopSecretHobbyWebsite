@@ -20,15 +20,15 @@
 <div id="pageContainer" ng-app="myApp" ng-controller="myCtrl" class="fullScreen">
     <!--Makes background image darker-->
     <div class="darkerPic fullScreen">
-        
+
         <br /><br />
         <!--Container for all filter control buttons-->
         <div class="searchToolBox container metalicBackground">
-            <center><!--SerchToolBox-->
-                
+            <center>
+                <!--SerchToolBox-->
                 <!--Seach tool Row-->
                 <div style="padding:20px;" class="row">
-                   
+
                     <!--Type Filters-->
                     <div class="col-md-2">
                         <h3 class="myLabel">Card type</h3>
@@ -107,7 +107,6 @@
                         <button ng-click="legalityToggler('standardTgl')" value="Standard" class="toggleButton med" id="standardTgl"><span class="glyphicon glyphicon-knight"></span> Standard</button>
                     </div>
                     <!--Legality End-->
-
                     <!--Order by and utility filters-->
                     <div class="col-md-4 col-md-offset-1">
                         <h3 class="myLabel">Order By</h3>
@@ -126,8 +125,8 @@
                         <input ng-model="searchBox" type="text">
                     </div>
 
-                        <!--Utils End-->
-                    </div>
+                    <!--Utils End-->
+                </div>
                 <!--Row End-->
             </center><!--SerchToolBox-->
         </div>
@@ -141,7 +140,7 @@
             <center>
                 <br />
                 <br />
-                <div id="dvCards" dir-paginate="x in data | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter  | filter:legalityFilter | filter:costFilter |filter:searchBox | itemsPerPage:16 ">
+                <div id="dvCards" dir-paginate="x in data | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter  | filter:legalityFilter | filter:costFilter |filter:searchBox | itemsPerPage:4 ">
                     <div class="col-md-3" style="margin-bottom: 20px;">
                         <img ng-click="displayCardDetailsModal(x)" class="cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
 
@@ -171,13 +170,23 @@
 
                     </div>
                 </div>
-               <nav class="pagination pagination-lg nav-justified paginatorController"><dir-pagination-controls id="paginator" on-page-change="myMethod(newPageNumber)" template-url="~/bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls></nav>
+                <nav class="pagination pagination-lg nav-justified paginatorController"><dir-pagination-controls id="paginator" on-page-change="myMethod(newPageNumber)" template-url="~/bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls></nav>
             </center>
         </div>
         <!--Card Display End-->
+
+        <br>
+        <!--Deck List-->
+        <div id="deckList" class="container metalicBackground">
+            <center>
+                <h2 class="myLabel">List of owned decks</h2>
+
+            </center>
+        </div>
+        <!--Deck List End-->
+
         <!-- http://www.jasonbutz.info/bootstrap-lightbox/
         http://twitter.github.io/typeahead.js/ Check this out man  -->
-        
         <!--Modal Start-->
         <div class="modal" id="cardDetailsModal">
             <div style="width: 40%;" class="modal-dialog">
@@ -195,7 +204,7 @@
                     </div>
                 </div>
             </div>
-         </div>
+        </div>
         <!--Modal End-->
 
     </div>
@@ -214,6 +223,5 @@
     <script src="~/Scripts/Cards/CardsModals.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.js"></script>
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.4.js"></script>
-
 }
 

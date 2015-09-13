@@ -10,6 +10,5 @@ namespace MtgCollectionWebApp.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public virtual int CollectionId { get; set; }       
         public virtual ICollection<CollectionEntry> CollectionEntries { get; set; }
-        
     }
 }

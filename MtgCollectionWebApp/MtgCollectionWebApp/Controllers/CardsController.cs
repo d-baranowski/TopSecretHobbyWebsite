@@ -17,9 +17,20 @@ namespace MtgCollectionWebApp.Controllers
             } else
             {
                 return RedirectToAction("Login", "Account");
-                 
+            } 
+        }
+
+        // GET: Cards
+        public ActionResult DeckBuilder()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
             }
-            
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
     }
 }
