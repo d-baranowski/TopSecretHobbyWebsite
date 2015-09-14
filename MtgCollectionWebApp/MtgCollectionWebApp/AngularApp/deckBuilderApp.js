@@ -1,33 +1,15 @@
-﻿
-var app = angular.module('myApp', ['angular.filter', 'angularUtils.directives.dirPagination','ui.router']);
-
-app.config(function ($stateProvider, $urlRouterProvider) {
-    // For any unmatched url, redirect to /state1
-    $urlRouterProvider.otherwise("/state1");
-
-    // Now set up the states
-    $stateProvider
-      .state('state1', {
-          url: "/state1",
-          templateUrl: "_deckBuilderListState.cshtml",
-          controller: function ($scope, $http) {
-              $http.get("http://localhost:59756/api/DeckApi/").success(function (response) {
-                  $scope.decks = response;
-              });
-          }
-      })
-      .state('state2', {
-          url: "/state2",
-          templateUrl: "_deckBuilderCreateState.cshtml"
-      });
-});
-
+﻿var app = angular.module('myApp', ['angular.filter', 'angularUtils.directives.dirPagination']);
 
 app.controller('myCtrl', function ($scope, $http) {
 
     $http.get("http://localhost:59756/api/CardsApi/").success(function (response) {
         $scope.data = response;
     });
+
+    $http.get("http://localhost:59756/api/DeckApi/").success(function (response) {
+        $scope.decks = response;
+    });
+
 
     $scope.addOne = function (entry) {
         changeQuantity(entry["Card"]["CardId"], +1);
