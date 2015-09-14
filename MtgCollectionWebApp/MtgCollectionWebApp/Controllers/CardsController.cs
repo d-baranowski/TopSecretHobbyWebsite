@@ -32,6 +32,21 @@ namespace MtgCollectionWebApp.Controllers
                 return RedirectToAction("Login", "Account");
             }
         }
+
+        public ActionResult deckList()
+        {
+            return PartialView("~/Views/Cards/_deckList.cshtml");
+        }
+
+        public ActionResult createDeck()
+        {
+            return PartialView("~/Views/Cards/_createDeck.cshtml");
+        }
+
+        public ActionResult deckBox()
+        {
+            return PartialView("~/Views/Cards/_deckBox.cshtml");
+        }
     }
 }
 

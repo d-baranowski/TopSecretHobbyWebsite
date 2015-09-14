@@ -2,27 +2,22 @@
 
 app.controller('myCtrl', function ($scope, $http) {
 
+    //Retrieve Data
     $http.get("http://localhost:59756/api/CardsApi/").success(function (response) {
         $scope.data = response;
     });
-
     $http.get("http://localhost:59756/api/DeckApi/").success(function (response) {
         $scope.decks = response;
     });
 
-
-    $scope.addOne = function (entry) {
-        changeQuantity(entry["Card"]["CardId"], +1);
-        entry["Quantity"] = entry["Quantity"] + 1;
+    $scope.refreshDecks = function () {
+        $http.get("http://localhost:59756/api/DeckApi/").success(function (response) {
+            $scope.decks = response;
+            $scope.apply();
+        });
     }
 
-    $scope.subOne = function (entry) {
-        changeQuantity(entry["Card"]["CardId"], -1);
-        if (entry["Quantity"] != 0) {
-            entry["Quantity"] = entry["Quantity"] - 1;
-        }
-    }
-
+    //Rate Card
     $scope.rateCard = function (name, rating, entry) {
         entry["Rating"] = rating;
         $.ajax({
@@ -38,10 +33,7 @@ app.controller('myCtrl', function ($scope, $http) {
         });
     }
 
-    $scope.range = function (n) {
-        return new Array(n);
-    };
-
+    //Quantity
     function changeQuantity(cardId, value) {
         $.ajax({
             url: 'http://localhost:59756/api/Quantity/' + cardId + "?value=" + value,
@@ -53,7 +45,19 @@ app.controller('myCtrl', function ($scope, $http) {
         }).success(function (result) {
         });
     }
+    $scope.addOne = function (entry) {
+        changeQuantity(entry["Card"]["CardId"], +1);
+        entry["Quantity"] = entry["Quantity"] + 1;
+    }
+    $scope.subOne = function (entry) {
+        changeQuantity(entry["Card"]["CardId"], -1);
+        if (entry["Quantity"] != 0) {
+            entry["Quantity"] = entry["Quantity"] - 1;
+        }
+    }
 
+    //Filters
+    //Legality
     $scope.getLegality = function (item, format) {
         if (item["Card"]["CardLegalities"] != "") {
             var obj = angular.fromJson(item["Card"]["CardLegalities"]);
@@ -67,9 +71,6 @@ app.controller('myCtrl', function ($scope, $http) {
         }
         return false;
     }
-
-    //Filters
-    //Legality
     $scope.legalityIncludes = [];
     $scope.legalityToggler = function (id) {
         var btn = $('#' + id);
@@ -101,7 +102,6 @@ app.controller('myCtrl', function ($scope, $http) {
 
     //Rarity
     $scope.rarityIncludes = [];
-
     $scope.rarityToggler = function (id) {
         var btn = $('#' + id);
         btn.toggleClass("down");
@@ -172,7 +172,6 @@ app.controller('myCtrl', function ($scope, $http) {
         $scope.$apply();
 
     }
-
     $scope.typeFilter = function (entry) {
         //Filter out Planes and Schemes due to image incompatibilities 
         if (entry["Card"]["CardTypes"].toString().indexOf("Plane") != -1 || entry["Card"]["CardTypes"].toString().indexOf("Scheme") != -1) {
@@ -194,8 +193,6 @@ app.controller('myCtrl', function ($scope, $http) {
     $scope.costIncludes = [];
     $scope.lowerBoundry = [0, 2, 4, 6];
     $scope.upperBoundry = [1, 3, 5, 99];
-
-
     $scope.costToggler = function (id) {
         var btn = $('#' + id);
         btn.toggleClass("down");
@@ -210,8 +207,6 @@ app.controller('myCtrl', function ($scope, $http) {
         }
         $scope.$apply();
     }
-
-
     $scope.costFilter = function (entry) {
         if ($scope.costIncludes.length > 0) {
             var fits = 0;
@@ -229,7 +224,6 @@ app.controller('myCtrl', function ($scope, $http) {
 
     //Owned
     $scope.owned = 0;
-
     $scope.ownedToggler = function (id) {
         var btn = $('#' + id);
         btn.toggleClass("down");
@@ -288,12 +282,10 @@ app.controller('myCtrl', function ($scope, $http) {
                 btn.toggleClass("down");
             }
         }
-
         var btn = $('#' + id);
         btn.toggleClass("down");
         $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
         $scope.predicate = predicate;
-
         var html = btn.html();
         if ($scope.reverse == true) {
             btn.append(" <span class='glyphicon glyphicon-arrow-up'></span>");
@@ -302,7 +294,6 @@ app.controller('myCtrl', function ($scope, $http) {
             btn.append(" <span class='glyphicon glyphicon-arrow-down'></span>");
         }
     };
-
     $scope.displayCardDetailsModal = function (entry) {
         $('#cardDetailsModalTitle').html(entry["Card"]["CardName"]);
         $scope.modalDescription = entry["Card"]["CardText"];
@@ -311,5 +302,45 @@ app.controller('myCtrl', function ($scope, $http) {
 
     }
 
+    //Utilities
+    $scope.range = function (n) {
+        return new Array(n);
+    };
+
+    //Deck Menu Navigation
+    $scope.deckMenuPath = "deckList";
+    $scope.setDeckMenuPath = function (path) {
+        $scope.deckMenuPath = path;
+        $scope.apply();
+    };
+
+    //Create Deck
+    $scope.createDeck = function (name, description) {
+        $.ajax({
+            url: 'http://localhost:59756/api/DeckApi',
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: '{"DeckId": "0","OwnerId": "0","DeckName": "' + name + '", "DeckDesc": "' + description + '"}'
+        }).done(function (data) {
+            $scope.refreshDecks();
+            $scope.deckMenuPath = "deckList";
+            $scope.apply();
+        }).fail(function (err) {
+            alert('Sorry I failed you :(');
+        }).success(function (result) {
+        });
+    }
+
+    //Open deck
+    $scope.openDeck = function (deckId) {
+        var result = $.grep($scope.decks, function (deck) { return deck.Deck.DeckId == deckId; });
+        if (result.length == 0) {
+            // not found
+        } else if (result.length == 1) {
+            $scope.activeDeck = result[0].Deck;
+            $scope.deckMenuPath = "deckBox";
+        }
+    }
 });
 

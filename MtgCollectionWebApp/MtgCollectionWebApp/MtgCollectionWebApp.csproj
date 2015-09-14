@@ -523,6 +523,9 @@
     <Content Include="templates\Domainer\assets\images\stats_div.png" />
     <Content Include="templates\Domainer\assets\js\main.js" />
     <Content Include="templates\Domainer\index.html" />
+    <Content Include="Views\Cards\_createDeck.cshtml" />
+    <Content Include="Views\Cards\_deckBox.cshtml" />
+    <None Include="Views\Cards\_deckList.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

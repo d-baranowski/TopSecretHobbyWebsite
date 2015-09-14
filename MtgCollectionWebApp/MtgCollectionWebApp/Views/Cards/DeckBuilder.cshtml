@@ -176,20 +176,17 @@
         <!--Card Display End-->
 
         <br>
-        <!--Deck List-->
-        <div id="deckList" class="container metalicBackground">
+        <!--Deck Menu-->
+        <div id="deckMenu" class="container metalicBackground">
             <center>
-                <h2 class="myLabel">List of owned decks</h2>
-                <table>
-                    <tr ng-repeat-start="d in decks"></tr>
-                    <tr>{{d.Deck.DeckName}}</tr>
-                    <tr ng-repeat-end="d in decks"></tr>
-                </table>
-                <button>Add Deck</button>
-
+                <div ng-switch="deckMenuPath">
+                    <div ng-switch-when="deckList"><ng-include src="'@Url.Action("deckList", "Cards")'"></ng-include></div>
+                    <div ng-switch-when="createDeck"><ng-include src="'@Url.Action("createDeck", "Cards")'"></ng-include></div>
+                    <div ng-switch-when="deckBox"><ng-include src="'@Url.Action("deckBox", "Cards")'"></ng-include></div>
+                </div>
             </center>
         </div>
-        <!--Deck List End-->
+        <!--Deck Menu End-->
 
         <!-- http://www.jasonbutz.info/bootstrap-lightbox/
         http://twitter.github.io/typeahead.js/ Check this out man  -->
