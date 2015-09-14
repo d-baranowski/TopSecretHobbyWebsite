@@ -178,14 +178,10 @@
         <br>
         <!--Deck List-->
         <div id="deckList" class="container metalicBackground">
+            <div ui-view></div>
+            <a ui-sref="state1">State 1</a>
+            <a ui-sref="state2">State 2</a>
             <center>
-                <h2 class="myLabel">List of owned decks</h2>
-                <table>
-                    <tr ng-repeat-start="d in decks"></tr>
-                    <tr>{{d.Deck.DeckName}}</tr>
-                    <tr ng-repeat-end="d in decks"></tr>
-                </table>
-                <button>Add Deck</button>
 
             </center>
         </div>
