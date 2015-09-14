@@ -202,6 +202,7 @@
     <Compile Include="Controllers\CardsApiController.cs" />
     <Compile Include="Controllers\CardsController.cs" />
     <Compile Include="Controllers\CollectionEntriesManagerController.cs" />
+    <Compile Include="Controllers\DeckApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RatingApiController.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="Models\Deck.cs" />
     <Compile Include="Models\DeckEntry.cs" />
     <Compile Include="Models\DeckRating.cs" />
+    <Compile Include="Models\DeckViewModel.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\Collection.cs" />
     <Compile Include="Models\CollectionEntry.cs" />
@@ -227,6 +229,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AngularApp\deckBuilderApp.js" />
     <Content Include="AngularApp\displayCardsApp.js" />
     <Content Include="bower_components\angularUtils-pagination\dirPagination.js" />
     <Content Include="bower_components\angularUtils-pagination\dirPagination.tpl.html" />

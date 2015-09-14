@@ -8,6 +8,7 @@ namespace MtgCollectionWebApp.Models
     {
         [Key]
         public virtual int DeckId { get; set; }
+        public virtual string DeckName { get; set; }
         public virtual ICollection<DeckEntry> DeckEntries { get; set; }
         public virtual ICollection<SideboardEntry> SiedeboardEntries { get; set; }
         public virtual int OwnerId { get; set; }

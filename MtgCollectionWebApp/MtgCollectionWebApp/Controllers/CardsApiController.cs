@@ -11,7 +11,7 @@ namespace MtgCollectionWebApp.Controllers
 {
     public class CardsApiController : ApiController
     {
-        private MtgCollectionDB db = new MtgCollectionDB();
+        private readonly MtgCollectionDB db = new MtgCollectionDB();
 
         // GET: api/CardsApi
         public List<CardsViewModel> GetCards()
