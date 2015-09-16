@@ -341,12 +341,17 @@ app.controller('myCtrl', function ($scope, $http) {
             // not found
         } else if (result.length == 1) {
             $scope.activeDeck = result[0].Deck;
-            $http.get("http://localhost:59756/api/DeckApi/getMainDeckViewModels?id=" + $scope.activeDeck.DeckId).success(function (response) {
+            $http.get("http://localhost:59756/api/DeckApi/getDeckCardViewModels?id=" + $scope.activeDeck.DeckId).success(function (response) {
                 $scope.mainDeck = response;
             });
             $http.get("http://localhost:59756/api/DeckApi/getSideBoardViewModels?id=" + $scope.activeDeck.DeckId).success(function (response) {
                 $scope.sideboard = response;
             });
+
+            $scope.deckMenuPath = "deckBox";
+            $scope.apply();
+
+
         }
     }
 
