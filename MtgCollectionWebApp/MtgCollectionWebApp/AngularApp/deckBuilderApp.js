@@ -358,7 +358,7 @@ app.controller('myCtrl', function ($scope, $http) {
     //Drag and Drop Support
     $scope.dragged = false;
     $scope.onDropToMainDeck = function (data, evt) {
-        $http.post('http://localhost:59756/api/DeckApi/addCardToSideboard', { "deckId": 1, "cardId": 1, "quantity": 1 }).success(function (response) {
+        $http.post('http://localhost:59756/api/DeckApi/addCardToSideboard', { "deckId": $scope.activeDeck.DeckId, "cardId": data.Card.CardId, "quantity": 1 }).success(function (response) {
             $scope.activeDeck["DeckEntries"].push(response);
         });
         
