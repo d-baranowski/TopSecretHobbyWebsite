@@ -142,7 +142,7 @@
                 <br />
                 <div id="dvCards" dir-paginate="x in data | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter  | filter:legalityFilter | filter:costFilter |filter:searchBox | itemsPerPage:4 ">
                     <div class="col-md-3" style="margin-bottom: 20px;">
-                        <img ng-click="displayCardDetailsModal(x)" class="cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
+                        <div ng-drag-stop="onDragStop()" ng-drag-start="onDragStart()" ng-drag-data="x" ng-drag="true" ng-click="displayCardDetailsModal(x)"><img class="cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" /></div>
 
                         <div class="container" id="controllers">
                             <!--Increment and Decrement Quantity in Collection-->

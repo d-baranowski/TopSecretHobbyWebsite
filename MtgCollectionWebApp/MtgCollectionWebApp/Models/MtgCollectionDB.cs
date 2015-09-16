@@ -13,6 +13,7 @@ namespace MtgCollectionWebApp.Models
         public DbSet<Card> Cards { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Deck> Decks { get; set; }
+        public DbSet<DeckEntry> DeckEntries { get; set; }
         public DbSet<DeckRating> DeckRatings { get; set; }
     }
 }

@@ -1,48 +1,57 @@
-﻿<h2 class="myLabel">{{activeDeck.DeckName}}</h2>
-<button ng-click="setDeckMenuPath('deckList')">Close Deck Box</button>
+﻿
+<div id="showOnDrag" style="display: none;">
+    <div class="col-md-6" style="height: 500px; background-color:blue;" ng-drop="true" ng-drop-success="onDropToMainDeck($data,$event)"></div>
+    <div class="col-md-6" style="height: 500px; background-color:blue;" ng-drop="true" ng-drop-success="onDropToSideBoard($data,$event)"></div>
+</div>
 
-<center>
-    <br />
-    <br />
-    <h3 class="myLabel">Main Deck</h3>
-    <div id="cards" ng-repeat="x in activeDeck.mainDeck | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter  | filter:legalityFilter | filter:costFilter |filter:searchBox">
-        <div class="col-md-3" style="margin-bottom: 20px;">
-            <img ng-click="displayCardDetailsModal(x)" class="cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
+<div id="hideOnDrag">
+    <center>
+        <h2 class="myLabel">{{activeDeck.DeckName}}</h2>
 
-            <div class="container" id="controllers">
-                <!--Increment and Decrement Quantity in Collection-->
-                <div class="entryControlls input-group" role="group">
-                    <center>
-                        <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
-                        <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
-                        <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
-                    </center>
+        <h3 class="myLabel">Main Deck</h3>
+        <div id="cards" ng-repeat="x in activeDeck.DeckEntries | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter  | filter:legalityFilter | filter:costFilter |filter:searchBox">
+            <div class="col-md-3" style="margin-bottom: 20px;">
+                <img ng-click="displayCardDetailsModal(x)" class="cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
+
+                <div class="container" id="controllers">
+                    <!--Increment and Decrement Quantity in Collection-->
+                    <div class="entryControlls input-group" role="group">
+                        <center>
+                            <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
+                            <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
+                            <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
+                        </center>
+                    </div>
+                    <!--Quantity buttons end-->
                 </div>
-                <!--Quantity buttons end-->
+
             </div>
-
         </div>
-    </div>
 
-    <br />
-    <br />
-    <h3 class="myLabel">Sideboard</h3>
-    <div id="cards" ng-repeat="x in activeDeck.sideboard | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter  | filter:legalityFilter | filter:costFilter |filter:searchBox">
-        <div class="col-md-3" style="margin-bottom: 20px;">
-            <img ng-click="displayCardDetailsModal(x)" class="cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
 
-            <div class="container" id="controllers">
-                <!--Increment and Decrement Quantity in Collection-->
-                <div class="entryControlls input-group" role="group">
-                    <center>
-                        <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
-                        <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
-                        <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
-                    </center>
+        <br />
+        <br />
+
+
+        <h3 class="myLabel">Sideboard</h3>
+        <div id="cards" ng-repeat="x in activeDeck.sideboard | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter  | filter:legalityFilter | filter:costFilter |filter:searchBox">
+            <div class="col-md-3" style="margin-bottom: 20px;">
+                <img ng-click="displayCardDetailsModal(x)" class="cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
+
+                <div class="container" id="controllers">
+                    <!--Increment and Decrement Quantity in Collection-->
+                    <div class="entryControlls input-group" role="group">
+                        <center>
+                            <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
+                            <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
+                            <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
+                        </center>
+                    </div>
+                    <!--Quantity buttons end-->
                 </div>
-                <!--Quantity buttons end-->
             </div>
-
         </div>
-    </div>
-</center>
+        <button ng-click="setDeckMenuPath('deckList')">Close Deck Box</button>
+    </center>
+</div>
+

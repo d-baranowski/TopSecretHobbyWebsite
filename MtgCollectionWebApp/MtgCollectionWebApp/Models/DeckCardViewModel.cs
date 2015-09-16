@@ -5,9 +5,9 @@ using System.Web;
 
 namespace MtgCollectionWebApp.Models
 {
-    public class DeckViewModel
+    public class DeckCardViewModel
     {
-        public Deck Deck { get; set; }
-        public int Rating { get; set; }
+        public Card card { get; set; }
+        public int quantity { get; set; }
     }
 }

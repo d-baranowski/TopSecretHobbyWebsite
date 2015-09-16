@@ -8,7 +8,7 @@ using System.Net;
 
 namespace MtgCollectionWebApp.Models
 {
-    public class MtgDbInitializer : System.Data.Entity.DropCreateDatabaseAlways<MtgCollectionDB>
+    public class MtgDbInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<MtgCollectionDB>
     {
         protected override void Seed(MtgCollectionDB context)
         {

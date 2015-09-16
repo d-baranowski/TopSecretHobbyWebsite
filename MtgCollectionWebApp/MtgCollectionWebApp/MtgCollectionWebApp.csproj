@@ -213,6 +213,8 @@
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\CardsViewModel.cs" />
     <Compile Include="Models\Deck.cs" />
+    <Compile Include="Models\DeckCardEntryModel.cs" />
+    <Compile Include="Models\DeckCardViewModel.cs" />
     <Compile Include="Models\DeckEntry.cs" />
     <Compile Include="Models\DeckRating.cs" />
     <Compile Include="Models\DeckViewModel.cs" />
@@ -307,6 +309,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\ngDraggable.js" />
     <Content Include="Scripts\prettyCheckable.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />

@@ -1,4 +1,4 @@
-﻿var app = angular.module('myApp', ['angular.filter', 'angularUtils.directives.dirPagination']);
+﻿var app = angular.module('myApp', ['angular.filter', 'angularUtils.directives.dirPagination', 'ngDraggable']);
 
 app.controller('myCtrl', function ($scope, $http) {
 
@@ -295,11 +295,13 @@ app.controller('myCtrl', function ($scope, $http) {
         }
     };
     $scope.displayCardDetailsModal = function (entry) {
-        $('#cardDetailsModalTitle').html(entry["Card"]["CardName"]);
-        $scope.modalDescription = entry["Card"]["CardText"];
-        $scope.$apply;
-        $('#cardDetailsModal').modal();
-
+        if (!$scope.dragged) {
+            $('#cardDetailsModalTitle').html(entry["Card"]["CardName"]);
+            $scope.modalDescription = entry["Card"]["CardText"];
+            $scope.$apply;
+            $('#cardDetailsModal').modal();
+        }
+        $scope.dragged = false;
     }
 
     //Utilities
@@ -339,8 +341,38 @@ app.controller('myCtrl', function ($scope, $http) {
             // not found
         } else if (result.length == 1) {
             $scope.activeDeck = result[0].Deck;
-            $scope.deckMenuPath = "deckBox";
+            $http.get("http://localhost:59756/api/DeckApi/getMainDeckViewModels?id=" + $scope.activeDeck.DeckId).success(function (response) {
+                $scope.mainDeck = response;
+            });
+            $http.get("http://localhost:59756/api/DeckApi/getSideBoardViewModels?id=" + $scope.activeDeck.DeckId).success(function (response) {
+                $scope.sideboard = response;
+            });
         }
     }
+
+    //Drag and Drop Support
+    $scope.dragged = false;
+    $scope.onDropToMainDeck = function (data, evt) {
+        $http.post('http://localhost:59756/api/DeckApi/addCardToSideboard', { "deckId": 1, "cardId": 1, "quantity": 1 }).success(function (response) {
+            $scope.activeDeck["DeckEntries"].push(response);
+        });
+        
+    }
+
+    $scope.onDropToSideBoard = function (data, evt) {
+        alert(data["Card"]["CardName"] + " was dropped to the side board");
+    }
+
+    $scope.onDragStart = function () {
+        $scope.dragged = true;
+        $('#hideOnDrag').hide();
+        $('#showOnDrag').show();
+    }
+
+    $scope.onDragStop = function () {
+        $('#hideOnDrag').show();
+        $('#showOnDrag').hide();
+    }
+
 });
 

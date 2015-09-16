@@ -10,10 +10,9 @@ namespace MtgCollectionWebApp.Models
     public class DeckEntry
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public virtual int DeckEntryId { get; set; }
-        public virtual int Quantity { get; set; }
-        public int DeckEntryCardId { get; set; }
+        public virtual int DeckEntryId { get; set; } 
         public int DeckId { get; set; }
+        public int CardId { get; set; }
+        public bool MainDeck { get; set; }
     }
 }

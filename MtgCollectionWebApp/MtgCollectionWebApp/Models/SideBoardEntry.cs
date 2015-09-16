@@ -11,9 +11,8 @@ namespace MtgCollectionWebApp.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public virtual int SideboardEntryId { get; set; }
+        public virtual int SideboardEntryId { get; set; } //The same as card id
         public virtual int Quantity { get; set; }
-        public int SideboardEntryCardId { get; set; }
         public int DeckId { get; set; }
     }
 }
