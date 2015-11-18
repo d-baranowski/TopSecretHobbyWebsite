@@ -1,49 +1,28 @@
 ﻿using System.Web.Mvc;
-using MtgCollectionWebApp.Models;
 
 namespace MtgCollectionWebApp.Controllers
 {
+    [Authorize]
     public class CardsController : Controller
     {
-        private MtgCollectionDB db = new MtgCollectionDB();
-
         // GET: Cards
         [HttpGet]
         public ActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return View();
-            } else
-            {
-                return RedirectToAction("Login", "Account");
-            } 
+            return View();
         }
 
-        // GET: Cards
-        public ActionResult DeckBuilder()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-        }
-
-        public ActionResult deckList()
+        public ActionResult DeckList()
         {
             return PartialView("~/Views/Cards/_deckList.cshtml");
         }
 
-        public ActionResult createDeck()
+        public ActionResult CreateDeck()
         {
             return PartialView("~/Views/Cards/_createDeck.cshtml");
         }
 
-        public ActionResult deckBox()
+        public ActionResult DeckBox()
         {
             return PartialView("~/Views/Cards/_deckBox.cshtml");
         }

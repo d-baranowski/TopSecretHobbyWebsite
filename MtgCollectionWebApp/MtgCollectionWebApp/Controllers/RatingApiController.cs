@@ -1,32 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MtgCollectionWebApp.Models;
 
 namespace MtgCollectionWebApp.Controllers
 {
+    [Authorize]
     public class RatingApiController : ApiController
     {
-        private MtgCollectionDB db = new MtgCollectionDB();
+        private readonly MtgCollectionDB _db = new MtgCollectionDB();
 
         // GET: api/RatingApi
         public IQueryable<Rating> GetRatings()
         {
-            return db.Ratings;
+            return _db.Ratings;
         }
 
         // GET: api/RatingApi/5
         [ResponseType(typeof(Rating))]
         public IHttpActionResult GetRating(int id)
         {
-            Rating rating = db.Ratings.Find(id);
+            var rating = _db.Ratings.Find(id);
             if (rating == null)
             {
                 return NotFound();
@@ -49,11 +46,11 @@ namespace MtgCollectionWebApp.Controllers
                 return BadRequest();
             }
 
-            db.Entry(rating).State = EntityState.Modified;
+            _db.Entry(rating).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                _db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -74,35 +71,39 @@ namespace MtgCollectionWebApp.Controllers
         [ResponseType(typeof(Rating))]
         public IHttpActionResult PostRating(Rating data)
         {
-            
-            Rating rating = null;
-            int userId = User.Identity.Name.GetHashCode();
-
-            var userRatings = db.Ratings.Where(r => r.UserId == userId);
-            int test = userRatings.Count();
-            
-            if (test > 0)
+            if (data == null)
             {
+                return BadRequest();
+            }
+
+            Rating rating;
+            var userId = User.Identity.Name.GetHashCode();
+            var userRatings = _db.Ratings.Where(r => r.UserId == userId);
+            
+            if (userRatings.Any())
+            {
+                //If there exist a rating from this user for this card 
                 var cardRating = userRatings.Where(r => r.RatingCardName == data.RatingCardName);
-                int test2 = cardRating.Count();
-                if (test2 > 0) //If there exist a rating from this user for this card 
+                if (cardRating.Any()) 
                 {
                     rating = cardRating.First();
                     rating.RatingValue = data.RatingValue;
-                    db.Entry(rating).State = EntityState.Modified;
-                    db.SaveChanges();
+                    _db.Entry(rating).State = EntityState.Modified;
+                    _db.SaveChanges();
                     return CreatedAtRoute("DefaultApi", new { id = rating.RatingId }, rating);
                 }
             }
 
-            rating = new Rating();
-            rating.RatingValue = data.RatingValue;
-            rating.RatingCardName = data.RatingCardName;
-            rating.UserId = userId; //This might throw an exception 
-
+            rating = new Rating
+            {
+                RatingValue = data.RatingValue,
+                RatingCardName = data.RatingCardName,
+                UserId = userId
+            };
+            
             //Success
-            db.Ratings.Add(rating);
-            db.SaveChanges();
+            _db.Ratings.Add(rating);
+            _db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = rating.RatingId }, rating); 
         }
@@ -111,14 +112,14 @@ namespace MtgCollectionWebApp.Controllers
         [ResponseType(typeof(Rating))]
         public IHttpActionResult DeleteRating(int id)
         {
-            Rating rating = db.Ratings.Find(id);
+            var rating = _db.Ratings.Find(id);
             if (rating == null)
             {
                 return NotFound();
             }
 
-            db.Ratings.Remove(rating);
-            db.SaveChanges();
+            _db.Ratings.Remove(rating);
+            _db.SaveChanges();
 
             return Ok(rating);
         }
@@ -127,14 +128,14 @@ namespace MtgCollectionWebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool RatingExists(int id)
         {
-            return db.Ratings.Count(e => e.RatingId == id) > 0;
+            return _db.Ratings.Count(e => e.RatingId == id) > 0;
         }
     }
 }

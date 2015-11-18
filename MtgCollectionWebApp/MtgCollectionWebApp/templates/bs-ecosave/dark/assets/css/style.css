@@ -108,7 +108,6 @@ background-color: #fff;
  HOME SECTION
     ===================================*/
 #home{
-background: url(../img/head.jpg) no-repeat center center;
 padding: 0;
 -webkit-background-size: cover;
 background-size: cover;
@@ -139,7 +138,7 @@ background-size: cover;
        text-align:center;
     }
     #home .overlay {
-              background:rgba(0, 0, 0, 0.7);        
+        background:rgba(0, 0, 0, 0.7);        
         min-height:700px;
     }
     #home h3 {
@@ -147,7 +146,7 @@ background-size: cover;
     }
     .div-trans {
 padding-top: 5px;
-background-color: rgba(0, 0, 0, 0.5);
+background-color: rgba(0, 0, 0, 0.8);
 min-height: 330px;
 margin-top: 150px;
 color: #fff;

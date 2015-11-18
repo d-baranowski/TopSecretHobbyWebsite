@@ -8,7 +8,7 @@ using System.Net;
 
 namespace MtgCollectionWebApp.Models
 {
-    public class MtgDbInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<MtgCollectionDB>
+    public class MtgDbInitializer : System.Data.Entity.DropCreateDatabaseAlways<MtgCollectionDB>
     {
         protected override void Seed(MtgCollectionDB context)
         {
@@ -80,9 +80,6 @@ namespace MtgCollectionWebApp.Models
                         {
                             if (context.Cards.Find(multiverseId) == null)
                             {
-                                System.IO.StreamWriter file = new System.IO.StreamWriter("c:\\test.txt", true);
-                                file.WriteLine(name + " " + multiverseId);
-                                file.Close();
                                 context.Cards.Add(new Card
                                 {
                                     CardId = multiverseId,

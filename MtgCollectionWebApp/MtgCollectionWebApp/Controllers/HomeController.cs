@@ -3,17 +3,19 @@ using System.Web.Mvc;
 
 namespace MtgCollectionWebApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         
-        private MtgCollectionDB db = new MtgCollectionDB();
+        private readonly MtgCollectionDB _db = new MtgCollectionDB();
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
             {
-                if (db.Collections.Find(User.Identity.Name.GetHashCode()) == null) { 
-                    var a = db.Collections.Add(new Collection {CollectionId = User.Identity.Name.GetHashCode()});
-                    db.SaveChanges();
+                if (_db.Collections.Find(User.Identity.Name.GetHashCode()) == null)
+                {
+                    _db.Collections.Add(new Collection {CollectionId = User.Identity.Name.GetHashCode()});
+                    _db.SaveChanges();
                 }
             }
             ViewBag.Message = User.Identity.Name.GetHashCode();

@@ -1,18 +1,18 @@
 ﻿using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
 using System.Web.Http;
+using MtgCollectionWebApp.Models;
 
-namespace MtgCollectionWebApp.Models
+namespace MtgCollectionWebApp.Controllers
 {
+    [Authorize]
     public class QuantityController : ApiController
     {
-        private MtgCollectionDB db = new MtgCollectionDB();
+        private readonly MtgCollectionDB _db = new MtgCollectionDB();
 
         // PUT: api/Quantity/5
         public void Put(int id, int value)
         {
-            CollectionEntry collectionEntry = db.CollectionsEntries.Find(id);
+            var collectionEntry = _db.CollectionsEntries.Find(id);
             if (collectionEntry != null) //If there already is an entry for this card modify or remove it
             {
                 var entryQ = collectionEntry.Quantity;
@@ -20,11 +20,11 @@ namespace MtgCollectionWebApp.Models
 
                 if (q <= 0) //Can't have entries with quantity 0 or less
                 {
-                    db.CollectionsEntries.Remove(collectionEntry);
+                    _db.CollectionsEntries.Remove(collectionEntry);
                 } else
                 {
                     collectionEntry.Quantity = q;
-                    db.Entry(collectionEntry).State = EntityState.Modified;
+                    _db.Entry(collectionEntry).State = EntityState.Modified;
                 }
             } else if (value > 0) //If entry doesn't exist, create one if val is positive
             {
@@ -36,9 +36,9 @@ namespace MtgCollectionWebApp.Models
                     Quantity = value
                 };
 
-                db.CollectionsEntries.Add(collectionEntry);
+                _db.CollectionsEntries.Add(collectionEntry);
             }
-            db.SaveChanges();
+            _db.SaveChanges();
         }
     }
 }

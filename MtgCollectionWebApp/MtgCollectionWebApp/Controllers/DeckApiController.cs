@@ -7,34 +7,35 @@ using System.Web.Http.Description;
 namespace MtgCollectionWebApp.Controllers
 {
     [RoutePrefix("api/DeckApi")]
+    [Authorize]
     public class DeckApiController : ApiController
     {
-        private readonly MtgCollectionDB db = new MtgCollectionDB();
+        private readonly MtgCollectionDB _db = new MtgCollectionDB();
 
         // GET: api/DeckApi
         public List<DeckViewModel> GetDecks()
         {
             var data = new List<DeckViewModel>();
-            int userId = User.Identity.Name.GetHashCode();
+            var userId = User.Identity.Name.GetHashCode();
 
-            var decks = db.Decks.Where(d => d.OwnerId == userId);
+            var decks = _db.Decks.Where(d => d.OwnerId == userId);
 
-            foreach (Deck d in decks)
+            foreach (var deck in decks)
             {
-                var ratings = db.DeckRatings.Where(r => r.RatingDeckId == d.DeckId);
-                int ratingsVal = 0;
+                var ratings = _db.DeckRatings.Where(r => r.RatingDeckId == deck.DeckId);
+                var ratingsVal = 0;
 
-                if (ratings.Count() > 0)
+                if (ratings.Any())
                 {
-                    foreach (DeckRating r in ratings)
+                    foreach (var rating in ratings)
                     {
-                        ratingsVal += r.RatingValue;
+                        ratingsVal += rating.RatingValue;
                     }
 
                     ratingsVal = ratingsVal / ratings.Count();
                 }
 
-                data.Add(new DeckViewModel { Deck = d, Rating = ratingsVal });
+                data.Add(new DeckViewModel { Deck = deck, Rating = ratingsVal });
             }
 
             return data;
@@ -49,39 +50,38 @@ namespace MtgCollectionWebApp.Controllers
             {
                 return BadRequest("User is not logged in");
             }
-            Deck deck = null;
-            int userId = User.Identity.Name.GetHashCode();
+            var userId = User.Identity.Name.GetHashCode();
 
-            deck = new Deck();
+            var deck = new Deck
+            {
+                OwnerId = userId,
+                DeckName = data.DeckName,
+                DeckDesc = data.DeckDesc
+            };
 
-            deck.OwnerId = userId;
-            deck.DeckName = data.DeckName;
-            deck.DeckDesc = data.DeckDesc;
 
             //Success
-            db.Decks.Add(deck);
-            db.SaveChanges();
+            _db.Decks.Add(deck);
+            _db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = deck.DeckId }, deck);
         }
 
         [HttpGet]
         [Route("getDeckCardViewModels/")]
-        public List<DeckCardViewModel> getMainDeckViewModels(int id)
+        public List<DeckCardViewModel> GetMainDeckViewModels(int id)
         {
             var list = new List<DeckCardViewModel>();
-            var entries = db.DeckEntries.Where(e => e.DeckId == id && e.MainDeck == true);
-            HashSet<int> cardIds = new HashSet<int>();
+            var entries = _db.DeckEntries.Where(e => e.DeckId == id && e.MainDeck == true);
+            var cardIds = new HashSet<int>();
 
             foreach (var e in entries)
             {
-                if (!cardIds.Contains(e.CardId))
-                {
-                    var _card = db.Cards.Find(e.CardId);
-                    int _quantity = db.DeckEntries.Where(entry => entry.CardId == _card.CardId).Count();
-                    list.Add(new DeckCardViewModel { card = _card, quantity = _quantity });
-                    cardIds.Add(e.CardId);
-                }
+                if (cardIds.Contains(e.CardId)) continue;
+                var card = _db.Cards.Find(e.CardId);
+                var quantity = _db.DeckEntries.Count(entry => entry.CardId == card.CardId);
+                list.Add(new DeckCardViewModel { card = card, quantity = quantity });
+                cardIds.Add(e.CardId);
             }
 
             return list;
@@ -89,21 +89,19 @@ namespace MtgCollectionWebApp.Controllers
 
         [HttpGet]
         [Route("getSideBoardViewModels/")]
-        public List<DeckCardViewModel> getSideBoardViewModels(int id)
+        public List<DeckCardViewModel> GetSideBoardViewModels(int id)
         {
             var list = new List<DeckCardViewModel>();
-            var entries = db.DeckEntries.Where(e => e.DeckId == id && e.MainDeck == false);
-            HashSet<int> cardIds = new HashSet<int>();
+            var entries = _db.DeckEntries.Where(e => e.DeckId == id && e.MainDeck == false);
+            var cardIds = new HashSet<int>();
 
             foreach (var e in entries)
             {
-                if (!cardIds.Contains(e.CardId))
-                {
-                    var _card = db.Cards.Find(e.CardId);
-                    int _quantity = db.DeckEntries.Where(entry => entry.CardId == _card.CardId).Count();
-                    list.Add(new DeckCardViewModel { card = _card, quantity = _quantity });
-                    cardIds.Add(e.CardId);
-                }
+                if (cardIds.Contains(e.CardId)) continue;
+                var card = _db.Cards.Find(e.CardId);
+                var quantity = _db.DeckEntries.Count(entry => entry.CardId == card.CardId);
+                list.Add(new DeckCardViewModel { card = card, quantity = quantity });
+                cardIds.Add(e.CardId);
             }
 
             return list;
@@ -114,32 +112,34 @@ namespace MtgCollectionWebApp.Controllers
         [Route("addCardToMainDeck/")]
         public void AddCardToMainDeck(DeckCardEntryModel model)
         {
-            for (int i = 0; i < model.quantity; i++)
+            for (var i = 0; i < model.quantity; i++)
             {
-                db.DeckEntries.Add(new DeckEntry { CardId = model.cardId, DeckId = model.deckId, MainDeck = true });
+                _db.DeckEntries.Add(new DeckEntry { CardId = model.cardId, DeckId = model.deckId, MainDeck = true });
             }
-            db.SaveChanges();
+            _db.SaveChanges();
         }
 
         [HttpPost]
         [Route("addCardToSideboard/")]
         public void AddCardToSideboard(DeckCardEntryModel model)
         {
-            for (int i = 0; i < model.quantity; i++)
+            for (var i = 0; i < model.quantity; i++)
             {
-                db.DeckEntries.Add(new DeckEntry { CardId = model.cardId, DeckId = model.deckId, MainDeck = false });
+                _db.DeckEntries.Add(new DeckEntry { CardId = model.cardId, DeckId = model.deckId, MainDeck = false });
             }
-            db.SaveChanges();
+            _db.SaveChanges();
         }
 
         [HttpGet]
         [Route("getExample")]
-        public DeckCardEntryModel getExample()
+        public DeckCardEntryModel GetExample()
         {
-            var model = new DeckCardEntryModel();
-            model.cardId = 1;
-            model.deckId = 1;
-            model.quantity = 1;
+            var model = new DeckCardEntryModel
+            {
+                cardId = 1,
+                deckId = 1,
+                quantity = 1
+            };
             return model;
         }
     }

@@ -1,33 +1,30 @@
-﻿using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
+﻿using System.Linq;
 using System.Web.Http;
-using System.Web.Http.Description;
 using MtgCollectionWebApp.Models;
 using System.Collections.Generic;
 
 namespace MtgCollectionWebApp.Controllers
 {
+    [Authorize]
     public class CardsApiController : ApiController
     {
-        private readonly MtgCollectionDB db = new MtgCollectionDB();
+        private readonly MtgCollectionDB _db = new MtgCollectionDB();
 
         // GET: api/CardsApi
         public List<CardsViewModel> GetCards()
         {
             var data = new List<CardsViewModel>();
 
-            foreach (Card c in db.Cards)
+            foreach (var card in _db.Cards)
             {
-                var ratings = db.Ratings.Where(r => r.RatingCardName == c.CardName);
-                var entry = db.CollectionsEntries.Find(c.CardId);
-                int quantity = 0;
-                int ratingVal = 0; 
+                var ratings = _db.Ratings.Where(r => r.RatingCardName == card.CardName);
+                var entry = _db.CollectionsEntries.Find(card.CardId);
+                var quantity = 0;
+                var ratingVal = 0; 
 
-                if (ratings.Count() > 0)
+                if (ratings.Any())
                 {
-                    int sum = ratings.Sum(r => r.RatingValue);
+                    var sum = ratings.Sum(r => r.RatingValue);
                     ratingVal = sum / ratings.Count();
                 }
 
@@ -36,8 +33,7 @@ namespace MtgCollectionWebApp.Controllers
                     quantity = entry.Quantity;
                 }
 
-                data.Add(new CardsViewModel { Card = c, Quantity = quantity, Rating = ratingVal });
-
+                data.Add(new CardsViewModel { Card = card, Quantity = quantity, Rating = ratingVal });
             }
 
             return data;

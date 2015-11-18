@@ -2,7 +2,11 @@
 
 <table>
     <tbody ng-repeat="d in decks">
-        <tr style="background-color:#ffffff"><td>{{d.Deck.DeckName}} </td><td>{{d.Deck.DeckDesc}}</td><td><button ng-click="openDeck(d.Deck.DeckId)">Open Deck Box</button></td></tr>
+    <tr>
+        <td>{{d.Deck.DeckName}}</td>
+        <td>{{d.Deck.DeckDesc}}</td>
+        <td><button ng-click="openDeck(d.Deck.DeckId)">Open Deck Box</button></td>
+    </tr>
     </tbody>
 </table>
     <button ng-click="setDeckMenuPath('createDeck')">Add Deck</button>

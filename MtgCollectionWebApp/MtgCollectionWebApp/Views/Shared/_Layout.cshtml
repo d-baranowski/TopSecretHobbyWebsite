@@ -12,14 +12,12 @@
     <link href="bootstrap-switch.css" rel="stylesheet">
     <link href="~/templates/cssmenu/styles.css" rel="stylesheet" />
     <style>
-        .body-content{
-           background-color:black;
-           padding: 0px;
-        }
-        
-        .fullScreen {
-            min-height:100vh
-        }      
+         .body-content{
+             background: url('../../img/background.jpg') no-repeat center center fixed;
+             background-size: cover;
+             padding: 0px;
+             min-height: 80vh;
+         }
     </style>
     
 </head>
@@ -36,18 +34,15 @@
                         <li><a href='#'><span>Products</span></a></li>
                         <li><a href='#'><span>Company</span></a></li>
                         <li class='last pull-right'><a href='#'><span>Log in</span></a></li>
-
                     </ul>
-
-                
                 </div>
-
             </div>
         </div>
     </div>
-    <div class="body-content">
-        @RenderBody()
-    </div>
+<div class="body-content">
+    @RenderBody();
+</div>
+
     <link href="bootstrap.css" rel="stylesheet">
     <script src="bootstrap-switch.js"></script>
     <script src="~/scripts/angular.js"></script>

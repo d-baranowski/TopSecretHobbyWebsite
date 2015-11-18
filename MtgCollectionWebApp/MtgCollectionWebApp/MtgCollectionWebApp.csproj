@@ -201,7 +201,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CardsApiController.cs" />
     <Compile Include="Controllers\CardsController.cs" />
-    <Compile Include="Controllers\CollectionEntriesManagerController.cs" />
     <Compile Include="Controllers\DeckApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -232,7 +231,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AngularApp\deckBuilderApp.js" />
-    <Content Include="AngularApp\displayCardsApp.js" />
     <Content Include="bower_components\angularUtils-pagination\dirPagination.js" />
     <Content Include="bower_components\angularUtils-pagination\dirPagination.tpl.html" />
     <Content Include="bower_components\angularUtils-pagination\index.js" />
@@ -586,7 +584,6 @@
     <Content Include="templates\Domainer\assets\font\webhostinghub-glyphs.ttf" />
     <Content Include="templates\Domainer\README.md" />
     <Content Include="templates\Domainer\sendthedata.php" />
-    <Content Include="Views\Cards\DeckBuilder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

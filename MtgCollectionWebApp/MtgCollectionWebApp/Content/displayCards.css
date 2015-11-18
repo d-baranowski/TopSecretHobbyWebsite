@@ -76,8 +76,7 @@ button.toggleButton:hover {
 }
 
 #pageContainer {
-    background: url('../../img/background.jpg') no-repeat center center fixed;
-    background-size: cover;
+    height: 100%
 }
 
 .darkerPic {
@@ -129,6 +128,24 @@ button.toggleButton:hover {
     padding: 10px;
     width: 223px;
     background: url('../img/ControlPanelBackround.jpg') no-repeat;
+}
+
+.cardDrawer {
+    border-style: dashed;
+    border-color:transparent;
+    height: 80vh;
+    position:fixed;
+    text-align: center;
+    font-size: 30px;
+    color: transparent;
+}
+
+#mainDeckDrawer {
+   
+}
+
+#sideboardDrawer {
+
 }
 
 .myLabel {
