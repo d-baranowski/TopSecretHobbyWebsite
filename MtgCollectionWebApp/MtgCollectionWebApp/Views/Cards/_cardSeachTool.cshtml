@@ -1,0 +1,111 @@
+﻿<div class="searchToolBox container metalicBackground">
+    <center>
+        <!--SerchToolBox-->
+        <!--Seach tool Row-->
+        <div style="padding: 20px;" class="row">
+
+            <!--Type Filters-->
+            <div class="col-md-2">
+                <h3 class="myLabel">Card type</h3>
+                <button ng-click="typeToggler('creatureTgl')" value="Creature" class="toggleButton lrg" id="creatureTgl">
+                    <img class="btnIco" src="~/img/typeIcons/creatureSymbol.png"/> Creature
+                </button>
+                <button ng-click="typeToggler('instantTgl')" value="Instant" class="toggleButton lrg" id="instantTgl">
+                    <img class="btnIco" src="~/img/typeIcons/instantSymbol.png"/>Instant
+                </button>
+                <button ng-click="typeToggler('artifactTgl')" value="Artifact" class="toggleButton lrg" id="artifactTgl">
+                    <img class="btnIco" src="~/img/typeIcons/artifactSymbol.png"/>Artifact
+                </button>
+                <button ng-click="typeToggler('sorceryTgl')" value="Sorcery" class="toggleButton lrg" id="sorceryTgl">
+                    <img class="btnIco" src="~/img/typeIcons/sorcerySymbol.png"/>Sorcery
+                </button>
+                <button ng-click="typeToggler('landTgl')" value="Land" class="toggleButton lrg" id="landTgl">
+                    <img class="btnIco" src="~/img/typeIcons/landSymbol.png"/>Land
+                </button>
+                <button ng-click="typeToggler('enchantmentTgl')" value="Enchantment" class="toggleButton lrg" id="enchantmentTgl">
+                    <img class="btnIco" src="~/img/typeIcons/enchantmentSymbol.png"/>Enchantment
+                </button>
+            </div>
+            <!--Type filters End-->
+            <!--Color Filters-->
+            <div class="col-md-1">
+                <h3 class="myLabel">Colors</h3>
+                <button ng-click="colorToggler('whiteTgl')" value="White" class="iconBtn toggleButton" id="whiteTgl">
+                    <img class="btnIcoLg" src="~/img/manaSymbols/White_mana.png"/>
+                </button>
+                <button ng-click="colorToggler('blueTgl')" value="Blue" class="iconBtn toggleButton" id="blueTgl">
+                    <img class="btnIcoLg" src="~/img/manaSymbols/Blue_mana.png"/>
+                </button>
+                <button ng-click="colorToggler('greenTgl')" value="Green" class="iconBtn toggleButton" id="greenTgl">
+                    <img class="btnIcoLg" src="~/img/manaSymbols/Green_mana.png"/>
+                </button>
+                <button ng-click="colorToggler('blackTgl')" value="Black" class="iconBtn toggleButton" id="blackTgl">
+                    <img class="btnIcoLg" src="~/img/manaSymbols/Black_mana.png"/>
+                </button>
+                <button ng-click="colorToggler('redTgl')" value="Red" class="iconBtn toggleButton" id="redTgl">
+                    <img class="btnIcoLg" src="~/img/manaSymbols/Red_mana.png"/>
+                </button>
+            </div>
+            <!--Color End-->
+            <!--Cost Filters-->
+            <div class="col-md-1">
+                <h3 class="myLabel">Cost</h3>
+                <button ng-click="costToggler('oneTgl')" value="0" class="toggleButton sml" id="oneTgl">0 - 1</button>
+                <button ng-click="costToggler('twoTgl')" value="1" class="toggleButton sml" id="twoTgl">2 - 3</button>
+                <button ng-click="costToggler('threeTgl')" value="2" class="toggleButton sml" id="threeTgl">4 - 5</button>
+                <button ng-click="costToggler('fourTgl')" value="3" class="toggleButton sml" id="fourTgl">6 +</button>
+            </div>
+            <!--Cost Filters end-->
+            <!--Rarity Filters-->
+            <div class="col-md-1">
+                <h3 class="myLabel">Rarity</h3>
+                <button ng-click="rarityToggler('commonTgl')" value="Common" class="iconBtn toggleButton" id="commonTgl">
+                    <img class="btnIcoLg" src="~/img/raritySymbols/common.png"/>
+                </button>
+                <button ng-click="rarityToggler('uncommonTgl')" value="Uncommon" class="iconBtn toggleButton" id="uncommonTgl">
+                    <img class="btnIcoLg" src="~/img/raritySymbols/uncommon.png"/>
+                </button>
+                <button ng-click="rarityToggler('rareTgl')" value="Rare" class="iconBtn toggleButton" id="rareTgl">
+                    <img class="btnIcoLg" src="~/img/raritySymbols/rare.png"/>
+                </button>
+                <button ng-click="rarityToggler('mythicTgl')" value="Mythic" class="iconBtn toggleButton" id="mythicTgl">
+                    <img class="btnIcoLg" src="~/img/raritySymbols/mythic.png"/>
+                </button>
+            </div>
+            <!--Rarity End-->
+            <!--Legality Filters-->
+            <div class="col-md-2">
+                <h3 class="myLabel">Legal in</h3>
+                <button ng-click="legalityToggler('commanderTgl')" value="Commander" class="toggleButton med" id="commanderTgl"><span class="glyphicon glyphicon-tower"></span> Commander</button>
+                <button ng-click="legalityToggler('legacyTgl')" value="Legacy" class="toggleButton med" id="legacyTgl"><span class="glyphicon glyphicon-king"></span> Legacy</button>
+                <button ng-click="legalityToggler('vintageTgl')" value="Vintage" class="toggleButton med" id="vintageTgl"><span class="glyphicon glyphicon-queen"></span> Vintage</button>
+                <button ng-click="legalityToggler('standardTgl')" value="Standard" class="toggleButton med" id="standardTgl"><span class="glyphicon glyphicon-knight"></span> Standard</button>
+            </div>
+            <!--Legality End-->
+            <!--Order by and utility filters-->
+            <div class="col-md-4 col-md-offset-1">
+                <h3 class="myLabel">Order By</h3>
+                <button ng-click="ownedToggler('owned')" class="toggleButton lrg" id="owned"><span class="glyphicon glyphicon-inbox"></span> Owned</button>
+                <button ng-click="uniqueToggler('unique')" class="toggleButton lrg" id="unique"><span class="glyphicon glyphicon-camera"></span> Show variations</button>
+                <button id="ordName" class="toggleButton lrg" ng-click="order('Card.CardName','ordName')">Name </button>
+                <button id="ordRating" class="toggleButton lrg" ng-click="order('Rating','ordRating')">Rating</button>
+                <button id="ordSet" class="toggleButton lrg" ng-click="order('Card.CardSet','ordSet')">Set</button>
+                <button id="ordArtist" class="toggleButton lrg" ng-click="order('Card.CardArtist','ordArtist')">Atrist</button>
+                <button id="ordManaCost" class="toggleButton lrg" ng-click="order('Card.CardCmc','ordManaCost')">Mana Cost</button>
+                <button id="ordType" class="toggleButton lrg" ng-click="order('Card.CardType','ordType')">Type</button>
+            </div>
+
+            <div class="col-md-4 col-md-offset-5">
+                <h3 class="myLabel">Seach</h3>
+                <input ng-model="searchBox" type="text">
+            </div>
+
+            <!--Utils End-->
+        </div>
+        <!--Row End-->
+    </center>
+</div>
+<!--SerchToolBox-->
+
+
+M

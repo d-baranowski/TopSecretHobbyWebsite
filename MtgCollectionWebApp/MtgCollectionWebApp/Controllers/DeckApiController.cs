@@ -72,14 +72,14 @@ namespace MtgCollectionWebApp.Controllers
         public List<DeckCardViewModel> GetMainDeckViewModels(int id)
         {
             var list = new List<DeckCardViewModel>();
-            var entries = _db.DeckEntries.Where(e => e.DeckId == id && e.MainDeck == true);
+            var entries = _db.DeckEntries.Where(e => e.DeckId == id && e.MainDeck);
             var cardIds = new HashSet<int>();
 
             foreach (var e in entries)
             {
                 if (cardIds.Contains(e.CardId)) continue;
                 var card = _db.Cards.Find(e.CardId);
-                var quantity = _db.DeckEntries.Count(entry => entry.CardId == card.CardId);
+                var quantity = entries.Count(entry => entry.CardId == card.CardId);
                 list.Add(new DeckCardViewModel { card = card, quantity = quantity });
                 cardIds.Add(e.CardId);
             }
@@ -99,7 +99,7 @@ namespace MtgCollectionWebApp.Controllers
             {
                 if (cardIds.Contains(e.CardId)) continue;
                 var card = _db.Cards.Find(e.CardId);
-                var quantity = _db.DeckEntries.Count(entry => entry.CardId == card.CardId);
+                var quantity = entries.Count(entry => entry.CardId == card.CardId);
                 list.Add(new DeckCardViewModel { card = card, quantity = quantity });
                 cardIds.Add(e.CardId);
             }
@@ -126,6 +126,30 @@ namespace MtgCollectionWebApp.Controllers
             for (var i = 0; i < model.quantity; i++)
             {
                 _db.DeckEntries.Add(new DeckEntry { CardId = model.cardId, DeckId = model.deckId, MainDeck = false });
+            }
+            _db.SaveChanges();
+        }
+
+        [HttpPost]
+        [Route("deleteCardFromMainDeck")]
+        public void DeleteCardFromMainDeck(DeckCardEntryModel model)
+        {
+            for (var i = 0; i < model.quantity; i++)
+            {
+                var entity = _db.DeckEntries.First(e => e.CardId == model.cardId && e.MainDeck);
+                _db.DeckEntries.Remove(entity);
+            }
+            _db.SaveChanges();
+        }
+
+        [HttpPost]
+        [Route("deleteCardFromSideboard")]
+        public void DeleteCardFromSideboard(DeckCardEntryModel model)
+        {
+            for (var i = 0; i < model.quantity; i++)
+            {
+                var entity = _db.DeckEntries.First(e => e.CardId == model.cardId && e.MainDeck == false);
+                _db.DeckEntries.Remove(entity);
             }
             _db.SaveChanges();
         }

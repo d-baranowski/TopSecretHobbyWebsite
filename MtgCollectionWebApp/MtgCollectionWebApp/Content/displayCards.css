@@ -130,6 +130,10 @@ button.toggleButton:hover {
     background: url('../img/ControlPanelBackround.jpg') no-repeat;
 }
 
+.quantityControl {
+    
+}
+
 .cardDrawer {
     border-style: dashed;
     border-color:transparent;
@@ -157,3 +161,4 @@ button.toggleButton:hover {
     display: flex;
     align-items: center;
 }
+

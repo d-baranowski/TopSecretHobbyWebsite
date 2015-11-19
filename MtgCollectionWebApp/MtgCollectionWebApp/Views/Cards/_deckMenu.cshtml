@@ -1,0 +1,17 @@
+﻿<!--Deck Menu-->
+<div id="deckMenu" class="container metalicBackground">
+    <center>
+        <div ng-switch="deckMenuPath">
+            <div ng-switch-when="deckList">
+                <ng-include src="'@Url.Action("DeckList", "Cards")'"></ng-include>
+            </div>
+            <div ng-switch-when="createDeck">
+                <ng-include src="'@Url.Action("CreateDeck", "Cards")'"></ng-include>
+            </div>
+            <div ng-switch-when="deckBox">
+                <ng-include src="'@Url.Action("DeckBox", "Cards")'"></ng-include>
+            </div>
+        </div>
+    </center>
+</div>
+<!--Deck Menu End-->

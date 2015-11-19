@@ -299,7 +299,7 @@ app.controller("myCtrl", function ($scope, $http) {
         if (!$scope.dragged) {
             $('#cardDetailsModalTitle').html(entry["Card"]["CardName"]);
             $scope.modalDescription = entry["Card"]["CardText"];
-            $scope.$apply;
+            $scope.apply();
             $('#cardDetailsModal').modal();
         }
         $scope.dragged = false;
@@ -335,8 +335,11 @@ app.controller("myCtrl", function ($scope, $http) {
         });
     }
 
+
+    $scope.deckOpenFlag = false;
     //Open deck
     $scope.openDeck = function (deckId) {
+        $scope.deckOpenFlag = true;
         var result = $.grep($scope.decks, function (deck) { return deck.Deck.DeckId === deckId; });
         if (result.length === 0) {
             // not found
@@ -354,32 +357,86 @@ app.controller("myCtrl", function ($scope, $http) {
         }
     }
 
+    //Close deck
+    $scope.closeDeck = function() {
+        $scope.deckOpenFlag = false;
+        $scope.sideboard = null;
+        $scope.mainDeck = null;
+        $scope.activeDeck = null;
+        $scope.deckMenuPath = "deckList";
+        $scope.apply();
+    }
+
     //Drag and Drop Support
     $scope.dragged = false;
     $scope.onDropToMainDeck = function (data, evt) {
-        $http.post("/api/DeckApi/addCardToSideboard", { "deckId": $scope.activeDeck.DeckId, "cardId": data.Card.CardId, "quantity": 1 }).success(function (response) {
-            $scope.activeDeck["DeckEntries"].push(response);
-        });
-        
+        if ($scope.deckOpenFlag) {
+            $http.post("/api/DeckApi/addCardToMainDeck", { "deckId": $scope.activeDeck.DeckId, "cardId": data.Card.CardId, "quantity": 1 }).success(function (response) {
+                $http.get("/api/DeckApi/getDeckCardViewModels?id=" + $scope.activeDeck.DeckId).success(function (response) {
+                    $scope.mainDeck = response;
+                });
+            });
+        }
     }
 
     $scope.onDropToSideBoard = function (data, evt) {
-        alert(data["Card"]["CardName"] + " was dropped to the side board");
+        if ($scope.deckOpenFlag) {
+            $http.post("/api/DeckApi/addCardToSideboard", { "deckId": $scope.activeDeck.DeckId, "cardId": data.Card.CardId, "quantity": 1 }).success(function (response) {
+                $http.get("/api/DeckApi/getSideBoardViewModels?id=" + $scope.activeDeck.DeckId).success(function (response) {
+                    $scope.sideboard = response;
+                });
+            });
+        }
     }
 
     $scope.onDragStart = function () {
-        $scope.dragged = true;
-        $(".showOnDrag").css("border-color", "silver");
-        $(".showOnDrag").css("color", "silver");
-        $(".hideOnDrag").hide();
-
+        if ($scope.deckOpenFlag) {
+            $scope.dragged = true;
+            $(".showOnDrag").css("border-color", "silver");
+            $(".showOnDrag").css("color", "silver");
+            //$(".hideOnDrag").hide();
+        }
     }
 
     $scope.onDragStop = function () {
-        $(".showOnDrag").css("border-color", "transparent");
-        $(".showOnDrag").css("color", "transparent");
-        $(".hideOnDrag").show();
+        if ($scope.deckOpenFlag) {
+            $(".showOnDrag").css("border-color", "transparent");
+            $(".showOnDrag").css("color", "transparent");
+            //$(".hideOnDrag").show();
+        }
     }
 
+
+    $scope.addOneToSideboard = function (data) {
+        $http.post("/api/DeckApi/addCardToSideboard", { "deckId": $scope.activeDeck.DeckId, "cardId": data.card.CardId, "quantity": 1 }).success(function (response) {
+            $http.get("/api/DeckApi/getSideBoardViewModels?id=" + $scope.activeDeck.DeckId).success(function (response) {
+                $scope.sideboard = response;
+            });
+        });
+    }
+
+    $scope.remCardFromSideboard = function(data) {
+        $http.post("/api/DeckApi/deleteCardFromSideboard", { "deckId": $scope.activeDeck.DeckId, "cardId": data.card.CardId, "quantity": 1 }).success(function (response) {
+            $http.get("/api/DeckApi/getSideBoardViewModels?id=" + $scope.activeDeck.DeckId).success(function (response) {
+                $scope.sideboard = response;
+            });
+        });
+    }
+
+    $scope.addOneToMainDeck = function (data) {
+        $http.post("/api/DeckApi/addCardToMainDeck", { "deckId": $scope.activeDeck.DeckId, "cardId": data.card.CardId, "quantity": 1 }).success(function (response) {
+            $http.get("/api/DeckApi/getDeckCardViewModels?id=" + $scope.activeDeck.DeckId).success(function (response) {
+                $scope.mainDeck = response;
+            });
+        });
+    }
+
+    $scope.remOneFromMainDeck = function (data) {
+        $http.post("/api/DeckApi/deleteCardFromMainDeck", { "deckId": $scope.activeDeck.DeckId, "cardId": data.card.CardId, "quantity": 1 }).success(function (response) {
+            $http.get("/api/DeckApi/getDeckCardViewModels?id=" + $scope.activeDeck.DeckId).success(function (response) {
+                $scope.mainDeck = response;
+            });
+        });
+    }
 });
 

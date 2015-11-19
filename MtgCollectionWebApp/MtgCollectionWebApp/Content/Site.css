@@ -42,13 +42,13 @@ textarea {
 
 .Quantity {
     background-image: -webkit-linear-gradient(top, #ebeb6a, #45452e);
-  background-image: -moz-linear-gradient(top, #ebeb6a, #45452e);
-  background-image: -ms-linear-gradient(top, #ebeb6a, #45452e);
-  background-image: -o-linear-gradient(top, #ebeb6a, #45452e);
-  background-image: linear-gradient(to bottom, #ebeb6a, #45452e);
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
-  border-radius: 5px;
+    background-image: -moz-linear-gradient(top, #ebeb6a, #45452e);
+    background-image: -ms-linear-gradient(top, #ebeb6a, #45452e);
+    background-image: -o-linear-gradient(top, #ebeb6a, #45452e);
+    background-image: linear-gradient(to bottom, #ebeb6a, #45452e);
+    -webkit-border-radius: 28;
+    -moz-border-radius: 28;
+    border-radius: 5px;
     font-size: 15px;
     padding: 6px 10px 8px 10px;
 }

@@ -8,7 +8,7 @@ using System.Net;
 
 namespace MtgCollectionWebApp.Models
 {
-    public class MtgDbInitializer : System.Data.Entity.DropCreateDatabaseAlways<MtgCollectionDB>
+    public class MtgDbInitializer : System.Data.Entity.CreateDatabaseIfNotExists<MtgCollectionDB>
     {
         protected override void Seed(MtgCollectionDB context)
         {
@@ -31,8 +31,8 @@ namespace MtgCollectionWebApp.Models
             cardsPerPage = (int)o["perPage"];
 
 
-            for (int j = 0; j < 10; j++)
-            // while (!currentPage.Equals(lastPage))
+            //for (int j = 0; j < 10; j++)
+            while (!currentPage.Equals(lastPage))
             {
                 request = (HttpWebRequest)WebRequest.Create(currentPage);
                 request.Method = WebRequestMethods.Http.Get;

@@ -26,7 +26,7 @@ namespace MtgCollectionWebApp
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
 
             bundles.Add(new StyleBundle("~/templates/bs-ecosave/css").Include(
                       "~/templates/bs-ecosave/dark/assets/css/animate.css",

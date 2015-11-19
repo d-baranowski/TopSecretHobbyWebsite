@@ -249,11 +249,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dirPagination.tpl.html" />
     <Content Include="Content\displayCards.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="img\background.jpg" />
     <Content Include="img\ControlPanelBackround.jpg" />
     <Content Include="img\dark-metal-grid-6.jpg" />
@@ -526,6 +526,8 @@
     <Content Include="templates\Domainer\index.html" />
     <Content Include="Views\Cards\_createDeck.cshtml" />
     <Content Include="Views\Cards\_deckBox.cshtml" />
+    <Content Include="Views\Cards\_cardDisplay.cshtml" />
+    <Content Include="Views\Cards\_cardSeachTool.cshtml" />
     <None Include="Views\Cards\_deckList.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -584,6 +586,7 @@
     <Content Include="templates\Domainer\assets\font\webhostinghub-glyphs.ttf" />
     <Content Include="templates\Domainer\README.md" />
     <Content Include="templates\Domainer\sendthedata.php" />
+    <Content Include="Views\Cards\_deckMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

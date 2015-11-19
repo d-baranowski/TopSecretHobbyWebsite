@@ -1,0 +1,40 @@
+﻿<div id="cardDisplay" class="container metalicBackground">
+    <center>
+        <br />
+        <br />
+        <div id="dvCards" dir-paginate="x in data | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter  | filter:legalityFilter | filter:costFilter |filter:searchBox | itemsPerPage:12 ">
+            <div class="col-md-3">
+                <div ng-drag-stop="onDragStop()" ng-drag-start="onDragStart()" ng-drag-data="x" ng-drag="deckOpenFlag" ng-click="displayCardDetailsModal(x)">
+                    <img class="cardImage" ng-src={{x["Card"]["CardImageUrl"]}} width="223" height="310" />
+                </div>
+
+                <div class="container" id="controllers">
+                    <!--Increment and Decrement Quantity in Collection-->
+                    <div class="entryControlls input-group" role="group">
+                        <center>
+                            <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
+                            <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
+                            <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
+                        </center>
+                    </div>
+                    <!--Quantity buttons end-->
+                    <!--Display community rating of card and allow user to rate card-->
+                    <div class="btn-group" role="group" ng-repeat="a in range(5) track by $index">
+                        <div ng-switch="x.Rating >= $index + 1">
+                            <div ng-switch-when="true">
+                                <img src="~/img/star_full.png" ng-click="rateCard(x.Card.CardName, $index + 1, x);" class="star" />
+                            </div>
+                            <div ng-switch-when="false">
+                                <img src="~/img/star_none.png" ng-click="rateCard(x.Card.CardName, $index + 1, x);" class="star" />
+                            </div>
+                        </div>
+                    </div>
+                    <!--Rating End-->
+                </div>
+
+            </div>
+        </div>
+        <nav class="pagination pagination-lg nav-justified paginatorController hideOnDrag"><dir-pagination-controls id="paginator" on-page-change="myMethod(newPageNumber)" template-url="~/bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls></nav>
+    </center>
+</div>
+<!--Card Display End-->

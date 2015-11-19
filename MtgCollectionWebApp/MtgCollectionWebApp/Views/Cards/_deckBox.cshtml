@@ -1,35 +1,45 @@
-﻿    <center>
+﻿<div class="container-fluid">
+    <div class="col-md-12">
         <h2 class="myLabel">{{activeDeck.DeckName}}</h2>
-        
+    </div>
+
+    <div class="col-md-12">
+        <h3 class="myLabel">Stats</h3>
         <p>{{mainDeck[0]["card"]}}</p>
         <p>{{mainDeck[0]["quantity"]}}</p>
+
+        <button ng-click="closeDeck()">Close Deck Box</button>
+    </div>
+
+    <div class="col-md-12">
         <h3 class="myLabel">Main Deck</h3>
-        <div id="cards" ng-repeat="x in mainDeck ">
-            <div class="col-md-3" style="margin-bottom: 20px;">
+        <p ng-if="mainDeck.length == 0">There are no cards in your main deck. If you wish to add a card to main deck drag chosen card and drop it on the left side of the screen</p>
+        <div id="cards" ng-repeat="x in mainDeck">
+            <div class="col-md-3">
                 <img ng-click="displayCardDetailsModal(x)" class="cardImage" ng-src={{x["card"]["CardImageUrl"]}} width="223" height="310" />
 
-                <div class="container" id="controllers">
+                <div class="container quantityControl" id="controllers">
                     <!--Increment and Decrement Quantity in Collection-->
                     <div class="entryControlls input-group" role="group">
                         <center>
-                            <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
+                            <button class="btn-quantity-up btn btn-success" ng-click="addOneToMainDeck(x);"><span class="glyphicon glyphicon-plus"></span></button>
                             <span class="Quantity"><b>{{x["quantity"]}}</b></span>
-                            <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
+                            <button class="btn-quantity-down btn btn-danger " ng-click="remOneFromMainDeck(x);"><span class="glyphicon glyphicon-minus"></span></button>
                         </center>
                     </div>
                     <!--Quantity buttons end-->
                 </div>
-
             </div>
         </div>
-
+        </div>
 
         <br />
         <br />
 
-
+    <div class="col-md-12">
         <h3 class="myLabel">Sideboard</h3>
-        <div id="cards" ng-repeat="x in sideboard | unique: myUnique | orderBy: predicate: reverse | filter:colorFilter | filter:rarityFilter | filter:ownedFilter | filter:typeFilter  | filter:legalityFilter | filter:costFilter |filter:searchBox">
+        <p ng-if="sideboard.length == 0">There are no cards in your sideboard. If you wish to add a card to main deck drag chosen card and drop it on the right side of the screen</p>
+        <div id="cards" ng-repeat="x in sideboard">
             <div class="col-md-3" style="margin-bottom: 20px;">
                 <img ng-click="displayCardDetailsModal(x)" class="cardImage" ng-src={{x["card"]["CardImageUrl"]}} width="223" height="310" />
 
@@ -37,15 +47,15 @@
                     <!--Increment and Decrement Quantity in Collection-->
                     <div class="entryControlls input-group" role="group">
                         <center>
-                            <button class="btn-quantity-up btn btn-success" ng-click="addOne(x);"><span class="glyphicon glyphicon-plus"></span></button>
-                            <span class="Quantity"><b>{{x["Quantity"]}}</b></span>
-                            <button class="btn-quantity-down btn btn-danger " ng-click="subOne(x);"><span class="glyphicon glyphicon-minus"></span></button>
+                            <button class="btn-quantity-up btn btn-success" ng-click="addOneToSideboard(x);"><span class="glyphicon glyphicon-plus"></span></button>
+                            <span class="Quantity"><b>{{x["quantity"]}}</b></span>
+                            <button class="btn-quantity-down btn btn-danger " ng-click="remCardFromSideboard(x);"><span class="glyphicon glyphicon-minus"></span></button>
                         </center>
                     </div>
                     <!--Quantity buttons end-->
                 </div>
             </div>
         </div>
-        <button ng-click="setDeckMenuPath('deckList')">Close Deck Box</button>
-    </center>
+    </div>
+</div>    
 

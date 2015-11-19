@@ -1,12 +1,74 @@
 ﻿<h2 class="myLabel">List of owned decks</h2>
 
-<table>
-    <tbody ng-repeat="d in decks">
-    <tr>
-        <td>{{d.Deck.DeckName}}</td>
-        <td>{{d.Deck.DeckDesc}}</td>
-        <td><button ng-click="openDeck(d.Deck.DeckId)">Open Deck Box</button></td>
-    </tr>
-    </tbody>
-</table>
-    <button ng-click="setDeckMenuPath('createDeck')">Add Deck</button>
+
+<div class="datagrid" ng-if="decks.length > 0">
+    <table>
+        <thead><tr><th>Deck Name</th><th>Deck Description</th><th>Open Deck</th></thead>
+        <tbody>
+            <tr ng-repeat="d in decks">
+                <td>{{d.Deck.DeckName}}</td>
+                <td>{{d.Deck.DeckDesc}}</td>
+                <td><button style="margin:auto; display:block;" class="btn btn-success" ng-click="openDeck(d.Deck.DeckId)">Open Deck Box</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<button class="btn btn-success" ng-click="setDeckMenuPath('createDeck')">Add Deck</button>
+<br/>
+<br/>
+
+<style>
+    .btn {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+     .datagrid table {
+         border-collapse: collapse;
+         text-align: left;
+         width: 100%;
+     }
+
+    .datagrid {
+        font: normal 12px/150% Geneva, Arial, Helvetica, sans-serif;
+        background: #fff;
+        overflow: hidden;
+        border: 2px solid #61150D;
+        width: 80%;
+    }
+
+    .datagrid table td, .datagrid table th {
+        padding: 3px 8px;
+    }
+
+    .datagrid table thead th {
+        background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #444444), color-stop(1, #000000) );
+        background: -moz-linear-gradient( center top, #444444 5%, #000000 100% );
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444', endColorstr='#000000');
+        background-color: #444444;
+        color: #FFFFFF;
+        font-size: 16px;
+        font-weight: bold;
+        border-left: 1px solid #000000;
+    }
+
+    .datagrid table thead th:first-child {
+        border: none;
+    }
+
+    .datagrid table tbody td {
+        color: #000000;
+        border-left: 1px solid #000000;
+        font-size: 14px;
+        border-bottom: 1px solid #000000;
+        font-weight: normal;
+    }
+
+    .datagrid table tbody td:first-child {
+        border-left: none;
+    }
+
+    .datagrid table tbody tr:last-child td {
+        border-bottom: none;
+    }
+</style>
